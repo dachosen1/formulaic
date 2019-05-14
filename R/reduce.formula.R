@@ -1,9 +1,10 @@
 #' Reduce Formula
 #'
 #' TBD
+#'
 #' @param  dt TBD
 #' @param  outcome.name TBD
-#' @param  input.name TBD
+#' @param  input.names TBD
 #' @param  input.patterns TBD
 #' @param  max.input.categories TBD
 #' @param  max.outcome.categories.to.search TBD
@@ -14,7 +15,7 @@
 #'@export
 reduce.formula <- function(dt, outcome.name, input.names, input.patterns = NA, max.input.categories = 20,
                            max.outcome.categories.to.search = 4, return.as = "formula"){
-  # require(data.table)
+
   dt <- data.table::setDT(dt)
 
   if(!(outcome.name %in% names(dt))){
@@ -43,14 +44,24 @@ reduce.formula <- function(dt, outcome.name, input.names, input.patterns = NA, m
     reduced.inputs <- all.input.names
   }
 
-  the.formula <- Formulaic::create.formula(outcome.name = outcome.name, input.names = reduced.inputs,
+  the.formula <- formulaic::create.formula(outcome.name = outcome.name, input.names = reduced.inputs,
                                 all.data.names = names(dt), input.patterns = NA, return.as = return.as)
   return(the.formula)
 }
 
+
+#' reduce existing formula
+#'
+#' @param  dt tBU
+#' @param  the.initial.formula TBU
+#' @param  max.input.categories TBU
+#' @param  max.outcome.categories.to.search TBU
+#' @param  return.as TBU
+#'
+#'
 reduce.existing.formula <- function(dt, the.initial.formula, max.input.categories = 20,
                                     max.outcome.categories.to.search = 4, return.as = "formula"){
-  require(data.table)
+
   dt <- data.table::setDT(dt)
 
   the.sides <- strsplit(x = the.initial.formula, split = "~")[[1]]

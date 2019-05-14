@@ -13,6 +13,8 @@ reduce.formula(dt, outcome.name, input.names, input.patterns = NA,
 
 \item{outcome.name}{TBD}
 
+\item{input.names}{TBD}
+
 \item{input.patterns}{TBD}
 
 \item{max.input.categories}{TBD}
@@ -20,8 +22,6 @@ reduce.formula(dt, outcome.name, input.names, input.patterns = NA,
 \item{max.outcome.categories.to.search}{TBD}
 
 \item{return.as}{TBD}
-
-\item{input.name}{TBD}
 }
 \description{
 TBD

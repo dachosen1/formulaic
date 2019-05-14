@@ -2,15 +2,15 @@
 % Please edit documentation in R/create.formula.R
 \name{add.backtick}
 \alias{add.backtick}
-\title{Add backtick}
+\title{Add backticks if needed}
 \usage{
-add.backtick(x, include.backtick = TRUE)
+add.backtick(x, include.backtick = "as.needed")
 }
 \arguments{
-\item{x}{a character vector where matches are sought, or an object which can be coerced by as.character to a character vector. Long vectors are supported.}
+\item{x}{variables}
 
 \item{include.backtick}{logical. If TRUE the corresponding component will remove any white space.}
 }
 \description{
-Add backtick
+Add backticks to make a appropriate variable.
 }

@@ -5,7 +5,7 @@
 \title{Create Formula}
 \usage{
 create.formula(outcome.name, input.names, input.patterns = NA,
-  all.data.names = NA, include.backtick = TRUE,
+  all.data.names = NA, include.backtick = "as.needed",
   return.as = "formula")
 }
 \arguments{
@@ -17,12 +17,12 @@ create.formula(outcome.name, input.names, input.patterns = NA,
 
 \item{all.data.names}{The names of the data within which to search for patterns.}
 
-\item{include.backtick}{TBD}
+\item{include.backtick}{add backticks if needed}
 
-\item{return.as}{TBD}
+\item{return.as}{the data type of the output.  If not set as "formula", then a character vector will be returned.}
 }
 \description{
-Automatically creates a formula
+Automatically creates a formula from the following parameters:
 }
 \details{
 Return as the data type of the output.  If not set as "formula", then a character vector will be returned.

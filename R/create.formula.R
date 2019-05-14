@@ -1,12 +1,14 @@
-#' Add backtick
+#' Add backticks if needed
 #'
-#' @param  x  a character vector where matches are sought, or an object which can be coerced by as.character to a character vector. Long vectors are supported.
+#' Add backticks to make a appropriate variable.
+#'
+#' @param  x  variables
 #' @param  include.backtick  logical. If TRUE the corresponding component will remove any white space.
-add.backtick <- function(x, include.backtick = TRUE){
+add.backtick <- function(x, include.backtick = "as.needed"){
   if(include.backtick == "all"){
     w <- 1:length(x)
   }
-  if(include.backtick == TRUE){
+  if(include.backtick == "as.needed"){
     w <- grep(pattern = " ", x = x, fixed = TRUE)
   }
   if(length(w) > 0){
@@ -17,14 +19,14 @@ add.backtick <- function(x, include.backtick = TRUE){
 
 #' Create Formula
 #'
-#' Automatically creates a formula
+#' Automatically creates a formula from the following parameters:
 #'
 #' @param  outcome.name  The name of the variable serving as the outcome.
 #' @param  input.names The names of the variables with the full names delineated.
 #' @param  input.patterns  Includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector.  However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.
 #' @param  all.data.names  The names of the data within which to search for patterns.
-#' @param  include.backtick  TBD
-#' @param  return.as TBD
+#' @param  include.backtick  add backticks if needed
+#' @param  return.as the data type of the output.  If not set as "formula", then a character vector will be returned.
 #'
 #' @details  Return as the data type of the output.  If not set as "formula", then a character vector will be returned.
 #' The input.names and names of variables matching the input.patterns will be concatenated to form the full list of input variables.
@@ -42,7 +44,7 @@ add.backtick <- function(x, include.backtick = TRUE){
 #' @import stats
 #' @export
 create.formula <- function(outcome.name, input.names, input.patterns = NA, all.data.names = NA,
-                           include.backtick = TRUE, return.as = "formula"){
+                           include.backtick = "as.needed", return.as = "formula"){
   variable.names.from.patterns <- c()
   if(!is.na(input.patterns[1]) & !is.na(all.data.names[1])){
     pattern <- paste(input.patterns, collapse = "|")

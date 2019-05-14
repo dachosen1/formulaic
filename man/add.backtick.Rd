@@ -2,24 +2,15 @@
 % Please edit documentation in R/create.formula.R
 \name{add.backtick}
 \alias{add.backtick}
-\title{Automatically creates a formula from the following parameters:
-outcome.name:  the name of the variable serving as the outcome.
-input.names:  the names of the variables with the full names delineated.
-input.patterns:  includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector.  However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.
-all.data.names:  the names of the data within which to search for patterns.
-return.as:  the data type of the output.  If not set as "formula", then a character vector will be returned.
-The input.names and names of variables matching the input.patterns will be concatenated to form the full list of input variables.
-Note:  Does not account for interactions (a*b)}
+\title{Add backticks if needed}
 \usage{
 add.backtick(x, include.backtick = "as.needed")
 }
+\arguments{
+\item{x}{variables}
+
+\item{include.backtick}{logical. If TRUE the corresponding component will remove any white space.}
+}
 \description{
-Automatically creates a formula from the following parameters:
-outcome.name:  the name of the variable serving as the outcome.
-input.names:  the names of the variables with the full names delineated.
-input.patterns:  includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector.  However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.
-all.data.names:  the names of the data within which to search for patterns.
-return.as:  the data type of the output.  If not set as "formula", then a character vector will be returned.
-The input.names and names of variables matching the input.patterns will be concatenated to form the full list of input variables.
-Note:  Does not account for interactions (a*b)
+Add backticks to make a appropriate variable.
 }

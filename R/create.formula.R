@@ -26,7 +26,7 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 #' @param  input.patterns  Includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector.  However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.
 #' @param  all.data.names  The names of the data within which to search for patterns.
 #' @param  include.backtick  add backticks if needed
-#' @param  return.as the data type of the output.  If not set as "formula", then a character vector will be returned.
+#' @param  format.as the data type of the output.  If not set as "formula", then a character vector will be returned.
 #'
 #' @details  Return as the data type of the output.  If not set as "formula", then a character vector will be returned.
 #' The input.names and names of variables matching the input.patterns will be concatenated to form the full list of input variables.
@@ -40,29 +40,125 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 #'  dd[, y := 5 * x + 3 * pixel_1 + 2 * pixel_2 + rnorm(n)]
 #'
 #'  create.formula(outcome.name = "y", input.names = "x", input.patterns = c("pi", "xel"),
-#'    all.data.names = names(dd), return.as = "character")
+#'    all.data.names = names(dd), format.as = "character")
 #' @import stats
 #' @export
-create.formula <- function(outcome.name, input.names, input.patterns = NA, all.data.names = NA,
-                           include.backtick = "as.needed", return.as = "formula"){
+#' 
+#' 
+create.formula <- function(outcome.name, input.names, input.patterns = NA, dat, reduce = FALSE, max.input.categories = 20, max.outcome.categories.to.search = 4, order.as = "as.specified", include.backtick = "as.needed", format.as = "formula"){
+  
+  require(data.table)
+  setDT(dat)
+  
+  if(length(names(dat)) == 0){
+    return("Error:  dat must be an object with specified names.")
+  }
+  if(!(outcome.name %in% names(dat))){
+    return("Error:  To create a formula, the outcome.name must match one of the values in names(dat).")
+  }
+  
+  if(!is.na(input.names[1])){
+    if(input.names[1] == "."){
+      input.names <- names(dat)
+    }
+  }
   variable.names.from.patterns <- c()
-  if(!is.na(input.patterns[1]) & !is.na(all.data.names[1])){
+  
+  if(!is.na(input.patterns[1])){
     pattern <- paste(input.patterns, collapse = "|")
-    variable.names.from.patterns <- all.data.names[grep(pattern = pattern, x = all.data.names)]
+    variable.names.from.patterns <- names(dat)[grep(pattern = pattern, x = names(dat))]
   }
-  all.input.names <- unique(c(input.names, variable.names.from.patterns))
-  all.input.names <- all.input.names[all.input.names != outcome.name]
-  if(!is.na(all.data.names[1])){
-    all.input.names <- all.input.names[all.input.names %in% all.data.names]
+  
+  inclusion.table <- data.table(variable = unique(c(input.names, variable.names.from.patterns)))
+  inclusion.table[variable %in% names(dat), class := as.character(dat[, as.character(lapply(X = .SD, FUN = "class")), .SDcols = variable]), by = variable]
+  inclusion.table[, order := 1:.N]
+  inclusion.table[, specified.from := c(rep.int(x = "input.names", times = length(input.names)), rep.int(x = "input.patterns", times = .N - length(input.names)))]
+  inclusion.table[, exclude.not.in.names.dat := !(variable %in% names(dat))]
+  inclusion.table[, exclude.matches.outcome.name := (variable == outcome.name)]
+  
+  if(reduce == TRUE){
+    num.outcome.categories <- dat[!is.na(get(outcome.name)), length(unique(get(outcome.name)))]
+    
+    the.inputs <- inclusion.table[variable %in% names(dat), variable]
+    
+    if(num.outcome.categories <= max.outcome.categories.to.search){
+      num.unique.tab <- dat[, lapply(X = .SD, FUN = function(x){return(length(unique(x[!is.na(x)])))}), .SDcols = the.inputs, by = outcome.name]
+    }
+    if(num.outcome.categories > max.outcome.categories.to.search){
+      num.unique.tab <- dat[, lapply(X = .SD, FUN = function(x){return(length(unique(x[!is.na(x)])))}), .SDcols = the.inputs]
+    }
+    min.categories.tab <- num.unique.tab[, .(variable = the.inputs, min.categories = as.numeric(lapply(X = .SD, FUN = "min"))), .SDcols = the.inputs]
+    
+    min.categories.tab[, exclude.lack.contrast := min.categories < 2]
+
+    inclusion.table <- merge(x = inclusion.table, y = min.categories.tab, by = "variable")
+    
+    inclusion.table[, exclude.numerous.categories := min.categories > max.input.categories & class %in% c("character", "factor")]
+  
+    
   }
+  setorderv(x = inclusion.table, cols = "order", order = 1L)
+  
+  exclusion.columns <- grep(pattern = "exclude", x = names(inclusion.table))
+  
+  inclusion.table[, include.variable := rowMeans(.SD) == 0, .SDcols = exclusion.columns]
+  
+ 
+  all.input.names <- inclusion.table[include.variable == TRUE, variable]
+  
+  if(length(all.input.names) == 0){
+    all.input.names <- "1"
+  }
+  
+  if(order.as == "increasing"){
+    all.input.names <- sort(x = all.input.names, decreasing = FALSE)
+  } 
+  if(order.as == "decreasing"){
+    all.input.names <- sort(x = all.input.names, decreasing = TRUE)
+  }
+  if(order.as == "column.order"){
+    all.input.names <- names(dat)[names(dat) %in% all.input.names]
+  }
+  
   input.names.delineated <- add.backtick(x =  all.input.names, include.backtick = include.backtick)
   outcome.name.delineated <- add.backtick(x = outcome.name, include.backtick = include.backtick)
   the.formula <- sprintf("%s ~ %s", outcome.name.delineated, paste(input.names.delineated, collapse = "+"))
+  
+  if(format.as == "formula"){
+    the.formula <- as.formula(the.formula)
+  }
+  
+  res <- list(formula = the.formula, inclusion.table = inclusion.table)
+  
+  return(res)
+}
 
-  if(return.as == "formula"){
-    return(stats::as.formula(the.formula))
+
+#' reduce existing formula
+#'
+#' @param  dt tBU
+#' @param  the.initial.formula TBU
+#' @param  max.input.categories TBU
+#' @param  max.outcome.categories.to.search TBU
+#' @param  order.as
+#' @param  include.baktick
+#' @param  format.as TBU
+#'
+#'
+reduce.existing.formula <- function(the.initial.formula, dat, max.input.categories = 20, max.outcome.categories.to.search = 4, order.as = "as.specified", include.backtick = "as.needed", format.as = "formula"){
+  
+  if(class(the.initial.formula) == "formula"){
+    the.sides <- as.character(the.initial.formula)[2:3]
   }
-  if(return.as != "formula"){
-    return(the.formula)
+  if(is.character(the.initial.formula)){
+    the.sides <- strsplit(x = the.initial.formula, split = "~")[[1]]
   }
+
+  outcome.name <- trimws(x = the.sides[1], which = "both")
+  
+  the.pieces.untrimmed <- strsplit(x = the.sides[2], split = "+", fixed = TRUE)[[1]]
+  the.pieces.untrimmed.2 <- gsub(pattern = "`", replacement = "", x = the.pieces.untrimmed, fixed = TRUE)
+  input.names <- trimws(x = the.pieces.untrimmed.2, which = "both")
+  
+  return(create.formula(outcome.name = outcome.name, input.names = input.names, input.patterns = NA, dat = dat, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as))
 }

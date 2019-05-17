@@ -1,0 +1,32 @@
+#' Simulated Marketing Data
+#'
+#' contains information from the (fictionalized) marketing survey’s data.
+#'
+#' @format A data frame of 2300000 rows and 23 columns
+#' \describe{
+#'  \item{id}{Numeric values assigning a unique customer value}
+#'  \item{age}{Numeric values displaying the age of customer in years}
+#'  \item{gender}{Character value describing gender of the customer}
+#'  \item{income}{Numeric values displaying the income of the customer}
+#'  \item{region}{Numeric values describing the region of the customer}
+#'  \item{persona}{Character value describing the customer persona:"Millenial Muncher" "Righteous Reviewer" "Mainstream Maynard" "Savvy Samanth" "Easygoing Edith" "Old School Oliver"}
+#'  \item{Product}{Character value describing product consumed by the customer}
+#'  \item{Awareness}{Numeric values displaying the customer awareness level}
+#'  \item{BP_For_Me_0_10}{Numeric value displaying brand perception survey result scale (0-10)}
+#'  \item{BP_Fits_Budget_0_10}{Numeric value displaying brand perception survey results for budget scale (0-10)}
+#'  \item{BP_Tastes_Great_0_10}{Numeric value displaying brand perception survey results for tastes scale (0-10)}
+#'  \item{BP_Good_To_Share_0_10}{Numeric value displaying brand perception survey results for good to share scale (0-10)}
+#'  \item{BP_Like_Logo_0_10}{Numeric value displaying brand perception survey results for like logo scale (0-10)}
+#'  \item{BP_Special_Occasions_0_10}{Numeric value displaying brand perception survey results for special occations scale (0-10)}
+#'  \item{BP_Everyday_Snack_0_10}{Numeric value displaying brand perception survey results for everyday snack scale (0-10)}
+#'  \item{BP_Healthy_0_10}{Numeric value displaying brand perception survey results for healthly scale (0-10)}
+#'  \item{BP_Delicious_0_10}{Numeric value displaying brand perception survey results for delicious scale (0-10)}
+#'  \item{BP_Right_Amount_0_10}{Numeric value displaying brand perception survey results for right amount scale (0-10)}
+#'  \item{BP_Relaxing_0_10}{Numeric value displaying brand perception survey results for relaxing scale (0-10)}
+#'  \item{Consideration}{Numeric displaying if the customer would consider this product 1: Yes, 0: No}
+#'  \item{Consumption}{Numeric displaying if the customer would consume this product 1: Yes, 0: No}
+#'  \item{Satisfaction}{Numeric displaying if the customer was satisfied by this product 1: Yes, 0: No}
+#'  \item{Advocacy}{Numeric displaying if the customer would advocate for this product 1: Yes, 0: No}
+#'  }
+#' @source "Randomly generated data"
+"snack.dat"

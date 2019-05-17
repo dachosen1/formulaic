@@ -3,7 +3,7 @@
 #' Add backticks to make a appropriate variable.
 #'
 #' @param  x  variables
-#' @param  include.backtick  logical. If TRUE the corresponding component will remove any white space.
+#' @param  include.backtick specifies whether a backtick should be added. Parameter values should be either 'all' or 'as.needed'
 add.backtick <- function(x, include.backtick = "as.needed"){
   if(include.backtick == "all"){
     w <- 1:length(x)

@@ -36,7 +36,6 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 #' The input.names and names of variables matching the input.patterns will be concatenated to form the full list of input variables.
 #' Note:  Does not account for interactions (a*b)
 #' @import data.table
-#' @importFrom rlang .data
 #' @export
 #' @examples
 #'  n <- 10

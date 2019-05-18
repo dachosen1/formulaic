@@ -46,65 +46,78 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 #'  create.formula(outcome.name = "y", input.names = "x", input.patterns = c("pi", "xel"), dat = dd)
 #' @import stats
 #' @export
-create.formula <- function(outcome.name, input.names, input.patterns = NA, dat, reduce = FALSE, max.input.categories = 20, max.outcome.categories.to.search = 4, order.as = "as.specified", include.backtick = "as.needed", format.as = "formula"){
+create.formula <- function(outcome.name, input.names, input.patterns = NA, dat = NA, reduce = FALSE, max.input.categories = 20, max.outcome.categories.to.search = 4, order.as = "as.specified", include.backtick = "as.needed", format.as = "formula"){
 
-  dat <- data.table::setDT(dat)
 
-  if(length(names(dat)) == 0){
-    return("Error:  dat must be an object with specified names.")
-  }
-  if(!(outcome.name %in% names(dat))){
-    return("Error:  To create a formula, the outcome.name must match one of the values in names(dat).")
-  }
+  if(is.data.frame(dat)){
 
-  if(!is.na(input.names[1])){
-    if(input.names[1] == "."){
-      input.names <- names(dat)
+    require(data.table)
+    setDT(dat)
+
+    if(length(names(dat)) == 0){
+      return("Error:  dat must be an object with specified names.")
+    }
+    if(!(outcome.name %in% names(dat))){
+      return("Error:  To create a formula, the outcome.name must match one of the values in names(dat).")
+    }
+
+    if(!is.na(input.names[1])){
+      if(input.names[1] == "."){
+        input.names <- names(dat)
+      }
+    }
+    variable.names.from.patterns <- c()
+
+    if(!is.na(input.patterns[1])){
+      pattern <- paste(input.patterns, collapse = "|")
+      variable.names.from.patterns <- names(dat)[grep(pattern = pattern, x = names(dat))]
+    }
+
+    inclusion.table <- data.table(variable = unique(c(input.names, variable.names.from.patterns)))
+    inclusion.table[variable %in% names(dat), class := as.character(dat[, as.character(lapply(X = .SD, FUN = "class")), .SDcols = variable]), by = variable]
+    inclusion.table[, order := 1:.N]
+    inclusion.table[, specified.from := c(rep.int(x = "input.names", times = length(input.names)), rep.int(x = "input.patterns", times = .N - length(input.names)))]
+    inclusion.table[, exclude.not.in.names.dat := !(variable %in% names(dat))]
+    inclusion.table[, exclude.matches.outcome.name := (variable == outcome.name)]
+
+    if(reduce == TRUE){
+      num.outcome.categories <- dat[!is.na(get(outcome.name)), length(unique(get(outcome.name)))]
+
+      the.inputs <- inclusion.table[variable %in% names(dat), variable]
+
+      if(num.outcome.categories <= max.outcome.categories.to.search){
+        num.unique.tab <- dat[, lapply(X = .SD, FUN = function(x){return(length(unique(x[!is.na(x)])))}), .SDcols = the.inputs, by = outcome.name]
+      }
+      if(num.outcome.categories > max.outcome.categories.to.search){
+        num.unique.tab <- dat[, lapply(X = .SD, FUN = function(x){return(length(unique(x[!is.na(x)])))}), .SDcols = the.inputs]
+      }
+      min.categories.tab <- num.unique.tab[, .(variable = the.inputs, min.categories = as.numeric(lapply(X = .SD, FUN = "min"))), .SDcols = the.inputs]
+
+      min.categories.tab[, exclude.lack.contrast := min.categories < 2]
+
+      inclusion.table <- merge(x = inclusion.table, y = min.categories.tab, by = "variable")
+
+      inclusion.table[, exclude.numerous.categories := min.categories > max.input.categories & class %in% c("character", "factor")]
+
+
+    }
+    setorderv(x = inclusion.table, cols = "order", order = 1L)
+
+    exclusion.columns <- grep(pattern = "exclude", x = names(inclusion.table))
+
+    inclusion.table[, include.variable := rowMeans(.SD) == 0, .SDcols = exclusion.columns]
+
+
+    all.input.names <- inclusion.table[include.variable == TRUE, variable]
+
+    if(order.as == "column.order"){
+      all.input.names <- names(dat)[names(dat) %in% all.input.names]
     }
   }
-  variable.names.from.patterns <- c()
-
-  if(!is.na(input.patterns[1])){
-    pattern <- paste(input.patterns, collapse = "|")
-    variable.names.from.patterns <- names(dat)[grep(pattern = pattern, x = names(dat))]
+  if(!is.data.frame(x = dat)){
+    all.input.names <- input.names
+    inclusion.table <- "dat was not provided (NA); no inclusion table was computed."
   }
-
-  inclusion.table <- data.table(variable = unique(c(input.names, variable.names.from.patterns)))
-  inclusion.table[variable %in% names(dat), class := as.character(dat[, as.character(lapply(X = .SD, FUN = "class")), .SDcols = variable]), by = variable]
-  inclusion.table[, order := 1:.N]
-  inclusion.table[, specified.from := c(rep.int(x = "input.names", times = length(input.names)), rep.int(x = "input.patterns", times = .N - length(input.names)))]
-  inclusion.table[, exclude.not.in.names.dat := !(variable %in% names(dat))]
-  inclusion.table[, exclude.matches.outcome.name := (variable == outcome.name)]
-
-  if(reduce == TRUE){
-    num.outcome.categories <- dat[!is.na(get(outcome.name)), length(unique(get(outcome.name)))]
-
-    the.inputs <- inclusion.table[variable %in% names(dat), variable]
-
-    if(num.outcome.categories <= max.outcome.categories.to.search){
-      num.unique.tab <- dat[, lapply(X = .SD, FUN = function(x){return(length(unique(x[!is.na(x)])))}), .SDcols = the.inputs, by = outcome.name]
-    }
-    if(num.outcome.categories > max.outcome.categories.to.search){
-      num.unique.tab <- dat[, lapply(X = .SD, FUN = function(x){return(length(unique(x[!is.na(x)])))}), .SDcols = the.inputs]
-    }
-    min.categories.tab <- num.unique.tab[, .(variable = the.inputs, min.categories = as.numeric(lapply(X = .SD, FUN = "min"))), .SDcols = the.inputs]
-
-    min.categories.tab[, exclude.lack.contrast := min.categories < 2]
-
-    inclusion.table <- merge(x = inclusion.table, y = min.categories.tab, by = "variable")
-
-    inclusion.table[, exclude.numerous.categories := min.categories > max.input.categories & class %in% c("character", "factor")]
-
-
-  }
-  setorderv(x = inclusion.table, cols = "order", order = 1L)
-
-  exclusion.columns <- grep(pattern = "exclude", x = names(inclusion.table))
-
-  inclusion.table[, include.variable := rowMeans(.SD) == 0, .SDcols = exclusion.columns]
-
-
-  all.input.names <- inclusion.table[include.variable == TRUE, variable]
 
   if(length(all.input.names) == 0){
     all.input.names <- "1"
@@ -116,22 +129,20 @@ create.formula <- function(outcome.name, input.names, input.patterns = NA, dat, 
   if(order.as == "decreasing"){
     all.input.names <- sort(x = all.input.names, decreasing = TRUE)
   }
-  if(order.as == "column.order"){
-    all.input.names <- names(dat)[names(dat) %in% all.input.names]
-  }
 
   input.names.delineated <- add.backtick(x =  all.input.names, include.backtick = include.backtick)
   outcome.name.delineated <- add.backtick(x = outcome.name, include.backtick = include.backtick)
   the.formula <- sprintf("%s ~ %s", outcome.name.delineated, paste(input.names.delineated, collapse = "+"))
 
   if(format.as == "formula"){
-    the.formula <- stats::as.formula(the.formula)
+    the.formula <- as.formula(the.formula)
   }
 
   res <- list(formula = the.formula, inclusion.table = inclusion.table)
 
   return(res)
 }
+
 
 
 #' reduce existing formula

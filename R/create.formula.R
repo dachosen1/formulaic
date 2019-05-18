@@ -24,7 +24,7 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 #' @param outcome.name The name of the variable serving as the outcome.
 #' @param input.names The names of the variables with the full names delineated.
 #' @param input.patterns Includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector.  However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.
-#' @param dat Now, user must specify a data.frame object that will be used to remove any variables that are not listed in names(dat)
+#' @param dat User can specify a data.frame object that will be used to remove any variables that are not listed in names(dat. As default it is set as NA. In this case, the formula is created simply from the outcome.name and input.names.
 #' @param reduce This is an option that user can take. As default it is set as FALSE. When the user set it as TRUE, it will go through the logic of checking for too few contrasts or too many contrasts.
 #' @param max.input.categories This limits the maximum number of variables that will be employeed in the formula. As default it is set at 20, but users can still change at his/her convinence.
 #' @param max.outcome.categories.to.search This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 20, but users can still change at his/her convinence.
@@ -51,8 +51,8 @@ create.formula <- function(outcome.name, input.names, input.patterns = NA, dat =
 
   if(is.data.frame(dat)){
 
-    require(data.table)
-    setDT(dat)
+    #require(data.table)
+    data.table::setDT(dat)
 
     if(length(names(dat)) == 0){
       return("Error:  dat must be an object with specified names.")
@@ -135,7 +135,7 @@ create.formula <- function(outcome.name, input.names, input.patterns = NA, dat =
   the.formula <- sprintf("%s ~ %s", outcome.name.delineated, paste(input.names.delineated, collapse = "+"))
 
   if(format.as == "formula"){
-    the.formula <- as.formula(the.formula)
+    the.formula <- stats::as.formula(the.formula)
   }
 
   res <- list(formula = the.formula, inclusion.table = inclusion.table)

@@ -16,7 +16,7 @@ create.formula(outcome.name, input.names, input.patterns = NA,
 
 \item{input.patterns}{Includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector.  However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.}
 
-\item{dat}{User can specify a data.frame object that will be used to remove any variables that are not listed in names(dat. As default it is set as NA. In this case, the formula is created simply from the outcome.name and input.names.}
+\item{dat}{User can specify a data.frame object that will be used to remove any variables that are not listed in names(dat). As default it is set as NA. In this case, the formula is created simply from the outcome.name and input.names.}
 
 \item{reduce}{This is an option that user can take. As default it is set as FALSE. When the user set it as TRUE, it will go through the logic of checking for too few contrasts or too many contrasts.}
 
@@ -34,8 +34,10 @@ create.formula(outcome.name, input.names, input.patterns = NA,
 Automatically creates a formula from the following parameters:
 }
 \details{
-Return as the data type of the output.  If not set as "formula", then a character vector will be returned.
+Return as the data type of the output. If not set as "formula", then a character vector will be returned.
 The input.names and names of variables matching the input.patterns will be concatenated to form the full list of input variables.
+
+
 Note:  Does not account for interactions (a*b)
 }
 \examples{

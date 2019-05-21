@@ -154,6 +154,7 @@ create.formula <- function(outcome.name, input.names, input.patterns = NA, dat =
 #' @param  include.backtick Add backticks to make a appropriate variable
 #' @param  format.as TBU
 #'
+#'
 #' @export
 reduce.existing.formula <- function(the.initial.formula, dat, max.input.categories = 20,
                                     max.outcome.categories.to.search = 4, order.as = "as.specified",

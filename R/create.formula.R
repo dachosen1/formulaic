@@ -2,8 +2,8 @@
 #'
 #' Add backticks to make a appropriate variable.
 #'
-#' @param  x  variables
-#' @param  include.backtick specifies whether a backtick should be added. Parameter values should be either 'all' or 'as.needed'
+#' @param  x inputcharacter vector.
+#' @param  include.backtick Specifies whether a backtick should be added. Parameter values should be either 'all' or 'as.needed'
 add.backtick <- function(x, include.backtick = "as.needed"){
   if(include.backtick == "all"){
     w <- 1:length(x)
@@ -46,11 +46,12 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 #'  create.formula(outcome.name = "y", input.names = "x", input.patterns = c("pi", "xel"), dat = dd)
 #' @import stats
 #' @export
-create.formula <- function(outcome.name, input.names, input.patterns = NA, dat = NA, reduce = FALSE, max.input.categories = 20, max.outcome.categories.to.search = 4, order.as = "as.specified", include.backtick = "as.needed", format.as = "formula"){
-
+create.formula <- function(outcome.name, input.names, input.patterns = NA, dat = NA, reduce = FALSE,
+                           max.input.categories = 20, max.outcome.categories.to.search = 4,
+                           order.as = "as.specified", include.backtick = "as.needed",
+                           format.as = "formula"){
 
   if(is.data.frame(dat)){
-
     #require(data.table)
     data.table::setDT(dat)
 
@@ -60,7 +61,6 @@ create.formula <- function(outcome.name, input.names, input.patterns = NA, dat =
     if(!(outcome.name %in% names(dat))){
       return("Error:  To create a formula, the outcome.name must match one of the values in names(dat).")
     }
-
     if(!is.na(input.names[1])){
       if(input.names[1] == "."){
         input.names <- names(dat)
@@ -144,19 +144,20 @@ create.formula <- function(outcome.name, input.names, input.patterns = NA, dat =
 }
 
 
-
 #' reduce existing formula
 #'
-#' @param  the.initial.formula TBU
-#' @param  dat TBU
+#' @param  the.initial.formula  object of class "lm" or for multiple responses of class c("mlm", "lm").
+#' @param  dat Data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model.
 #' @param  max.input.categories TBU
 #' @param  max.outcome.categories.to.search TBU
-#' @param  order.as  TBU
-#' @param  include.backtick  TBU
+#' @param  order.as  rearranges its first argument into ascending or descending order.
+#' @param  include.backtick Add backticks to make a appropriate variable
 #' @param  format.as TBU
 #'
 #' @export
-reduce.existing.formula <- function(the.initial.formula, dat, max.input.categories = 20, max.outcome.categories.to.search = 4, order.as = "as.specified", include.backtick = "as.needed", format.as = "formula"){
+reduce.existing.formula <- function(the.initial.formula, dat, max.input.categories = 20,
+                                    max.outcome.categories.to.search = 4, order.as = "as.specified",
+                                    include.backtick = "as.needed", format.as = "formula"){
 
   if(class(the.initial.formula) == "formula"){
     the.sides <- as.character(the.initial.formula)[2:3]

@@ -10,17 +10,17 @@ reduce.existing.formula(the.initial.formula, dat,
   format.as = "formula")
 }
 \arguments{
-\item{the.initial.formula}{TBU}
+\item{the.initial.formula}{object of class "lm" or for multiple responses of class c("mlm", "lm").}
 
-\item{dat}{TBU}
+\item{dat}{Data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
 
 \item{max.input.categories}{TBU}
 
 \item{max.outcome.categories.to.search}{TBU}
 
-\item{order.as}{TBU}
+\item{order.as}{rearranges its first argument into ascending or descending order.}
 
-\item{include.backtick}{TBU}
+\item{include.backtick}{Add backticks to make a appropriate variable}
 
 \item{format.as}{TBU}
 }

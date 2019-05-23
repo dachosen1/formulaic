@@ -7,6 +7,12 @@ output:
   knitr:::html_vignette
 ---
 
+```{r setup}
+library(formulaic)
+library(data.table)
+library(knitr)
+```
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -16,22 +22,13 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-
-#tools::compactPDF(paths = "../vignettes/",
-#                  qpdf = Sys.which(Sys.getenv("R_QPDF", "qpdf")),
-#                  gs_quality = 'ebook')
+tools::compactPDF(paths = "../vignettes/",
+                  qpdf = Sys.which(Sys.getenv("R_QPDF", "qpdf")),
+                  gs_quality = 'ebook')
 ```
-
-
-```{r setup}
-library(formulaic)
-library(data.table)
-#data(snack.dat, package = "formulaic")
-```
-
 
 ```{r}
-snack.dat <- read.csv('../data-raw/snack.dat.csv')
+data("snack.dat")
 ```
 
 ```{r constant}
@@ -61,10 +58,9 @@ dim(snack.dat)
 names(snack.dat)
 ```
 
-
 ## Create Formula Examples
 
-the addback tick examples 
+The addback tick examples 
 
 ```{r add.backtick}
 formulaic:::add.backtick(x = names(snack.dat),include.backtick = 'all')

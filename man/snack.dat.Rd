@@ -37,6 +37,6 @@
 snack.dat
 }
 \description{
-contains information from the (fictionalized) marketing survey’s data.LazyData: true
+contains information from the (fictionalized) marketing survey’s data.
 }
 \keyword{datasets}

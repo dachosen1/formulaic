@@ -1,6 +1,6 @@
 #' Simulated Marketing Data
 #'
-#' contains information from the (fictionalized) marketing survey’s data.LazyData: true
+#' contains information from the (fictionalized) marketing survey’s data.
 #'
 #' @format A data frame of 23000 rows and 23 columns
 #' \describe{

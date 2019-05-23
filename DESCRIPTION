@@ -3,7 +3,7 @@ Title: What the Package Does (one line, title case)
 Version: 0.0.0.9000
 Authors@R: c(
     person("David", "Shilane", , "david.shilane@columbia.edu", c("aut")),
-    person("Caffree", "Lee", , "cl3802@columbia.edu", c("ctb")),
+    person("Caffrey", "Lee", , "cl3802@columbia.edu", c("ctb")),
     person("Zichen", "Huang", , "zh2380@columbia.edu", c("ctb")),
     person("Anderson", "Nelson", , "an2908@columbia.edu", c("ctb","cre"))
     )

@@ -6,11 +6,7 @@
 \title{Simulated Marketing Data}
 \format{A data frame of 23000 rows and 23 columns
 \describe{
-<<<<<<< HEAD
  \item{User ID}{Charater values assigning a unique customer value}
-=======
- \item{User.ID}{Charater values assigning a unique customer value}
->>>>>>> 0b9ff6e58d25f4e5874fb9d397fcf06be4164790
  \item{Age}{Numeric values displaying the age of customer in years}
  \item{Gender}{Character value describing gender of the customer}
  \item{Income}{Numeric values displaying the income of the customer}

@@ -3,3 +3,5 @@
 ^\.travis\.yml$
 ^packrat/
 ^\.Rprofile$
+^doc$
+^Meta$

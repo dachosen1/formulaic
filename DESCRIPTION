@@ -17,4 +17,7 @@ Imports:
     data.table,
     stats,
     DT
- 
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

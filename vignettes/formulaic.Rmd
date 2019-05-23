@@ -1,10 +1,12 @@
 ---
-title: "formulaic package instructions"
+title: "A Short Introduction to the formulaic Package"
 vignette: >
-  %\VignetteIndexEntry{formulaic}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{A Short Introduction to the formulaic Package}
+output:
+  knitr:::html_vignette
 ---
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -14,9 +16,9 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-tools::compactPDF(paths = "../vignettes/",
-                  qpdf = Sys.which(Sys.getenv("R_QPDF", "qpdf")),
-                  gs_quality = 'ebook')
+#tools::compactPDF(paths = "../vignettes/",
+#                  qpdf = Sys.which(Sys.getenv("R_QPDF", "qpdf")),
+#                  gs_quality = 'ebook')
 ```
 
 

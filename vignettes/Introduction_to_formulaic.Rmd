@@ -1,0 +1,204 @@
+---
+title: "Introduction_to_formulaic"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction_to_formulaic}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(formulaic)
+library(data.table)
+library(knitr)
+data("snack.dat", package = "formulaic")
+```
+
+
+```{r constant}
+outcome.name.awareness <- "Awareness"
+outcome.name.satisfaction <- "Satisfaction"
+
+input.names <- c("Age", "Gender", "Income", "Region", "Persona", "Typo")
+input.patterns <- c("User", "BP_", outcome.name.awareness, outcome.name.satisfaction)
+
+
+input.names <- c("Age", "Gender", "Income", "Region", "Persona", "Typo")
+input.patterns <- c("User", "BP_", outcome.name.awareness, outcome.name.satisfaction)
+
+reduce <- FALSE
+max.input.categories = 20
+max.outcome.categories.to.search = 4
+order.as = "as.specified" 
+include.backtick = "as.needed"
+format.as = "formula"
+```
+
+## Data : snack.dat
+
+The snack.dat was provided as an example on which to explore the basic functions of the formulaic package. Formatted as a data.table object, snack.dat contains 23000 observation and 23 columns. These data contain simulated information from a fictionalized marketing survey.  In this survey, a progression of questions are asked about the respondents' awareness, consideration, consumption, satisfaction with, and advocacy for different brands of snack foods.  Questions downstream of awareness, then consideration, and then consumption are only asked for those respondents who responded affirmatively to the previous question.  Otherwise the values are missing.  Brand Perception questions are rated on a scale from 0 to 10 and indicated with a name starting with the prefix BP.
+
+
+```{r snack.dat}
+dim(snack.dat)
+names(snack.dat)
+```
+
+## add.backtick Examples
+
+It is a subsidiary function to create.fomula that add backticks to the variables. As a default, the include.backtick is set 'as.needed', which means that it only add backticks to the ones are required. User has the freedom to change the option to 'all'.
+
+As one can see, User ID, which requires backticks to be incorporated into a formula, is the only variable that is affected by the function when the included.backtick is set as 'as.needed', while every variable has backticks when it is set as 'all'.
+
+
+```{r add.backtick}
+formulaic:::add.backtick(x = names(snack.dat),include.backtick = 'all')
+formulaic:::add.backtick(x = names(snack.dat),include.backtick = 'as.needed')
+```
+
+## create.formula examples
+
+It automatically generates a formula based on the following parameters:
+outcome.name, input.names, input.patterns, dat, reduce, max.input.categories, max.outcome.categories.to.search, order.as, include.backtick, and format.as. 
+
+
+```{r create.formula examples 1}
+form.1 <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = NA,
+    input.patterns = NA,
+    dat = snack.dat
+  )
+
+form.1$formula
+form.1$inclusion.table
+```
+
+```{r create.formula examples 2}
+form.2 <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = ".",
+    input.patterns = NA,
+    dat = snack.dat
+  )
+
+form.2$formula
+form.2$inclusion.table
+```
+
+
+```{r create.formula examples 3}
+form.3 <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = input.names,
+    input.patterns = NA,
+    dat = NA,
+    reduce = reduce,
+    max.input.categories = max.input.categories,
+    max.outcome.categories.to.search = max.outcome.categories.to.search,
+    order.as = order.as,
+    include.backtick = include.backtick,
+    format.as = "character"
+  )
+
+form.3$formula
+form.3$inclusion.table
+```
+
+
+```{r create.formula examples 4}
+form.4 <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = input.names,
+    input.patterns = input.patterns,
+    dat = snack.dat,
+    reduce = reduce,
+    max.input.categories = max.input.categories,
+    max.outcome.categories.to.search = max.outcome.categories.to.search,
+    order.as = order.as,
+    include.backtick = include.backtick,
+    format.as = format.as
+  )
+
+form.4$formula
+form.4$inclusion.table
+```
+
+
+```{r create.formula examples 5}
+form.5 <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = input.names,
+    input.patterns = input.patterns,
+    dat = snack.dat,
+    reduce = TRUE,
+    max.input.categories = max.input.categories,
+    max.outcome.categories.to.search = max.outcome.categories.to.search,
+    order.as = order.as,
+    include.backtick = include.backtick,
+    format.as = format.as
+  )
+
+form.5$formula
+form.5$inclusion.table
+```
+
+
+```{r create.formula examples 6}
+form.6 <-
+  create.formula(
+    outcome.name = outcome.name.satisfaction,
+    input.names = input.names,
+    input.patterns = input.patterns,
+    dat = snack.dat,
+    reduce = TRUE,
+    max.input.categories = max.input.categories,
+    max.outcome.categories.to.search = max.outcome.categories.to.search,
+    order.as = order.as,
+    include.backtick = include.backtick,
+    format.as = format.as
+  )
+
+form.6$formula
+form.6$inclusion.table
+```
+
+# Reduce Formula Example
+
+```{r reduce.existing.formula examples 7}
+form.7 <-
+  reduce.existing.formula(
+    the.initial.formula = form.3$formula,
+    dat = snack.dat,
+    format.as = "character"
+  )
+
+form.7$formula
+form.7$inclusion.table
+```
+
+```{r create.formula examples 8}
+form.8 <-
+  reduce.existing.formula(
+    the.initial.formula = form.4$formula,
+    dat = snack.dat,
+    format.as = "formula"
+  )
+
+form.8$formula
+form.8$inclusion.table
+```
+
+

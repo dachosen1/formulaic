@@ -14,15 +14,15 @@ reduce.existing.formula(the.initial.formula, dat,
 
 \item{dat}{Data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
 
-\item{max.input.categories}{TBU}
+\item{max.input.categories}{This limits the maximum number of variables that will be employeed in the formula. As default it is set at 20, but users can still change at his/her convinence.}
 
-\item{max.outcome.categories.to.search}{TBU}
+\item{max.outcome.categories.to.search}{This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 20, but users can still change at his/her convinence.}
 
 \item{order.as}{rearranges its first argument into ascending or descending order.}
 
 \item{include.backtick}{Add backticks to make a appropriate variable}
 
-\item{format.as}{TBU}
+\item{format.as}{The data type of the output.  If not set as "formula", then a character vector will be returned.}
 }
 \description{
 reduce existing formula

@@ -7,9 +7,9 @@
 add.backtick(x, include.backtick = "as.needed")
 }
 \arguments{
-\item{x}{input character vector.}
+\item{x}{variables}
 
-\item{include.backtick}{Specifies whether a backtick should be added. Parameter values should be either 'all' or 'as.needed'}
+\item{include.backtick}{specifies whether a backtick should be added. Parameter values should be either 'all' or 'as.needed'}
 }
 \description{
 Add backticks to make a appropriate variable.

@@ -16,14 +16,12 @@ knitr::opts_chunk$set(
   error = FALSE,
   comment = "#>"
 )
-tools::compactPDF(paths = "../vignettes/",
-                  qpdf = Sys.which(Sys.getenv("R_QPDF", "qpdf")),
-                  gs_quality = 'ebook')
 ```
 
 ```{r setup}
 library(formulaic)
 library(data.table)
+library(knitr)
 data(snack.dat, package = "formulaic")
 ```
 
@@ -43,7 +41,7 @@ format.as = "formula"
 ```
 
 ## Data : snack.dat
-To explore the basic function of formulaic, we’ll use snack.dat, a randomly generated data. This dataset contains 23000 observation and 23 columns. This data contains information from the (fictionalized) marketing survey’s data.
+The snack.dat was provided as an example on which to explore the basic functions of the formulaic package. Formatted as a data.table object, snack.dat contains 23000 observation and 23 columns. These data contain simulated information from a fictionalized marketing survey.  In this survey, a progression of questions are asked about the respondents' awareness, consideration, consumption, satisfaction with, and advocacy for different brands of snack foods.  Questions downstream of awareness, then consideration, and then consumption are only asked for those respondents who responded affirmatively to the previous question.  Otherwise the values are missing.  Brand Perception questions are rated on a scale from 0 to 10 and indicated with a name starting with the prefix BP.
 ```{r snack.dat}
 dim(snack.dat)
 names(snack.dat)
@@ -51,7 +49,8 @@ names(snack.dat)
 
 ## add.backtick
 ```{r add.backtick}
-formulaic:::add.backtick(x = names(snack.dat))
+formulaic:::add.backtick(x = names(snack.dat), include.backtick = "as.needed")
+formulaic:::add.backtick(x = names(snack.dat), include.backtick = "all")
 
 ```
 

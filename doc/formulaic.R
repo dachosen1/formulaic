@@ -1,19 +1,9 @@
----
-title: "A Short Introduction to the formulaic Package"
-vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{A Short Introduction to the formulaic Package}
-output:
-  knitr:::html_vignette
----
-
-```{r setup}
+## ----setup---------------------------------------------------------------
 library(formulaic)
 library(data.table)
 library(knitr)
-```
 
-```{r, include = FALSE}
+## ---- include = FALSE----------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   message = FALSE,
@@ -21,27 +11,15 @@ knitr::opts_chunk$set(
   error = FALSE,
   comment = "#>"
 )
-<<<<<<< HEAD
-```
-
-```{r setup}
-library(formulaic)
-library(data.table)
-library(knitr)
-data(snack.dat, package = "formulaic")
-=======
 
 tools::compactPDF(paths = "../vignettes/",
                   qpdf = Sys.which(Sys.getenv("R_QPDF", "qpdf")),
                   gs_quality = 'ebook')
-```
 
-```{r}
+## ------------------------------------------------------------------------
 data("snack.dat")
->>>>>>> 4195a2d6612095ccdf3f88f28a881f4efd203da6
-```
 
-```{r constant}
+## ----constant------------------------------------------------------------
 outcome.name.awareness <- "Awareness"
 outcome.name.satisfaction <- "Satisfaction"
 
@@ -58,36 +36,17 @@ max.outcome.categories.to.search = 4
 order.as = "as.specified" 
 include.backtick = "as.needed"
 format.as = "formula"
-```
 
-## Data : snack.dat
-<<<<<<< HEAD
-The snack.dat was provided as an example on which to explore the basic functions of the formulaic package. Formatted as a data.table object, snack.dat contains 23000 observation and 23 columns. These data contain simulated information from a fictionalized marketing survey.  In this survey, a progression of questions are asked about the respondents' awareness, consideration, consumption, satisfaction with, and advocacy for different brands of snack foods.  Questions downstream of awareness, then consideration, and then consumption are only asked for those respondents who responded affirmatively to the previous question.  Otherwise the values are missing.  Brand Perception questions are rated on a scale from 0 to 10 and indicated with a name starting with the prefix BP.
-=======
-To explore the basic function of formulaic, we’ll use snack.dat, a randomly generated data. This dataset contains 23000 observation and 23 columns. This data contains information from the (fictionalized) marketing survey’s data.
-
->>>>>>> 4195a2d6612095ccdf3f88f28a881f4efd203da6
-```{r snack.dat}
+## ----snack.dat-----------------------------------------------------------
 dim(snack.dat)
 names(snack.dat)
-```
 
-## Create Formula Examples
-
-The addback tick examples 
-
-```{r add.backtick}
-<<<<<<< HEAD
-formulaic:::add.backtick(x = names(snack.dat), include.backtick = "as.needed")
-formulaic:::add.backtick(x = names(snack.dat), include.backtick = "all")
-=======
+## ----add.backtick--------------------------------------------------------
 formulaic:::add.backtick(x = names(snack.dat),include.backtick = 'all')
->>>>>>> 4195a2d6612095ccdf3f88f28a881f4efd203da6
 
 formulaic:::add.backtick(x = names(snack.dat),include.backtick = 'as.needed')
-```
 
-```{r create.formula examples 1}
+## ----create.formula examples 1-------------------------------------------
 form.1 <-
   create.formula(
     outcome.name = outcome.name.awareness,
@@ -98,9 +57,8 @@ form.1 <-
 
 form.1$formula
 form.1$inclusion.table
-```
 
-```{r create.formula examples 2}
+## ----create.formula examples 2-------------------------------------------
 form.2 <-
   create.formula(
     outcome.name = outcome.name.awareness,
@@ -111,10 +69,8 @@ form.2 <-
 
 form.2$formula
 form.2$inclusion.table
-```
 
-
-```{r create.formula examples 3}
+## ----create.formula examples 3-------------------------------------------
 form.3 <-
   create.formula(
     outcome.name = outcome.name.awareness,
@@ -131,10 +87,8 @@ form.3 <-
 
 form.3$formula
 form.3$inclusion.table
-```
 
-
-```{r create.formula examples 4}
+## ----create.formula examples 4-------------------------------------------
 form.4 <-
   create.formula(
     outcome.name = outcome.name.awareness,
@@ -151,10 +105,8 @@ form.4 <-
 
 form.4$formula
 form.4$inclusion.table
-```
 
-
-```{r create.formula examples 5}
+## ----create.formula examples 5-------------------------------------------
 form.5 <-
   create.formula(
     outcome.name = outcome.name.awareness,
@@ -171,10 +123,8 @@ form.5 <-
 
 form.5$formula
 form.5$inclusion.table
-```
 
-
-```{r create.formula examples 6}
+## ----create.formula examples 6-------------------------------------------
 form.6 <-
   create.formula(
     outcome.name = outcome.name.satisfaction,
@@ -191,11 +141,8 @@ form.6 <-
 
 form.6$formula
 form.6$inclusion.table
-```
 
-# Reduce Formula Example
-
-```{r reduce.existing.formula examples 7}
+## ----reduce.existing.formula examples 7----------------------------------
 form.7 <-
   reduce.existing.formula(
     the.initial.formula = form.3$formula,
@@ -205,9 +152,8 @@ form.7 <-
 
 form.7$formula
 form.7$inclusion.table
-```
 
-```{r create.formula examples 8}
+## ----create.formula examples 8-------------------------------------------
 form.8 <-
   reduce.existing.formula(
     the.initial.formula = form.4$formula,
@@ -217,6 +163,4 @@ form.8 <-
 
 form.8$formula
 form.8$inclusion.table
-```
-
 

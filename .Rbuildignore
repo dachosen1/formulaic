@@ -1,4 +1,11 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
+<<<<<<< HEAD
+^packrat/
+^\.Rprofile$
+^doc$
+^Meta$
+=======
 ^data-raw$
+>>>>>>> origin

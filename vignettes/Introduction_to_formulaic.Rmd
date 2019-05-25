@@ -1,6 +1,7 @@
 ---
 title: "Introduction_to_formulaic"
 output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
 vignette: >
   %\VignetteIndexEntry{Introduction_to_formulaic}
   %\VignetteEngine{knitr::rmarkdown}

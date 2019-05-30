@@ -4,8 +4,9 @@
 \alias{create.formula}
 \title{Create Formula}
 \usage{
-create.formula(outcome.name, input.names, input.patterns = NA,
-  dat = NA, reduce = FALSE, max.input.categories = 20,
+create.formula(outcome.name, input.names = NA, input.patterns = NA,
+  dat = NA, interactions = NA, force.main.effects = TRUE,
+  reduce = FALSE, max.input.categories = 20,
   max.outcome.categories.to.search = 4, order.as = "as.specified",
   include.backtick = "as.needed", format.as = "formula")
 }
@@ -17,6 +18,10 @@ create.formula(outcome.name, input.names, input.patterns = NA,
 \item{input.patterns}{Includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector.  However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.}
 
 \item{dat}{User can specify a data.frame object that will be used to remove any variables that are not listed in names(dat. As default it is set as NA. In this case, the formula is created simply from the outcome.name and input.names.}
+
+\item{interactions}{This is meant to be a list of character vectors. Each entry of the list is meant to specify all of the terms that will form a single interaction.}
+
+\item{force.main.effects}{This is a logical value.  When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.}
 
 \item{reduce}{This is an option that user can take. As default it is set as FALSE. When the user set it as TRUE, it will go through the logic of checking for too few contrasts or too many contrasts.}
 

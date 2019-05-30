@@ -6,8 +6,8 @@
 \usage{
 reduce.existing.formula(the.initial.formula, dat,
   max.input.categories = 20, max.outcome.categories.to.search = 4,
-  order.as = "as.specified", include.backtick = "as.needed",
-  format.as = "formula")
+  force.main.effects = TRUE, order.as = "as.specified",
+  include.backtick = "as.needed", format.as = "formula")
 }
 \arguments{
 \item{the.initial.formula}{object of class "lm" or for multiple responses of class c("mlm", "lm").}
@@ -17,6 +17,8 @@ reduce.existing.formula(the.initial.formula, dat,
 \item{max.input.categories}{This limits the maximum number of variables that will be employeed in the formula. As default it is set at 20, but users can still change at his/her convinence.}
 
 \item{max.outcome.categories.to.search}{This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 20, but users can still change at his/her convinence.}
+
+\item{force.main.effects}{This is a logical value.  When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.}
 
 \item{order.as}{rearranges its first argument into ascending or descending order.}
 

@@ -6,3 +6,6 @@
 
 
 Package to automatically create a formula to be used in function 
+
+
+Note: This package is still in development in conjuction with 3 other packages. Check periodically for updates

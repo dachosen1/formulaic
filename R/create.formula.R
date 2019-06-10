@@ -268,5 +268,5 @@ reduce.existing.formula <- function(the.initial.formula, dat, max.input.categori
 
   }
 
-  return(create.formula(outcome.name = outcome.name, input.names = input.names, input.patterns = NA, dat = dat, interactions = interactions, force.main.effects = force.main.effects, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as))
+  return(create.formula(outcome.name = outcome.name, input.names = input.names, input.patterns = NULL, dat = dat, interactions = interactions, force.main.effects = force.main.effects, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as))
 }

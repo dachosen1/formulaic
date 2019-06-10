@@ -194,8 +194,8 @@ form.7$interactions.table
 ```{r create.formula.example 8}
 form.8 <- create.formula(
     outcome.name = outcome.name.awareness, 
-    input.names = NULL, 
-    input.patterns = NULL, 
+    input.names = NA, 
+    input.patterns = NA, 
     dat = snack.dat, 
     interactions = interactions, 
     force.main.effects = TRUE, 
@@ -215,8 +215,8 @@ form.8$interactions.table
 ```{r create.formula.example 9}
 form.9 <- create.formula(
     outcome.name = outcome.name.awareness, 
-    input.names = NULL, 
-    input.patterns = NULL, 
+    input.names = NA, 
+    input.patterns = NA, 
     dat = snack.dat, 
     interactions = interactions, 
     force.main.effects = FALSE, 
@@ -236,9 +236,9 @@ form.9$interactions.table
 ```{r create.formula.example 10}
 form.10 <- create.formula(
     outcome.name = outcome.name.awareness, 
-    input.names = NULL, 
-    input.patterns = NULL, 
-    dat = NULL, 
+    input.names = NA, 
+    input.patterns = NA, 
+    dat = NA, 
     interactions = interactions, 
     force.main.effects = FALSE, 
     reduce = FALSE, 
@@ -255,29 +255,27 @@ form.10$interactions.table
 ```
 
 
-Duplicates in input.names Example: if there is duplicates in input.name, for instance `duplicated.inputs`, create.formula will deduplicate them and take only one varialbe.
+Duplicates in input.names Example: if there is duplicates in input.name, for instance `r duplicated.inputs`, create.formula will deduplicate them and take only one varialbe.
 
 ```{r create.formula.example 11}
-deduped.formula<- create.formula(
+deduped.formula <- create.formula(
   outcome.name = outcome.name.awareness, 
   input.names = duplicated.inputs, 
-  dat = snack.dat
-  )
+  dat = snack.dat)
 
 deduped.formula$formula
 deduped.formula$inclusion.table
 deduped.formula$interactions.table
 ```
 
-Duplicates in interactions: if there is duplicates in interactions, for instance `duplicated.interactions`, create.formula will deduplicate them and take only one interaction. 
+Duplicates in interactions: if there is duplicates in interactions, for instance duplicated.interactions, create.formula will deduplicate them and take only one interaction. 
 
 ```{r create.formula.example 12}
 deduped.formula2 <- create.formula(
-  outcome.name = outcome.name.awareness, 
-  input.names = duplicated.inputs, 
-  dat = snack.dat, 
-  interactions = duplicated.interactions
-  )
+  outcome.name = outcome.name.awareness,
+  input.names = duplicated.inputs2,
+  dat = snack.dat,
+  interactions = duplicated.interactions)
 
 deduped.formula2$formula
 deduped.formula2$inclusion.table

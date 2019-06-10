@@ -16,7 +16,7 @@ reduce.existing.formula(the.initial.formula, dat,
 
 \item{max.input.categories}{This limits the maximum number of variables that will be employeed in the formula. As default it is set at 20, but users can still change at his/her convinence.}
 
-\item{max.outcome.categories.to.search}{This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 20, but users can still change at his/her convinence.}
+\item{max.outcome.categories.to.search}{This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4, but users can still change at his/her convinence.}
 
 \item{force.main.effects}{This is a logical value.  When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.}
 

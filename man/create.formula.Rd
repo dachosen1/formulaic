@@ -4,8 +4,8 @@
 \alias{create.formula}
 \title{Create Formula}
 \usage{
-create.formula(outcome.name, input.names = NA, input.patterns = NA,
-  dat = NA, interactions = NA, force.main.effects = TRUE,
+create.formula(outcome.name, input.names = NULL, input.patterns = NULL,
+  dat = NULL, interactions = NULL, force.main.effects = TRUE,
   reduce = FALSE, max.input.categories = 20,
   max.outcome.categories.to.search = 4, order.as = "as.specified",
   include.backtick = "as.needed", format.as = "formula")
@@ -17,7 +17,7 @@ create.formula(outcome.name, input.names = NA, input.patterns = NA,
 
 \item{input.patterns}{Includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector.  However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.}
 
-\item{dat}{User can specify a data.frame object that will be used to remove any variables that are not listed in names(dat. As default it is set as NA. In this case, the formula is created simply from the outcome.name and input.names.}
+\item{dat}{User can specify a data.frame object that will be used to remove any variables that are not listed in names(dat. As default it is set as NULL. In this case, the formula is created simply from the outcome.name and input.names.}
 
 \item{interactions}{This is meant to be a list of character vectors. Each entry of the list is meant to specify all of the terms that will form a single interaction.}
 
@@ -27,11 +27,11 @@ create.formula(outcome.name, input.names = NA, input.patterns = NA,
 
 \item{max.input.categories}{This limits the maximum number of variables that will be employeed in the formula. As default it is set at 20, but users can still change at his/her convinence.}
 
-\item{max.outcome.categories.to.search}{This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 20, but users can still change at his/her convinence.}
+\item{max.outcome.categories.to.search}{This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4, but users can still change at his/her convinence.}
 
 \item{order.as}{User can specify the order the input variables in the formula in a variety of ways for patterns: increasing for increasing alphabet order, decreasing for decreasing alphabet order, column.order for as they appear in data, and as.specified for maintaining the user's specified order.}
 
-\item{include.backtick}{Add backticks if needed}
+\item{include.backtick}{Add backticks if needed. As default it is set as 'as.needed', which add backticks when only it is needed. The other option is 'all'. This is only compatible when format.as != 'formula.}
 
 \item{format.as}{The data type of the output.  If not set as "formula", then a character vector will be returned.}
 }

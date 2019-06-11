@@ -98,7 +98,7 @@ create.formula <- function(outcome.name, input.names = NULL, input.patterns = NU
       num.from.input.names <- 0
     }
     if(!is.null(input.names)){
-      num.from.input.names <- length(input.names[!is.null(input.names)])
+      num.from.input.names <- length(input.names[!is.na(input.names)])
     }
 
     num.from.input.patterns <- length(variable.names.from.patterns[!(variable.names.from.patterns %in% input.names)])
@@ -270,4 +270,3 @@ reduce.existing.formula <- function(the.initial.formula, dat, max.input.categori
 
   return(create.formula(outcome.name = outcome.name, input.names = input.names, input.patterns = NA, dat = dat, interactions = interactions, force.main.effects = force.main.effects, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as))
 }
-

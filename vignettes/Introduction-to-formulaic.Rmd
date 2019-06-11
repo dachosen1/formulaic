@@ -25,15 +25,12 @@ data("snack.dat", package = "formulaic")
 ```{r constant}
 outcome.name.awareness <- "Awareness"
 outcome.name.satisfaction <- "Satisfaction"
-
 duplicated.inputs <- rep.int(x = "Age", times = 2)
 duplicated.inputs2 <- c(rep.int(x = "Age", times = 2), "Income")
 duplicated.interactions <- list(c("Age", "Income"), c("Age", "Income"))
-
 input.names <- c("Age", "Gender", "Income", "Region", "Persona", "Typo")
 input.patterns <- c("User", "BP_", outcome.name.awareness, outcome.name.satisfaction)
 interactions <- list(c("Age", "Gender"), c("Age", "Income"), c("Age", "Gender", "Income"), c("Gender", "Inco"), c("Age", "Reg ion"))
-
 reduce <- FALSE
 max.input.categories = 20
 max.outcome.categories.to.search = 4
@@ -161,7 +158,6 @@ deduped.formula <- create.formula(
   outcome.name = outcome.name.awareness, 
   input.names = duplicated.inputs, 
   dat = snack.dat)
-
 deduped.formula$formula
 deduped.formula$inclusion.table
 deduped.formula$interactions.table
@@ -175,7 +171,6 @@ deduped.formula2 <- create.formula(
   input.names = duplicated.inputs2,
   dat = snack.dat,
   interactions = duplicated.interactions)
-
 deduped.formula2$formula
 deduped.formula2$inclusion.table
 deduped.formula2$interactions.table
@@ -185,7 +180,6 @@ deduped.formula2$interactions.table
 
 ```{r reduce.existing.formula examples 1}
 reduce.form.1 <- reduce.existing.formula(the.initial.formula = form.3$formula, dat = snack.dat, format.as = "character")
-
 reduce.form.1$formula
 reduce.form.1$inclusion.table
 reduce.form.1$interactions.table
@@ -193,9 +187,7 @@ reduce.form.1$interactions.table
 
 ```{r reduce.existing.formula examples 2}
 reduce.form.2 <- reduce.existing.formula(the.initial.formula = form.4$formula, dat = snack.dat, format.as = "formula")
-
 reduce.form.2$formula
 reduce.form.2$inclusion.table
 reduce.form.2$interactions.table
 ```
-

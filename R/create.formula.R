@@ -98,7 +98,7 @@ create.formula <- function(outcome.name, input.names = NULL, input.patterns = NU
       num.from.input.names <- 0
     }
     if(!is.null(input.names)){
-      num.from.input.names <- length(input.names[!is.na(input.names)])
+      num.from.input.names <- length(input.names[!is.null(input.names)])
     }
 
     num.from.input.patterns <- length(variable.names.from.patterns[!(variable.names.from.patterns %in% input.names)])

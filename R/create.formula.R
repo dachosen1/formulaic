@@ -53,29 +53,23 @@ create.formula <- function(outcome.name, input.names = NULL, input.patterns = NU
   if(!is.null(input.names)){
     if(is.na(input.names[1])){
       input.names <- NULL
-    } else {
-      input.names <- unique(input.names)
     }
+    input.names <- unique(input.names)
   }
-
   if(!is.null(interactions)){
     if(is.na(interactions[1])){
       interactions <- NULL
-    } else {
-      interactions <- unique(interactions)
     }
+    interactions <- unique(interactions)
   }
-
   if(!is.null(input.patterns)){
-    if(is.na(input.patterns[1])){
+    if(is.na(input.patterns)){
       input.patterns <- NULL
-    } else {
-      input.patterns <- unique(input.patterns)
     }
+    input.patterns <- unique(input.patterns)
   }
 
-
-  if(is.data.frame(x = dat)){
+  if(is.data.frame(dat)){
 
     data.table::setDT(dat)
 
@@ -116,23 +110,29 @@ create.formula <- function(outcome.name, input.names = NULL, input.patterns = NU
       num.from.input.names <- 0
     }
     if(!is.null(input.names)){
-      num.from.input.names <- length(input.names[!is.null(input.names)])
+      if(is.na(input.names[1])){
+        num.from.input.names <- 0
+      }
+      num.from.input.names <- length(input.names[!is.na(input.names)])
     }
-
     if(is.null(input.patterns)){
       num.from.input.patterns <- 0
     }
     if(!is.null(input.patterns)){
+      if(is.na(input.patterns[1])){
+        num.from.input.patterns <- 0
+      }
       num.from.input.patterns <- length(variable.names.from.patterns[!(variable.names.from.patterns %in% input.names)])
     }
-
     if(is.null(interactions)){
       num.from.interactions <- 0
     }
     if(!is.null(interactions)){
+      if(is.na(interactions[1])){
+        num.from.interactions <- 0
+      }
       num.from.interactions <- length(unique(unlisted.interactions[!(unlisted.interactions %in% c(input.names, variable.names.from.patterns))]))
     }
-
 
     inclusion.table[variable %in% names(dat), class := as.character(dat[, as.character(lapply(X = .SD, FUN = "class")), .SDcols = variable]), by = variable]
     inclusion.table[, order := 1:.N]

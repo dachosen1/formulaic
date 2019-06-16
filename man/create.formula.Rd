@@ -8,7 +8,8 @@ create.formula(outcome.name, input.names = NULL, input.patterns = NULL,
   dat = NULL, interactions = NULL, force.main.effects = TRUE,
   reduce = FALSE, max.input.categories = 20,
   max.outcome.categories.to.search = 4, order.as = "as.specified",
-  include.backtick = "as.needed", format.as = "formula")
+  include.backtick = "as.needed", format.as = "formula",
+  variable.to.exclude = NULL)
 }
 \arguments{
 \item{outcome.name}{The name of the variables serving as the outcome.}
@@ -34,6 +35,8 @@ create.formula(outcome.name, input.names = NULL, input.patterns = NULL,
 \item{include.backtick}{Add backticks if needed. As default it is set as 'as.needed', which add backticks when only it is needed. The other option is 'all'. This is only compatible when format.as != 'formula.}
 
 \item{format.as}{The data type of the output.  If not set as "formula", then a character vector will be returned.}
+
+\item{variable.to.exclude}{This will automatically drop the variable from the regression. It also supersede any variables metioned in input.names.}
 }
 \description{
 Automatically creates a formula from the following parameters:

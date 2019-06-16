@@ -70,7 +70,7 @@ outcome.name, input.names, input.patterns, dat, interactions, force.main.effects
 
 
 ```{r create.formula examples 1}
-form.1 <- create.formula(outcome.name = outcome.name.awareness, input.names = NULL, input.patterns = NULL, dat = NULL)
+form.1 <- create.formula(outcome.name = outcome.name.awareness, input.names = NA, input.patterns = NA, dat = NA)
 
 form.1$formula
 form.1$inclusion.table
@@ -78,7 +78,7 @@ form.1$interactions.table
 ```
 
 ```{r create.formula examples 2}
-form.2 <- create.formula(outcome.name = outcome.name.awareness, input.names = ".", input.patterns = NULL, dat = snack.dat)
+form.2 <- create.formula(outcome.name = outcome.name.awareness, input.names = ".", input.patterns = NA, dat = snack.dat)
 
 form.2$formula
 form.2$inclusion.table
@@ -86,7 +86,7 @@ form.2$interactions.table
 ```
 
 ```{r create.formula examples 3}
-form.3 <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, input.patterns = NULL, dat = NULL, reduce = reduce, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = "character")
+form.3 <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, input.patterns = NA, dat = NA, reduce = reduce, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = "character")
 
 form.3$formula
 form.3$inclusion.table
@@ -119,7 +119,7 @@ form.6$interactions.table
 ```
 
 ```{r create.formula.example 7}
-form.7 <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, input.patterns = input.patterns, dat = snack.dat, interactions = interactions, force.main.effects = TRUE, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as)
+form.7 <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, input.patterns = input.patterns, dat = snack.dat, interactions = interactions, force.main.effects = force.main.effects, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as)
 
 form.7$formula
 form.7$inclusion.table
@@ -127,7 +127,7 @@ form.7$interactions.table
 ```
 
 ```{r create.formula.example 8}
-form.8 <- create.formula(outcome.name = outcome.name.awareness, input.names = NULL, input.patterns = NULL, dat = snack.dat, interactions = interactions, force.main.effects = TRUE, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as)
+form.8 <- create.formula(outcome.name = outcome.name.awareness, input.names = NA, input.patterns = NA, dat = snack.dat, interactions = interactions, force.main.effects = force.main.effects, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as)
 
 form.8$formula
 form.8$inclusion.table
@@ -135,7 +135,7 @@ form.8$interactions.table
 ```
 
 ```{r create.formula.example 9}
-form.9 <- create.formula(outcome.name = outcome.name.awareness, input.names = NULL, input.patterns = NULL, dat = snack.dat, interactions = interactions, force.main.effects = FALSE, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as)
+form.9 <- create.formula(outcome.name = outcome.name.awareness, input.names = NA, input.patterns = NA, dat = snack.dat, interactions = interactions, force.main.effects = FALSE, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as)
 
 form.9$formula
 form.9$inclusion.table
@@ -143,7 +143,7 @@ form.9$interactions.table
 ```
 
 ```{r create.formula.example 10}
-form.10 <- create.formula(outcome.name = outcome.name.awareness, input.names = NULL, input.patterns = NULL, dat = NULL, interactions = interactions, force.main.effects = FALSE, reduce = FALSE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as)
+form.10 <- create.formula(outcome.name = outcome.name.awareness, input.names = NA, input.patterns = NA, dat = NULL, interactions = interactions, force.main.effects = FALSE, reduce = FALSE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as)
 
 form.10$formula
 form.10$inclusion.table

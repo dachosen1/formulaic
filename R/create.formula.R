@@ -50,6 +50,8 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 #' @export
 create.formula <- function(outcome.name, input.names = NULL, input.patterns = NULL, dat = NULL, interactions = NULL, force.main.effects = TRUE, reduce = FALSE, max.input.categories = 20, max.outcome.categories.to.search = 4, order.as = "as.specified", include.backtick = "as.needed", format.as = "formula"){
 
+  specified.from <- exclude.not.in.names.dat <- exclude.matches.outcome.name <- exclude.lack.contrast <- min.categories <- exclude.numerous.categories <- include.variable <- variable <- . <-  NULL
+
   if(!is.null(input.names)){
     if(is.na(input.names[1])){
       input.names <- NULL
@@ -103,6 +105,8 @@ create.formula <- function(outcome.name, input.names = NULL, input.patterns = NU
     if(length(unique.names)==0){
       unique.names <- NA
     }
+
+    #Compute inclusion.table
 
     inclusion.table <- data.table(variable = unique.names)[!is.na(variable)]
 

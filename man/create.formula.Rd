@@ -9,7 +9,7 @@ create.formula(outcome.name, input.names = NULL, input.patterns = NULL,
   reduce = FALSE, max.input.categories = 20,
   max.outcome.categories.to.search = 4, order.as = "as.specified",
   include.backtick = "as.needed", format.as = "formula",
-  variable.to.exclude = NULL)
+  variables.to.exclude = NULL, include.intercept = TRUE)
 }
 \arguments{
 \item{outcome.name}{The name of the variables serving as the outcome.}
@@ -32,14 +32,16 @@ create.formula(outcome.name, input.names = NULL, input.patterns = NULL,
 
 \item{order.as}{User can specify the order the input variables in the formula in a variety of ways for patterns: increasing for increasing alphabet order, decreasing for decreasing alphabet order, column.order for as they appear in data, and as.specified for maintaining the user's specified order.}
 
-\item{include.backtick}{Add backticks if needed. As default it is set as 'as.needed', which add backticks when only it is needed. The other option is 'all'. This is only compatible when format.as != 'formula.}
+\item{include.backtick}{Add backticks if needed. As default it is set as 'as.needed', which add backticks when only it is needed. The other option is 'all'. The use of include.backtick = "all" is limited to cases in which the output is generated as a character variable. When the output is generated as a formula object, then R automatically removes all unnecessary backticks. That is, it is only compatible when format.as != formula.}
 
 \item{format.as}{The data type of the output.  If not set as "formula", then a character vector will be returned.}
 
-\item{variable.to.exclude}{This will automatically drop the variable from the regression. It also supersede any variables metioned in input.names.}
+\item{variables.to.exclude}{This will automatically drop the variable from the regression. It also supersede any variables metioned in input.names.}
+
+\item{include.intercept}{As a default it is set as 'TRUE'; however, if user changes it to 'FALSE', then intercept will be removed from the result, the formula.}
 }
 \description{
-Automatically creates a formula from the following parameters:
+Create formula is a tool to automatically create a formula from a provided variable and output names. Reduces the time required to manually input variables for modeling. Output can be used in linear regression, random forest, neural network etc. Create formula becomes useful when modeling data with multiple features. Reduces the time required for modeling and implementation :
 }
 \details{
 Return as the data type of the output.  If not set as "formula", then a character vector will be returned.

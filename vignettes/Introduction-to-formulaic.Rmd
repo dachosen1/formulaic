@@ -31,7 +31,7 @@ duplicated.interactions <- list(c("Age", "Income"), c("Age", "Income"))
 input.names <- c("Age", "Gender", "Income", "Region", "Persona", "Typo")
 input.patterns <- c("User", "BP_", outcome.name.awareness, outcome.name.satisfaction)
 interactions <- list(c("Age", "Gender"), c("Age", "Income"), c("Age", "Gender", "Income"), c("Gender", "Inco"), c("Age", "Reg ion"))
-variable.to.exclude = c("Income", "Region")
+variables.to.exclude = c("Age", "Gender")
 reduce <- FALSE
 max.input.categories = 20
 max.outcome.categories.to.search = 4
@@ -152,14 +152,22 @@ form.10$inclusion.table
 form.10$interactions.table
 ```
 
+
 ```{r create.formula.expample 11}
-form.11 <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, input.patterns = NA, dat = snack.dat, interactions = interactions, force.main.effects = FALSE, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as, variable.to.exclude = variable.to.exclude)
+form.11 <- create.formula(outcome.name = outcome.name.awareness, input.names = c("Age", "Gender", "Income"), dat = snack.dat, variables.to.exclude = c("Age", "Gender"))
 
 form.11$formula
 form.11$inclusion.table
 form.11$interactions.table
 ```
 
+```{r create.formula.expample 12}
+form.12 <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, dat = snack.dat, variables.to.exclude = c("Persona", "Region"), input.patterns = input.patterns, interactions = interactions, reduce = TRUE, force.main.effects = TRUE, include.backtick = "as.needed", format.as = 'formula')
+
+form.12$formula
+form.12$inclusion.table
+form.12$interactions.table
+```
 
 Duplicates in input.names Example: if there is duplicates in input.name, for instance `r duplicated.inputs`, create.formula will deduplicate them and take only one varialbe.
 
@@ -168,12 +176,13 @@ deduped.formula <- create.formula(
   outcome.name = outcome.name.awareness, 
   input.names = duplicated.inputs, 
   dat = snack.dat)
+
 deduped.formula$formula
 deduped.formula$inclusion.table
 deduped.formula$interactions.table
 ```
 
-Duplicates in interactions: if there is duplicates in interactions, for instance duplicated.interactions, create.formula will deduplicate them and take only one interaction. 
+Duplicates in interactions: if there is duplicates in interactions, for instance list(c("Age", "Income"), c("Age", "Income")), create.formula will deduplicate them and take only one interaction. 
 
 ```{r create.formula.example 13}
 deduped.formula2 <- create.formula(

@@ -9,7 +9,7 @@ create.formula(outcome.name, input.names = NULL, input.patterns = NULL,
   reduce = FALSE, max.input.categories = 20,
   max.outcome.categories.to.search = 4, order.as = "as.specified",
   include.backtick = "as.needed", format.as = "formula",
-  variable.to.exclude = NULL)
+  variables.to.exclude = NULL)
 }
 \arguments{
 \item{outcome.name}{The name of the variables serving as the outcome.}
@@ -36,7 +36,7 @@ create.formula(outcome.name, input.names = NULL, input.patterns = NULL,
 
 \item{format.as}{The data type of the output.  If not set as "formula", then a character vector will be returned.}
 
-\item{variable.to.exclude}{This will automatically drop the variable from the regression. It also supersede any variables metioned in input.names.}
+\item{variables.to.exclude}{This will automatically drop the variable from the regression. It also supersede any variables metioned in input.names.}
 }
 \description{
 Automatically creates a formula from the following parameters:

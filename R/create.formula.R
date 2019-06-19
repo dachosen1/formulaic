@@ -33,7 +33,7 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 #' @param order.as User can specify the order the input variables in the formula in a variety of ways for patterns: increasing for increasing alphabet order, decreasing for decreasing alphabet order, column.order for as they appear in data, and as.specified for maintaining the user's specified order.
 #' @param include.backtick Add backticks if needed. As default it is set as 'as.needed', which add backticks when only it is needed. The other option is 'all'. This is only compatible when format.as != 'formula.
 #' @param format.as The data type of the output.  If not set as "formula", then a character vector will be returned.
-#' @param variable.to.exclude This will automatically drop the variable from the regression. It also supersede any variables metioned in input.names.
+#' @param variables.to.exclude This will automatically drop the variable from the regression. It also supersede any variables metioned in input.names.
 #'
 #' @details  Return as the data type of the output.  If not set as "formula", then a character vector will be returned.
 #' The input.names and names of variables matching the input.patterns will be concatenated to form the full list of input variables.
@@ -49,9 +49,9 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 #'  create.formula(outcome.name = "y", input.names = "x", input.patterns = c("pi", "xel"), dat = dd)
 #' @import stats
 #' @export
-create.formula <- function(outcome.name, input.names = NULL, input.patterns = NULL, dat = NULL, interactions = NULL, force.main.effects = TRUE, reduce = FALSE, max.input.categories = 20, max.outcome.categories.to.search = 4, order.as = "as.specified", include.backtick = "as.needed", format.as = "formula",variable.to.exclude = NULL){
+create.formula <- function(outcome.name, input.names = NULL, input.patterns = NULL, dat = NULL, interactions = NULL, force.main.effects = TRUE, reduce = FALSE, max.input.categories = 20, max.outcome.categories.to.search = 4, order.as = "as.specified", include.backtick = "as.needed", format.as = "formula",variables.to.exclude = NULL){
 
-  specified.from <- exclude.not.in.names.dat <- exclude.matches.outcome.name <- exclude.lack.contrast <- min.categories <- exclude.numerous.categories <- include.variable <- variable <- . <- automatic.exclusions <-  NULL
+  specified.from <- exclude.not.in.names.dat <- exclude.matches.outcome.name <- exclude.lack.contrast <- min.categories <- exclude.numerous.categories <- include.variable <- variable <- . <- exclude.user.specified <-  NULL
 
 
 
@@ -68,17 +68,17 @@ create.formula <- function(outcome.name, input.names = NULL, input.patterns = NU
     interactions <- unique(interactions)
   }
   if(!is.null(input.patterns)){
-    if(is.na(input.patterns)){
+    if(is.na(input.patterns[1])){
       input.patterns <- NULL
     }
     input.patterns <- unique(input.patterns)
   }
 
-  if(!is.null(variable.to.exclude)){
-    if(is.na(variable.to.exclude)){
-      variable.to.exclude <- NULL
+  if(!is.null(variables.to.exclude)){
+    if(is.na(variables.to.exclude[1])){
+      variables.to.exclude <- NULL
     }
-    variable.to.exclude <- unique(variable.to.exclude)
+    variables.to.exclude <- unique(variables.to.exclude)
   }
   if(is.data.frame(dat)){
 
@@ -93,13 +93,12 @@ create.formula <- function(outcome.name, input.names = NULL, input.patterns = NU
 
 
     variable.names.from.exclude <- c()
-    if(!is.null(variable.to.exclude)){
-      variable.names.from.exclude <- unique(variable.to.exclude)
+    if(!is.null(variables.to.exclude)){
+      variable.names.from.exclude <- unique(variables.to.exclude)
       if(!is.null(input.names)){
         if(input.names[1] == "."){
-          input.names <- names(dat)[!(names(dat) %in% variable.names.from.exclude)]
+          input.names <- names(dat)
         }
-        input.names <- input.names[!(input.names %in% variable.names.from.exclude)]
       }
     }
 
@@ -109,13 +108,11 @@ create.formula <- function(outcome.name, input.names = NULL, input.patterns = NU
     if(!is.null(input.patterns)){
       pattern <- paste(input.patterns, collapse = "|")
       variable.names.from.patterns <- names(dat)[grep(pattern = pattern, x = names(dat))]
-      #variable.names.from.patterns <- variable.names.from.patterns[!(variable.names.from.patterns %in% variable.names.from.exclude)]
     }
 
     unlisted.interactions <- NULL
     if(!is.null(interactions)) {
       unlisted.interactions <- unlist(interactions)
-      unlisted.interactions <- unlisted.interactions[!(unlisted.interactions %in% variable.names.from.exclude)]
     }
 
     unique.names <- unique(c(input.names, variable.names.from.patterns, unlisted.interactions))
@@ -128,14 +125,14 @@ create.formula <- function(outcome.name, input.names = NULL, input.patterns = NU
 
     inclusion.table <- data.table(variable = unique.names)[!is.na(variable)]
 
-    if(is.null(variable.to.exclude)){
-      num.from.variable.to.exclude <- 0
+    if(is.null(variables.to.exclude)){
+      num.from.variables.to.exclude <- 0
     }
-    if(!is.null(variable.to.exclude)){
-      if(is.na(variable.to.exclude[1])){
-        num.from.variable.to.exclude <- 0
+    if(!is.null(variables.to.exclude)){
+      if(is.na(variables.to.exclude[1])){
+        num.from.variables.to.exclude <- 0
       }
-      num.from.variable.to.exclude <- length(variable.to.exclude[!is.na(variable.to.exclude)])
+      num.from.variables.to.exclude <- length(variables.to.exclude[!is.na(variables.to.exclude)])
     }
     if(is.null(input.names)){
       num.from.input.names <- 0
@@ -153,7 +150,7 @@ create.formula <- function(outcome.name, input.names = NULL, input.patterns = NU
       if(is.na(input.patterns[1])){
         num.from.input.patterns <- 0
       }
-      num.from.input.patterns <- length(variable.names.from.patterns[!(variable.names.from.patterns %in% c(input.names, variable.to.exclude))])
+      num.from.input.patterns <- length(variable.names.from.patterns[!(variable.names.from.patterns %in% c(input.names, variables.to.exclude))])
     }
     if(is.null(interactions)){
       num.from.interactions <- 0
@@ -162,14 +159,14 @@ create.formula <- function(outcome.name, input.names = NULL, input.patterns = NU
       if(is.na(interactions[1])){
         num.from.interactions <- 0
       }
-      num.from.interactions <- length(unique(unlisted.interactions[!(unlisted.interactions %in% c(input.names, variable.names.from.patterns, variable.to.exclude))]))
+      num.from.interactions <- length(unique(unlisted.interactions[!(unlisted.interactions %in% c(input.names, variable.names.from.patterns, variables.to.exclude))]))
     }
 
     inclusion.table[variable %in% names(dat), class := as.character(dat[, as.character(lapply(X = .SD, FUN = "class")), .SDcols = variable]), by = variable]
     inclusion.table[, order := 1:.N]
     inclusion.table[, specified.from := c(rep.int(x = "input.names", times = num.from.input.names), rep.int(x = "input.patterns", times = num.from.input.patterns), rep.int(x = "interactions", times = num.from.interactions))]
 
-    inclusion.table[, automatic.exclusions := variable %in% variable.names.from.exclude]
+    inclusion.table[, exclude.user.specified := variable %in% variable.names.from.exclude]
     inclusion.table[, exclude.not.in.names.dat := !(variable %in% names(dat))]
     inclusion.table[, exclude.matches.outcome.name := (variable == outcome.name)]
 
@@ -184,6 +181,7 @@ create.formula <- function(outcome.name, input.names = NULL, input.patterns = NU
       if(num.outcome.categories > max.outcome.categories.to.search){
         num.unique.tab <- dat[, lapply(X = .SD, FUN = function(x){return(length(unique(x[!is.na(x)])))}), .SDcols = the.inputs]
       }
+
       min.categories.tab <- num.unique.tab[, .(variable = the.inputs, min.categories = as.numeric(lapply(X = .SD, FUN = "min"))), .SDcols = the.inputs]
 
       min.categories.tab[, exclude.lack.contrast := min.categories < 2]

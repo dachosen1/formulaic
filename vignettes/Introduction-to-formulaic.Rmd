@@ -144,6 +144,7 @@ form.9$interactions.table
 ```
 
 ```{r create.formula.example 10}
+
 form.10 <- create.formula(outcome.name = outcome.name.awareness, input.names = NA, input.patterns = NA, dat = NA, interactions = interactions, force.main.effects = FALSE, reduce = FALSE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as)
 
 form.10$formula

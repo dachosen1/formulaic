@@ -73,13 +73,13 @@ create.formula <- function(outcome.name, input.names = NULL, input.patterns = NU
     }
     input.patterns <- unique(input.patterns)
   }
+
   if(!is.null(variable.to.exclude)){
     if(is.na(variable.to.exclude)){
       variable.to.exclude <- NULL
     }
     variable.to.exclude <- unique(variable.to.exclude)
   }
-
   if(is.data.frame(dat)){
 
     data.table::setDT(dat)

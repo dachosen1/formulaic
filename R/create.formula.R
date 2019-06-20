@@ -21,7 +21,7 @@ add.backtick <- function(x, include.backtick = "as.needed") {
 
 #' Create Formula
 #'
-#' Automatically creates a formula from the following parameters:
+#' Simple means of producing a specified formula
 #'
 #' @param outcome.name The name of the variables serving as the outcome.
 #' @param input.names The names of the variables with the full names delineated.
@@ -65,6 +65,7 @@ create.formula <-
            include.backtick = "as.needed",
            format.as = "formula",
            variables.to.exclude = NULL) {
+
     specified.from <-
       exclude.not.in.names.dat <-
       exclude.matches.outcome.name <-
@@ -73,8 +74,6 @@ create.formula <-
       exclude.numerous.categories <-
       include.variable <-
       variable <- . <- exclude.user.specified <-  NULL
-
-
 
     if (!is.null(input.names)) {
       if (is.na(input.names[1])) {
@@ -202,6 +201,7 @@ create.formula <-
       }
 
       inclusion.table[variable %in% names(dat), class := as.character(dat[, as.character(lapply(X = .SD, FUN = "class")), .SDcols = variable]), by = variable]
+      inclusion.table[, order := 1:.N]
       inclusion.table[, specified.from := c(
         rep.int(x = "input.names", times = num.from.input.names),
         rep.int(x = "input.patterns", times = num.from.input.patterns),
@@ -385,6 +385,8 @@ create.formula <-
     return(res)
   }
 #' reduce existing formula
+#'
+#' Reduce.formula is separately used to remove variables for issues like a lack of contrast.
 #'
 #' @param  the.initial.formula  object of class "lm" or for multiple responses of class c("mlm", "lm").
 #' @param  dat Data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model.

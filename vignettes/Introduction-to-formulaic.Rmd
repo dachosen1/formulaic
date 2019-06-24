@@ -67,9 +67,9 @@ As one can see, User ID, which requires backticks to be incorporated into a form
 
 
 ```{r add.backtick}
-add.backtick(x = names(snack.dat), include.backtick = 'all')
+#add.backtick(x = names(snack.dat), include.backtick = 'all')
 
-add.backtick(x = names(snack.dat), include.backtick = 'as.needed')
+#add.backtick(x = names(snack.dat), include.backtick = 'as.needed')
 ```
 
 ## create.formula examples

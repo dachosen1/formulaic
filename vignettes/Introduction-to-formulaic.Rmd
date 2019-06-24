@@ -65,6 +65,7 @@ Add backtick is subsidiary function to create.fomula that add backticks to the v
 
 As one can see, User ID, which requires backticks to be incorporated into a formula, is the only variable that is affected by the function when the included.backtick is set as 'as.needed', while every variable has backticks when it is set as 'all'.  
 
+TODO: Fix add back tick 
 
 ```{r add.backtick}
 #add.backtick(x = names(snack.dat), include.backtick = 'all')

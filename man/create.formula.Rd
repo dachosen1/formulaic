@@ -4,8 +4,8 @@
 \alias{create.formula}
 \title{Create Formula}
 \usage{
-create.formula(outcome.name, input.names = NULL, input.patterns = NULL,
-  dat = NULL, interactions = NULL, force.main.effects = TRUE,
+create.formula(outcome.name, input.names = NA, input.patterns = NA,
+  dat = NULL, interactions = NA, force.main.effects = TRUE,
   reduce = FALSE, max.input.categories = 20,
   max.outcome.categories.to.search = 4, order.as = "as.specified",
   include.backtick = "as.needed", format.as = "formula",
@@ -39,7 +39,7 @@ create.formula(outcome.name, input.names = NULL, input.patterns = NULL,
 \item{variables.to.exclude}{This will automatically drop the variable from the regression. It also supersede any variables metioned in input.names.}
 }
 \description{
-Automatically creates a formula from the following parameters:
+Simple means of producing a specified formula
 }
 \details{
 Return as the data type of the output.  If not set as "formula", then a character vector will be returned.

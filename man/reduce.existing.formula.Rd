@@ -27,5 +27,5 @@ reduce.existing.formula(the.initial.formula, dat,
 \item{format.as}{The data type of the output.  If not set as "formula", then a character vector will be returned.}
 }
 \description{
-reduce existing formula
+Reduce.formula is separately used to remove variables for issues like a lack of contrast.
 }

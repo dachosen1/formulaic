@@ -53,10 +53,10 @@ add.backtick <- function(x, include.backtick = "as.needed") {
 #' @export
 create.formula <-
   function(outcome.name,
-           input.names = NULL,
-           input.patterns = NULL,
+           input.names = NA,
+           input.patterns = NA,
            dat = NULL,
-           interactions = NULL,
+           interactions = NA,
            force.main.effects = TRUE,
            reduce = FALSE,
            max.input.categories = 20,
@@ -98,6 +98,7 @@ create.formula <-
       if (is.na(variables.to.exclude[1])) {
         variables.to.exclude <- NULL
       }
+
       variables.to.exclude <- unique(variables.to.exclude)
     }
     if (is.data.frame(dat)) {
@@ -344,7 +345,6 @@ create.formula <-
           "dat was not a data.frame; no interactions.table object was computed."
       }
     }
-
     if (length(c(all.input.names[!is.null(all.input.names)], interaction.terms[!is.null(interaction.terms)])) == 0) {
       all.input.names <- "1"
     }

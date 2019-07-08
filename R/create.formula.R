@@ -20,7 +20,7 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 #' Create Formula
 #'
 #' Create formula is a tool to automatically create a formula from a provided variable and output names. Reduces the time required to manually input variables for modeling. Output can be used in linear regression, random forest, neural network etc. Create formula becomes useful when modeling data with multiple features. Reduces the time required for modeling and implementation :
-#'
+
 #' @param outcome.name The name of the variables serving as the outcome.
 #' @param input.names The names of the variables with the full names delineated.
 #' @param input.patterns Includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector.  However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.

@@ -50,10 +50,30 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 #'  create.formula(outcome.name = "y", input.names = "x", input.patterns = c("pi", "xel"), dat = dd)
 #' @import stats
 #' @export
-create.formula <-   function(outcome.name,input.names = NULL,input.patterns = NULL,dat = NULL,interactions = NULL,force.main.effects = TRUE, reduce = FALSE,max.input.categories = 20,max.outcome.categories.to.search = 4,order.as = "as.specified",include.backtick = "as.needed",format.as = "formula",variables.to.exclude = NULL, include.intercept = TRUE) {
+create.formula <-
+  function(outcome.name,
+           input.names = NULL,
+           input.patterns = NULL,
+           dat = NULL,
+           interactions = NULL,
+           force.main.effects = TRUE,
+           reduce = FALSE,
+           max.input.categories = 20,
+           max.outcome.categories.to.search = 4,
+           order.as = "as.specified",
+           include.backtick = "as.needed",
+           format.as = "formula",
+           variables.to.exclude = NULL,
+           include.intercept = TRUE) {
 
-  #setting the variable shown in NOTE as NULL
-    specified.from <- exclude.not.in.names.dat <-exclude.matches.outcome.name <-exclude.lack.contrast <-min.categories <-exclude.numerous.categories <-include.variable <-variable <- . <- exclude.user.specified <-  NULL
+    specified.from <-
+      exclude.not.in.names.dat <-
+      exclude.matches.outcome.name <-
+      exclude.lack.contrast <-
+      min.categories <-
+      exclude.numerous.categories <-
+      include.variable <-
+      variable <- . <- exclude.user.specified <-  NULL
 
     if (!is.null(input.names)) {
       if (is.na(input.names[1])) {
@@ -84,7 +104,7 @@ create.formula <-   function(outcome.name,input.names = NULL,input.patterns = NU
       data.table::setDT(dat)
 
       if (!is.null(input.names)) {
-        if (input.names[1] == ".") {
+        if ("." %in% input.names) {
           input.names <- names(dat)
         }
       }
@@ -163,7 +183,7 @@ create.formula <-   function(outcome.name,input.names = NULL,input.patterns = NU
           num.from.input.patterns <- 0
         }
         num.from.input.patterns <-
-          length(variable.names.from.patterns[!(variable.names.from.patterns %in% c(input.names, variables.to.exclude))])
+          length(variable.names.from.patterns[!(variable.names.from.patterns %in% c(input.names))])
       }
       if (is.null(interactions)) {
         num.from.interactions <- 0
@@ -222,12 +242,7 @@ create.formula <-   function(outcome.name,input.names = NULL,input.patterns = NU
 
         min.categories.tab <-
           num.unique.tab[, .(variable = the.inputs,
-                             min.categories =
-                               as.numeric(lapply(
-                                 X = .SD,
-                                 FUN = "min"))
-                             ),
-                         .SDcols = the.inputs]
+                             min.categories = as.numeric(lapply(X = .SD, FUN = "min"))), .SDcols = the.inputs]
 
         min.categories.tab[, exclude.lack.contrast := min.categories < 2]
 
@@ -240,13 +255,12 @@ create.formula <-   function(outcome.name,input.names = NULL,input.patterns = NU
             all.y = TRUE
           )
 
-        inclusion.table[, exclude.numerous.categories := min.categories > max.input.categories &class %in% c("character", "factor")]
+        inclusion.table[, exclude.numerous.categories := min.categories > max.input.categories &
+                          class %in% c("character", "factor")]
       }
-
       setorderv(x = inclusion.table,
                 cols = "order",
                 order = 1L)
-
       exclusion.columns <-
         grep(pattern = "exclude", x = names(inclusion.table))
 
@@ -376,6 +390,7 @@ create.formula <-   function(outcome.name,input.names = NULL,input.patterns = NU
 
     return(res)
   }
+
 #' reduce existing formula
 #'
 #' @param  the.initial.formula  object of class "lm" or for multiple responses of class c("mlm", "lm").
@@ -397,6 +412,7 @@ reduce.existing.formula <-
            order.as = "as.specified",
            include.backtick = "as.needed",
            format.as = "formula") {
+
     if (class(the.initial.formula) == "formula") {
       the.sides <- as.character(the.initial.formula)[2:3]
     }
@@ -410,6 +426,7 @@ reduce.existing.formula <-
       strsplit(x = the.sides[2],
                split = "+",
                fixed = TRUE)[[1]]
+
     the.pieces.untrimmed.2 <-
       gsub(
         pattern = "`",

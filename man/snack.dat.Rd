@@ -29,6 +29,8 @@
  \item{Consumption}{Numeric displaying if the customer would consume this product 1: Yes, 0: No}
  \item{Satisfaction}{Numeric displaying if the customer was satisfied by this product 1: Yes, 0: No}
  \item{Advocacy}{Numeric displaying if the customer would advocate for this product 1: Yes, 0: No}
+ \item{Age Group}{Categorical value for the Age. The group is set as followed: "[ 18, 35)", "[ 35, 50)", "[ 50, 65)", "[ 65,120]"}
+ \item{Income Group}{Categorical value for the Income. The group is se as followed : "[ 0, 50000)", "[50000, 75000)", "[ 75000,100000)", "[100000,150000)", "[150000,250000]"}
  }}
 \source{
 "Randomly generated data"

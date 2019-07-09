@@ -9,8 +9,7 @@ Package to automatically create a formula to be used in function
 
 
 ## Installation 
-
-
+devtools::install_github('dachosen1/formulaic')
 
 ## Usage
 

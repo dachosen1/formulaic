@@ -105,7 +105,7 @@ create.formula <-
 
       if (!is.null(input.names)) {
         if ("." %in% input.names) {
-          input.names <- names(dat)
+          input.names <- unique(c(input.names[input.names != "."], names(dat)))
         }
       }
 

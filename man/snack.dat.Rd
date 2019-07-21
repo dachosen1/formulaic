@@ -6,7 +6,7 @@
 \title{Simulated Marketing Data}
 \format{A data frame of 23000 rows and 23 columns
 \describe{
- \item{User ID}{Charater values assigning a unique customer value}
+ \item{User.ID}{Charater values assigning a unique customer value}
  \item{Age}{Numeric values displaying the age of customer in years}
  \item{Gender}{Character value describing gender of the customer}
  \item{Income}{Numeric values displaying the income of the customer}
@@ -29,8 +29,6 @@
  \item{Consumption}{Numeric displaying if the customer would consume this product 1: Yes, 0: No}
  \item{Satisfaction}{Numeric displaying if the customer was satisfied by this product 1: Yes, 0: No}
  \item{Advocacy}{Numeric displaying if the customer would advocate for this product 1: Yes, 0: No}
- \item{Age Group}{Categorical value for the Age. The group is set as followed: "[ 18, 35)", "[ 35, 50)", "[ 50, 65)", "[ 65,120]"}
- \item{Income Group}{Categorical value for the Income. The group is se as followed : "[ 0, 50000)", "[50000, 75000)", "[ 75000,100000)", "[100000,150000)", "[150000,250000]"}
  }}
 \source{
 "Randomly generated data"

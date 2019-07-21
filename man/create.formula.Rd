@@ -16,19 +16,19 @@ create.formula(outcome.name, input.names = NULL, input.patterns = NULL,
 
 \item{input.names}{The names of the variables with the full names delineated.}
 
-\item{input.patterns}{Includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector.  However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.}
+\item{input.patterns}{Includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector. However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.}
 
 \item{dat}{User can specify a data.frame object that will be used to remove any variables that are not listed in names(dat. As default it is set as NULL. In this case, the formula is created simply from the outcome.name and input.names.}
 
-\item{interactions}{This is meant to be a list of character vectors. Each entry of the list is meant to specify all of the terms that will form a single interaction.}
+\item{interactions}{Each entry of the list is meant to specify all of the terms that will form a single interaction.}
 
 \item{force.main.effects}{This is a logical value.  When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.}
 
-\item{reduce}{This is an option that user can take. As default it is set as FALSE. When the user set it as TRUE, it will go through the logic of checking for too few contrasts or too many contrasts.}
+\item{reduce}{As default it is set as FALSE. When the user set it as TRUE, it will go through the logic of checking for too few contrasts or too many contrasts.}
 
-\item{max.input.categories}{This limits the maximum number of variables that will be employeed in the formula. As default it is set at 20, but users can still change at his/her convinence.}
+\item{max.input.categories}{Limits the maximum number of variables that will be employeed in the formula. As default it is set at 20, but users can still change at his/her convinence.}
 
-\item{max.outcome.categories.to.search}{This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4, but users can still change at his/her convinence.}
+\item{max.outcome.categories.to.search}{Limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4.}
 
 \item{order.as}{User can specify the order the input variables in the formula in a variety of ways for patterns: increasing for increasing alphabet order, decreasing for decreasing alphabet order, column.order for as they appear in data, and as.specified for maintaining the user's specified order.}
 
@@ -38,7 +38,7 @@ create.formula(outcome.name, input.names = NULL, input.patterns = NULL,
 
 \item{variables.to.exclude}{This will automatically drop the variable from the regression. It also supersede any variables metioned in input.names.}
 
-\item{include.intercept}{As a default it is set as 'TRUE'; however, if user changes it to 'FALSE', then intercept will be removed from the result, the formula.}
+\item{include.intercept}{As a default it is set as TRUE; however, if user changes it to 'FALSE', then intercept will be removed from the result, the formula.}
 }
 \description{
 Create formula is a tool to automatically create a formula from a provided variable and output names. Reduces the time required to manually input variables for modeling. Output can be used in linear regression, random forest, neural network etc. Create formula becomes useful when modeling data with multiple features. Reduces the time required for modeling and implementation :

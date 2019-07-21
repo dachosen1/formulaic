@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
 library(formulaic)
 library(data.table)
 library(knitr)
@@ -27,23 +28,32 @@ outcome.name.awareness <- "Awareness"
 outcome.name.satisfaction <- "Satisfaction"
 duplicated.inputs <- rep.int(x = "Age", times = 2)
 duplicated.inputs2 <- c(rep.int(x = "Age", times = 2), "Income")
-duplicated.interactions <- list(c("Age", "Income"), c("Age", "Income"))
-input.names <- c("Age", "Gender", "Income", "Region", "Persona", "Typo")
-input.patterns <- c("User", "BP_", outcome.name.awareness, outcome.name.satisfaction)
-interactions <- list(c("Age", "Gender"), c("Age", "Income"), c("Age", "Gender", "Income"), c("Gender", "Inco"), c("Age", "Reg ion"))
+duplicated.interactions <-
+  list(c("Age", "Income"), c("Age", "Income"))
+input.names <-
+  c("Age", "Gender", "Income", "Region", "Persona","Typo")
+input.patterns <-
+  c("User",
+    "BP_",
+    outcome.name.awareness,
+    outcome.name.satisfaction)
+interactions <-
+  list(
+    c("Age", "Gender"),
+    c("Age", "Income"),
+    c("Age", "Gender", "Income"),
+    c("Gender", "Income"),
+    c("Age", "Regi on")
+  )
 variables.to.exclude = c("Age", "Gender")
-reduce <- FALSE
+
 max.input.categories = 20
 max.outcome.categories.to.search = 4
-order.as = "as.specified"
-include.backtick = "as.needed"
-format.as = "formula"
-force.main.effects <- TRUE
 ```
 
 ## Data : snack.dat
 
-The snack.dat was provided as an example on which to explore the basic functions of the formulaic package. Formatted as a data.table object, snack.dat contains 23000 observation and 23 columns. These data contain simulated information from a fictionalized marketing survey.  In this survey, a progression of questions are asked about the respondents' awareness, consideration, consumption, satisfaction with, and advocacy for different brands of snack foods.  Questions downstream of awareness, then consideration, and then consumption are only asked for those respondents who responded affirmatively to the previous question.  Otherwise the values are missing.  Brand Perception questions are rated on a scale from 0 to 10 and indicated with a name starting with the prefix BP.
+The snack.dat was provided as an example on which to explore the basic functions of the formulaic package. Formatted as a data.table object, snack.dat contains 23000 observation and 23 columns. The data is simulated from a fictionalized marketing survey. In this survey, a progression of questions is asked about the respondents' awareness, consideration, consumption, satisfaction with, and advocacy for different brands of snack foods.  Questions downstream of awareness, then consideration, and then consumption is only asked for those respondents who responded affirmatively to the previous question. Otherwise, the values are missing.  Brand Perception questions are rated on a scale from 0 to 10 and indicated with a name starting with the prefix BP.
 
 
 ```{r snack.dat}
@@ -55,10 +65,13 @@ head(snack.dat)
 ## add.backtick Examples
 
 
-Add backtick is subsidiary function to create.formula that add backticks to the names of the variables.  Formula objects include the names of different variables within a data.frame.  When these names contain a space, the name must be encapsulated in backticks to ensure proper formatting.  For instance, if there are three variables called y, x1, and User ID, then a formula formatted as y ~ x1 + User ID will generate errors due to the space in User ID.  Instead, this formula can be properly formatted as y ~ x1 + `User ID`.  Meanwhile, it is also acceptable to add backticks to the other names, such as `y` ~ `x1` + `User ID`, but this is not a necessary step.  As a default, the include.backtick is set to 'as.needed', which indicates that the function will only add backticks to the variables that require them. The user has the freedom to change the option to 'all'. Yet, it is only compatible when format.as != "formula", in which case a character object is returned.  In particular, a formula object will automatically remove unnecessary backticks.
+Add backtick is a subsidiary function to create.formula that add backticks to the names of the variables.  Formula objects include the names of different variables within a data.frame. When these names contain a space, the name must be encapsulated in backticks to ensure proper formatting. For instance, if there are three variables called y, x1, and User ID, then a formula formatted as y ~ x1 + User ID will generate errors due to the space in User ID. Instead, this formula can be properly formatted as y ~ x1 + `User ID.`
+
+Meanwhile, it is also acceptable to add backticks to the other names, such as `y` ~ `x1` + `User ID`, but this is not a necessary step.  As a default, the include.backtick is set to 'as.needed', which indicates that the function will only add backticks to the variables that require them. The user has the freedom to change the option to 'all'. Yet, it is only compatible when format.as != "formula", in which case a character object is returned.  In particular, a formula object will automatically remove unnecessary backticks.
 
 
-In the snack.dat data, User ID is the only variable that is affected by the function when the included.backtick is set as 'as.needed', while every variable has backticks when it is set as 'all'. 
+In the snack.dat data, User ID is the only variable that is affected by the function when the included.backtick is set as 'as.needed', while every variable has backticks when it is set as 'all'. The example below demonstrate the difference between the two fields in the function add.backtick
+
 
 
 ```{r add.backtick}
@@ -71,129 +84,173 @@ formulaic:::add.backtick(x = names(snack.dat),include.backtick = 'as.needed')
 The create.formula function was designed to automatically generate formulas from user-specified inputs and outputs.  The range of inputs may include directly specified variables, patterns to search within the names of an associate data.frame, a list of interactions, and a vector of variables to directly exclude from consideration.  The method also provides a range of quality checks that can detect issues with the construction of a formula and, at the user's discretion, automatically remove variables that would otherwise generate errors.  These quality checks include formatting variables with backticks, de-duplication, ensuring correspondence with the names of the variables in an associated data.frame, excluding categorical variables that would generate errors due to a lack of contrast or exceed a user-specified threshold for the maximum number of categories, and automatically removing interactions involving variables that should be excluded.  When directed by the user, these quality checks can be implemented to effectively reduce a formula to the subset of variables and interactions that would be appropriate for consideration in a statistical model.  The output of the function can be formatted as either a formula object or as a character.
 
 
+### Example 1: Modeling the intercept: 
+
+By simply providing a variable for the outcome.name produces an intercept model. 
+
 ```{r create.formula examples 1}
-form.1 <- create.formula(outcome.name = outcome.name.awareness, input.names = NULL, input.patterns = NULL, dat = NULL)
+form.1 <-
+  create.formula(
+    outcome.name = outcome.name.awareness
+  )
 
 form.1$formula
-form.1$inclusion.table
-form.1$interactions.table
+model1 <- lm(formula = form.1, data = snack.dat)
+
+summary(model1)
 ```
+
+### Example 2: Format as a character 
+
+Formatting as a character vector is incompatible with the formula syntax of R and will generate an error: 'Error: $ operator is invalid for atomic vectors' 
+
+Notice that the input.names contains a feature "Typo" that's not included in snack.dat, it's automatically removed in the output table to avoid any addiional errors. 
 
 ```{r create.formula examples 2}
-form.2 <- create.formula(outcome.name = outcome.name.awareness, input.names = ".", input.patterns = NULL, dat = snack.dat, include.intercept = FALSE)
-
+form.2 <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = input.names,
+    dat = snack.dat,
+    order.as = "column.order",
+    format.as = "character"
+  )
 form.2$formula
 form.2$inclusion.table
-form.2$interactions.table
 ```
+
+### Example 3: input patterns 
+
+The input.pattern searches the features in data and extracts those that matches the specified patterns and includes those patterns in the formula. 
+
 
 ```{r create.formula examples 3}
-form.3 <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, input.patterns = NULL, dat = NULL, reduce = reduce, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = "character")
-
+form.3 <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = input.names,
+    input.patterns = input.patterns,
+    dat = snack.dat,
+  )
 form.3$formula
 form.3$inclusion.table
-form.3$interactions.table
+model3 <- lm(formula = form.3, data = snack.dat)
+
 ```
 
+## Example 4: Reduce 
+
+Adding the variable "reduce" to the inputsin example 3 demostrates the use case for the reduce field, which removes features that lack contrast. 
+
+Only unique features are provided in the output formula. 
 
 ```{r create.formula examples 4}
-form.4 <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, input.patterns = input.patterns, dat = snack.dat, reduce = reduce, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as)
+form.4 <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = input.names,
+    input.patterns = input.patterns,
+    dat = snack.dat,
+    reduce = TRUE,
+  )
 
 form.4$formula
 form.4$inclusion.table
-form.4$interactions.table
+
+model4 <- lm(formula = form.4, data = snack.dat)
+summary(model4)
 ```
 
-```{r create.formula examples 5}
-form.5 <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, input.patterns = input.patterns, dat = snack.dat, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as)
+### Example 5: Testing interations
 
+
+The interaction features facilates the modeling of features combinations. Those specific interactions can be examined in the interaction.table output. The function verifies that all the features specified in the interaction table is included in the dat, and returns appropriate variables. Notice the misspelling of Region is not included in the final table.
+
+
+```{r create.formula examples 5}
+form.5 <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    dat = snack.dat,
+    interactions = interactions
+  )
 form.5$formula
 form.5$inclusion.table
 form.5$interactions.table
+
+
+model5 <- lm(formula = form.5, data = snack.dat)
+summary(model5)
 ```
+
+### Example 6:Variables to exclude
+
+Variables to excludes examine the varible in input names and excludes the indicated variables 
 
 ```{r create.formula examples 6}
-form.6 <- create.formula(outcome.name = outcome.name.satisfaction, input.names = input.names, input.patterns = input.patterns, dat = snack.dat, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as)
-
+form.6 <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = c("Age", "Gender", "Income"),
+    dat = snack.dat,
+    variables.to.exclude = c("Age", "Gender")
+  )
 form.6$formula
 form.6$inclusion.table
-form.6$interactions.table
 ```
 
-```{r create.formula.example 7}
-form.7 <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, input.patterns = input.patterns, dat = snack.dat, interactions = interactions, force.main.effects = TRUE, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as, variables.to.exclude = "Gender")
-
-form.7$formula
-form.7$inclusion.table
-form.7$interactions.table
-```
-
-```{r create.formula.example 8}
-form.8 <- create.formula(outcome.name = outcome.name.awareness, input.names = NULL, input.patterns = NULL, dat = snack.dat, interactions = interactions, force.main.effects = TRUE, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as)
-
-form.8$formula
-form.8$inclusion.table
-form.8$interactions.table
-```
-
-```{r create.formula.example 9}
-form.9 <- create.formula(outcome.name = outcome.name.awareness, input.names = NULL, input.patterns = NULL, dat = snack.dat, interactions = interactions, force.main.effects = FALSE, reduce = TRUE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as)
-
-form.9$formula
-form.9$inclusion.table
-form.9$interactions.table
-```
-
-```{r create.formula.example 10}
-
-form.10 <- create.formula(outcome.name = outcome.name.awareness, input.names = NULL, input.patterns = NULL, dat = NULL, interactions = interactions, force.main.effects = FALSE, reduce = FALSE, max.input.categories = max.input.categories, max.outcome.categories.to.search = max.outcome.categories.to.search, order.as = order.as, include.backtick = include.backtick, format.as = format.as)
-
-form.10$formula
-form.10$inclusion.table
-form.10$interactions.table
-```
-
-
-```{r create.formula.expample 11}
-form.11 <- create.formula(outcome.name = outcome.name.awareness, input.names = c("Age", "Gender", "Income"), dat = snack.dat, variables.to.exclude = variables.to.exclude)
-
-form.11$formula
-form.11$inclusion.table
-form.11$interactions.table
-```
-
-```{r create.formula.expample 12}
-form.12 <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, dat = snack.dat, variables.to.exclude = c("Persona", "Region"), input.patterns = input.patterns, interactions = interactions, reduce = TRUE, force.main.effects = TRUE, include.backtick = "as.needed", format.as = 'formula')
-
-form.12$formula
-form.12$inclusion.table
-form.12$interactions.table
-```
+### Example 7: Deduped formula
 
 Duplicates in input.names Example: if there is duplicates in input.name, for instance `r duplicated.inputs`, create.formula will deduplicate them and take only one varialbe.
 
-```{r create.formula.example 12}
-deduped.formula <- create.formula(outcome.name = outcome.name.awareness, input.names = duplicated.inputs, dat = snack.dat)
-
-deduped.formula$formula
-deduped.formula$inclusion.table
-deduped.formula$interactions.table
+```{r create.formula.example 7}
+deduped.formula1 <-
+  create.formula(outcome.name = outcome.name.awareness,
+                 input.names = duplicated.inputs,
+                 dat = snack.dat)
+deduped.formula1$formula
+deduped.formula1$inclusion.table
 ```
 
-Duplicates in interactions: if there are duplicates in interactions, for instance list(c("Age", "Income"), c("Age", "Income")), create.formula will deduplicate them and take only one interaction. 
 
-```{r create.formula.example 13}
-deduped.formula2 <- create.formula(outcome.name = outcome.name.awareness,input.names = duplicated.inputs2,dat = snack.dat,interactions = duplicated.interactions)
+Duplicates in input.names Example: if there is duplicates in input.name, for instance `r duplicated.inputs`, create.formula will deduplicate them and take only one varialbe.
+
+```{r create.formula.example 8}
+deduped.formula2 <-
+  create.formula(outcome.name = outcome.name.awareness,
+                 input.names = duplicated.inputs,
+                 dat = snack.dat)
 
 deduped.formula2$formula
 deduped.formula2$inclusion.table
 deduped.formula2$interactions.table
 ```
 
-# Reduce Formula Example
+Duplicates in interactions: if there are duplicates in interactions, for instance list(c("Age", "Income"), c("Age", "Income")), create.formula will deduplicate them and take only one interaction. 
+
+```{r create.formula.example 9}
+deduped.formula3 <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = duplicated.inputs2,
+    dat = snack.dat,
+    interactions = duplicated.interactions
+  )
+
+deduped.formula3$formula
+deduped.formula3$inclusion.table
+deduped.formula3$interactions.table
+```
+
+### Reduce Formula Example
 
 ```{r reduce.existing.formula examples 1}
-reduce.form.1 <- reduce.existing.formula(the.initial.formula = form.3$formula, dat = snack.dat, format.as = "character")
+reduce.form.1 <-
+  reduce.existing.formula(
+    the.initial.formula = form.3$formula,
+    dat = snack.dat,
+    format.as = "character"
+  )
 
 reduce.form.1$formula
 reduce.form.1$inclusion.table
@@ -201,7 +258,12 @@ reduce.form.1$interactions.table
 ```
 
 ```{r reduce.existing.formula examples 2}
-reduce.form.2 <- reduce.existing.formula(the.initial.formula = form.4$formula, dat = snack.dat, format.as = "formula")
+reduce.form.2 <-
+  reduce.existing.formula(
+    the.initial.formula = form.4$formula,
+    dat = snack.dat,
+    format.as = "formula"
+  )
 
 reduce.form.2$formula
 reduce.form.2$inclusion.table

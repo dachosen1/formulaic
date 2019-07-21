@@ -6,12 +6,17 @@
 ## Overview 
 Package to automatically create a formula to be used in function 
 
+## Install the current release from CRAN:
+```r
+install.packages('formulaic')
+```
 
-
-## Installation 
+## Install the development version from GitHub:
+```r
 devtools::install_github('dachosen1/formulaic')
+```
 
-## Usage
+
 
 
 

@@ -23,18 +23,18 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 
 #' @param outcome.name The name of the variables serving as the outcome.
 #' @param input.names The names of the variables with the full names delineated.
-#' @param input.patterns Includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector.  However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.
+#' @param input.patterns Includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector. However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.
 #' @param dat User can specify a data.frame object that will be used to remove any variables that are not listed in names(dat. As default it is set as NULL. In this case, the formula is created simply from the outcome.name and input.names.
-#' @param interactions This is meant to be a list of character vectors. Each entry of the list is meant to specify all of the terms that will form a single interaction.
+#' @param interactions Each entry of the list is meant to specify all of the terms that will form a single interaction.
 #' @param force.main.effects This is a logical value.  When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.
-#' @param reduce This is an option that user can take. As default it is set as FALSE. When the user set it as TRUE, it will go through the logic of checking for too few contrasts or too many contrasts.
-#' @param max.input.categories This limits the maximum number of variables that will be employeed in the formula. As default it is set at 20, but users can still change at his/her convinence.
-#' @param max.outcome.categories.to.search This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4, but users can still change at his/her convinence.
+#' @param reduce  As default it is set as FALSE. When the user set it as TRUE, it will go through the logic of checking for too few contrasts or too many contrasts.
+#' @param max.input.categories Limits the maximum number of variables that will be employeed in the formula. As default it is set at 20, but users can still change at his/her convinence.
+#' @param max.outcome.categories.to.search Limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4.
 #' @param order.as User can specify the order the input variables in the formula in a variety of ways for patterns: increasing for increasing alphabet order, decreasing for decreasing alphabet order, column.order for as they appear in data, and as.specified for maintaining the user's specified order.
 #' @param include.backtick Add backticks if needed. As default it is set as 'as.needed', which add backticks when only it is needed. The other option is 'all'. The use of include.backtick = "all" is limited to cases in which the output is generated as a character variable. When the output is generated as a formula object, then R automatically removes all unnecessary backticks. That is, it is only compatible when format.as != formula.
 #' @param format.as The data type of the output.  If not set as "formula", then a character vector will be returned.
 #' @param variables.to.exclude This will automatically drop the variable from the regression. It also supersede any variables metioned in input.names.
-#' @param include.intercept As a default it is set as 'TRUE'; however, if user changes it to 'FALSE', then intercept will be removed from the result, the formula.
+#' @param include.intercept As a default it is set as TRUE; however, if user changes it to 'FALSE', then intercept will be removed from the result, the formula.
 #'
 #' @details  Return as the data type of the output.  If not set as "formula", then a character vector will be returned.
 #' The input.names and names of variables matching the input.patterns will be concatenated to form the full list of input variables.

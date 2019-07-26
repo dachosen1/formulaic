@@ -18,6 +18,7 @@ install.packages('formulaic')
 devtools::install_github('dachosen1/formulaic')
 ```
 
+## Usage 
 
 Formulaic package has two main functions – **create.formula** and **reduce.existing.formula** – and one subsidiary function, **add.backtics**. The main purpose of developing the package is to help users to build a robust model faster and more convenient.
  

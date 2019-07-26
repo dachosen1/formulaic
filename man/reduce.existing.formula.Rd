@@ -2,7 +2,7 @@
 % Please edit documentation in R/create.formula.R
 \name{reduce.existing.formula}
 \alias{reduce.existing.formula}
-\title{reduce existing formula}
+\title{Reduce Existing Formula}
 \usage{
 reduce.existing.formula(the.initial.formula, dat,
   max.input.categories = 20, max.outcome.categories.to.search = 4,
@@ -27,5 +27,5 @@ reduce.existing.formula(the.initial.formula, dat,
 \item{format.as}{The data type of the output.  If not set as "formula", then a character vector will be returned.}
 }
 \description{
-reduce existing formula
+Reduce Existing Formula
 }

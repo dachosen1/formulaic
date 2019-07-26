@@ -95,9 +95,10 @@ summary(lm_example)
 A formula object may be one component of a larger system of software that processes data, generates models, and reports information. Dynamic applications with user interfaces, such as those generated with the shiny package, can allow a user to specify many of the parameters. This may include the type of model to fit, the outcome and input variables, and filters on the subset of the data to incorporate. As an example, the image below depicts an interface that allows a user to build models using the snack.dat:
 
 ```{r stats_image, out.width = "333px", echo = FALSE}
-include_graphics("../Screen Shot -- Engagement Model with Age Group Terms.png", auto_pdf = getOption("knitr.graphics.auto_pdf", FALSE), dpi = NULL)
 
-include_graphics("../Screen Shot -- Engagement Model without Age Group Terms.png", auto_pdf = getOption("knitr.graphics.auto_pdf", FALSE), dpi = NULL)
+#include_graphics("../Screen Shot -- Engagement Model with Age Group Terms.png", auto_pdf = #getOption("knitr.graphics.auto_pdf", FALSE), dpi = NULL)
+
+#include_graphics("../Screen Shot -- Engagement Model without Age Group Terms.png", auto_pdf = #getOption("knitr.graphics.auto_pdf", FALSE), dpi = NULL)
 
 ```
 

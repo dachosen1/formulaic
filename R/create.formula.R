@@ -391,7 +391,7 @@ create.formula <-
     return(res)
   }
 
-#' reduce existing formula
+#' Reduce Existing Formula
 #'
 #' @param  the.initial.formula  object of class "lm" or for multiple responses of class c("mlm", "lm").
 #' @param  dat Data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model.

@@ -1,13 +1,13 @@
 Package: formulaic
-Title: Create formula
-Version: 0.0.0.9000
+Title: Create Formula
+Version: 0.0.1
 Authors@R: c(
     person("David", "Shilane", , "david.shilane@columbia.edu", c("aut")),
     person("Caffrey", "Lee", , "cl3802@columbia.edu", c("ctb")),
     person("Zichen", "Huang", , "zh2380@columbia.edu", c("ctb")),
     person("Anderson", "Nelson", , "an2908@columbia.edu", c("ctb","cre"))
     )
-Description: Automatically creates a formula.
+Description: Creates a unified approach for programmatically and dynamically generating formula objects in R.
 Depends: R (>= 3.6.0)
 License: GPL-3 | file LICENSE
 Encoding: UTF-8

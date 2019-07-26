@@ -19,7 +19,27 @@ devtools::install_github('dachosen1/formulaic')
 ```
 
 
+Formulaic package has two main functions – **create.formula** and **reduce.existing.formula** – and one subsidiary function, **add.backtics**. The main purpose of developing the package is to help users to build a robust model faster and more convenient.
+ 
+**create.formula** automatically creates a formula from a provided list of input variables and the output variable. The variables will undergo a series of qualification tests such as automatic variable/categories reduction, typo, duplication, and lack of contrasted features elimination, etc. to make sure that a given feature is usable for modeling. This will reduce the time to build a model and set the users free from the trivial maneuver: manually inputting variables for modeling. The outcome of this formula can be used in a wide range from simple linear regression to any machine learning techniques such as random forest, neural network, etc. 
+ 
+The principal advantages of using create.formula are followed:
+ 
+1) Being able to dynamically generate a formula from a vector of inputs, without necessarily having to spell them all out by name. 
 
+2) Adding variables by searching for patterns.
+ 
+3) Simple integration of interactions.
+
+4) Easy removal of specific variables. 
+ 
+5) Quality checks that resolve a variety of issues -- typos, duplication, lack of contrast, etc. -- while providing a transparent explanation.
+ 
+**reduce.existing.formula** trims an existing formula down. Users plug an existing formula into the function, then it will undergo the same test as create.formula.
+ 
+**add.backticks** applies backticks the variables needs backticks to be employed in a formula as default. Users can also add backticks to all the variables; however, it is not necessary.   
+ 
+**Formulaic** is useful to create a dynamic formula with multiple features. It not only diminishes the time required for modeling and implementing, but also enriches the quality of the result.
 
 
 

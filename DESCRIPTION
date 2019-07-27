@@ -9,6 +9,8 @@ Authors@R: c(
     )
 Description: Creates a unified approach for programmatically and dynamically generating formula objects in R.
 Depends: R (>= 3.6.0)
+URL: https://github.com/dachosen1/formulaic
+BugReports: https://github.com/dachosen1/formulaic/issues
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: TRUE

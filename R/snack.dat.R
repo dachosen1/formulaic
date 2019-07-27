@@ -4,7 +4,7 @@
 #'
 #' @format A data frame of 23000 rows and 23 columns
 #' \describe{
-#'  \item{User.ID}{Charater values assigning a unique customer value}
+#'  \item{User ID}{Charater values assigning a unique customer value}
 #'  \item{Age}{Numeric values displaying the age of customer in years}
 #'  \item{Gender}{Character value describing gender of the customer}
 #'  \item{Income}{Numeric values displaying the income of the customer}
@@ -27,6 +27,8 @@
 #'  \item{Consumption}{Numeric displaying if the customer would consume this product 1: Yes, 0: No}
 #'  \item{Satisfaction}{Numeric displaying if the customer was satisfied by this product 1: Yes, 0: No}
 #'  \item{Advocacy}{Numeric displaying if the customer would advocate for this product 1: Yes, 0: No}
+#'  \item{Age Group}{Categorical variable that breaks the Users into 4 different groups}
+#'  \item{Income Group}{Categorical variable that breaks the Users into 5 different levels}
 #'  }
 #' @source "Randomly generated data"
 "snack.dat"

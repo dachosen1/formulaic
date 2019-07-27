@@ -43,7 +43,19 @@ The principal advantages of using create.formula are followed:
 **Formulaic** is useful to create a dynamic formula with multiple features. It not only diminishes the time required for modeling and implementing, but also enriches the quality of the result.
 
 
+``` r 
 
+n <- 10
+dd <- data.table::data.table(w = rnorm(n= n), x = rnorm(n = n), pixel_1 = rnorm(n = n))
+dd[, pixel_2 := 0.3 * pixel_1 + rnorm(n)]
+dd[, y := 5 * x + 3 * pixel_1 + 2 * pixel_2 + rnorm(n)]
+
+# create formula object 
+formula1 <- create.formula(outcome.name = "y", input.names = "x", input.patterns = c("pi", "xel"), dat = dd)
+
+# implement formula object
+model <- lm(formula = formula1, data = dd)
+```
 
 
 

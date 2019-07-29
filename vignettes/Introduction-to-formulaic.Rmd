@@ -39,11 +39,11 @@ satisfaction.name <- "Satisfaction"
 age.group.name <- "Age Group"
 income.group.name <- "Income Group"
 
-max.input.categories = 20
-max.outcome.categories.to.search = 4
-order.as = "as.specified"
-include.backtick = "as.needed"
-format.as = "formula"
+max.input.categories <- 20
+max.outcome.categories.to.search <- 4
+order.as <- "as.specified"
+include.backtick <- "as.needed"
+format.as <- "formula"
 force.main.effects <- TRUE
 ```
 
@@ -79,12 +79,10 @@ awareness.name = "Awareness"
 variable.names = c("Age", "Gender", "Income Group", "Region", "Persona", "Typo")
 
 ex.form <-
-  create.formula(
-    outcome.name = awareness.name,
-    input.names = variable.names,
-    dat = snack.dat
-  )
- 
+  create.formula(outcome.name = awareness.name,
+                 input.names = variable.names,
+                 dat = snack.dat)
+
 ex.form$formula
 lm_example <- lm(formula = ex.form, data = snack.dat)
 summary(lm_example)
@@ -93,14 +91,7 @@ summary(lm_example)
 
 ## Dynamic Generation of a Formula
 
-A formula object may be one component of a larger system of software that processes data, generates models, and reports information. Dynamic applications with user interfaces, such as those generated with the shiny package, can allow a user to specify many of the parameters. This may include the type of model to fit, the outcome and input variables, and filters on the subset of the data to incorporate. As an example, the image below depicts an interface that allows a user to build models using the snack.dat:
-
-```{r stats_image, out.width = "400px", echo = FALSE}
-include_graphics("../vignettes/Screen Shot -- Engagement Model with Age Group Terms.png", auto_pdf = getOption("knitr.graphics.auto_pdf", FALSE), dpi = NULL)
-
-include_graphics("../vignettes/Screen Shot -- Engagement Model without Age Group Terms.png", auto_pdf = getOption("knitr.graphics.auto_pdf", FALSE), dpi = NULL)
-
-```
+A formula object may be one component of a larger system of software that processes data, generates models, and reports information. Dynamic applications with user interfaces, such as those generated with the shiny package, can allow a user to specify many of the parameters. This may include the type of model to fit, the outcome and input variables, and filters on the subset of the data to incorporate. 
 
 In this application, the user is provided with a wide array of choices. A variety of outcomes related to customer engagement may be modeled. The user can select a subset of data related to a specific brand or aggregate multiple brands together. The user may also choose from a menu of inputs spanning all relevant columns of the data set. Then these data can be filtered into specific subgroups based on selections across a number of variables, including age groups, gender, income groups, region, etc.
 
@@ -132,8 +123,8 @@ As a subsidiary function, add.backtick is used inside of create.formula function
 **NOTE**: In the snack.dat data, **User ID, Age Group, and Income Group** are the only variables that are affected by the function when the included.backtick is set as 'as.needed', while every variable has backticks when it is set as 'all'. 
 
 ```{r add.backtics example}
-as.needed = formulaic:::add.backtick(x = names(snack.dat),include.backtick = 'as.needed')
-all = formulaic:::add.backtick(x = names(snack.dat),include.backtick = 'all')
+as.needed = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'as.needed')
+all = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'all')
 
 library(DT)
 datatable(data = cbind(as.needed, all))
@@ -146,11 +137,21 @@ create.formula(outcome.name = awareness.name, input.names = variable.names)$form
 ```
 
 ```{r add.backtics example 3}
-create.formula(outcome.name = awareness.name, input.names = variable.names, format.as = "character", include.backtick = "all")$formula
+create.formula(
+  outcome.name = awareness.name,
+  input.names = variable.names,
+  format.as = "character",
+  include.backtick = "all"
+)$formula
 ```
 
 ```{r add.backtics example 4}
-create.formula(outcome.name = awareness.name, input.names = variable.names, format.as = "character", include.backtick = "as.needed")$formula
+create.formula(
+  outcome.name = awareness.name,
+  input.names = variable.names,
+  format.as = "character",
+  include.backtick = "as.needed"
+)$formula
 ```
 
 When the output is returned as a formula object, the backticks may only be provided on an as-needed basis. For character objects, either option may be selected.
@@ -183,9 +184,13 @@ The create.formula function is designed to automatically generate formulas from 
 
 ```{r create.formula examples basic}
 outcome.name.awareness <- "Awareness"
-input.names <- c("Age", "Gender", "Income", "Region", "Persona", "Typo")
+input.names <-
+  c("Age", "Gender", "Income", "Region", "Persona", "Typo")
 
-basic.form <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, dat = snack.dat)
+basic.form <-
+  create.formula(outcome.name = outcome.name.awareness,
+                 input.names = input.names,
+                 dat = snack.dat)
 
 print(basic.form)
 ```
@@ -195,9 +200,17 @@ print(basic.form)
 The function allows users to incorporate interaction terms easily with the **interactions** parameter. Each interaction would be specified as a character vector, and the entire range of interactions is entered as a list, which allows for different interactions to include a different number of variables:
 
 ```{r create.formula example interactions}
-interactions = list(c("Age Group", "Gender"), c("Age Group", "Region"), c("Age Group", "Gender", "Region"))
+interactions = list(c("Age Group", "Gender"),
+                    c("Age Group", "Region"),
+                    c("Age Group", "Gender", "Region"))
 
-interaction.form <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, dat = snack.dat, interactions = interactions)
+interaction.form <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = input.names,
+    dat = snack.dat,
+    interactions = interactions
+  )
 
 print(interaction.form)
 ```
@@ -213,7 +226,13 @@ When a set of patterns is specified with the **input.patterns** parameter, the c
 bp.pattern = "BP_"
 input.patterns = c("Gend", bp.pattern)
 
-pattern.form <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, dat = snack.dat, input.patterns = input.patterns)
+pattern.form <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = input.names,
+    dat = snack.dat,
+    input.patterns = input.patterns
+  )
 
 print(pattern.form)
 ```
@@ -226,7 +245,10 @@ In this example, the age group was directly specified by the user. Gender was in
 The create.formula function maintains this capability when **“.”** is included in the input.names and a data set is provided:
 
 ```{r create.formula example dot.1}
-dot.form.1 <- create.formula(outcome.name = outcome.name.awareness, input.names = ".", dat = snack.dat)
+dot.form.1 <-
+  create.formula(outcome.name = outcome.name.awareness,
+                 input.names = ".",
+                 dat = snack.dat)
 
 print(dot.form.1)
 ```
@@ -258,12 +280,34 @@ print(dot.form.2)
 With multiple ways to specify the variables to include in a formula, it can also be helpful to ensure that a specific variable may not be included. As an example, when utilizing the input.patterns to include all of the brand perception variables, we can specifically remove BP_Delicious_0_10 and Gender by specifying the **variables.to.exclude** parameter. The parameter supersedes any variables mentioned in input.names as well as interactions:
 
 ```{r create.formual example variables.to.exclude.form}
-input.names <- c("Age", "Gender", "Income", "Region", "Persona", "Typo", "Age Group")
-interactions <- list(c("Age", "Gender"), c("Age", "Income"), c("Age", "Gender", "Income"), c("Gender", "Inco"), c("Age", "Reg ion"))
+input.names <-
+  c("Age",
+    "Gender",
+    "Income",
+    "Region",
+    "Persona",
+    "Typo",
+    "Age Group")
+interactions <-
+  list(
+    c("Age", "Gender"),
+    c("Age", "Income"),
+    c("Age", "Gender", "Income"),
+    c("Gender", "Inco"),
+    c("Age", "Reg ion")
+  )
 bp.pattern = "BP_"
 variables.to.exclude = c("BP_Delicious_0_10", "Gender")
 
-variables.to.exclude.form <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, interactions = interactions, input.patterns = bp.pattern, variables.to.exclude = variables.to.exclude, dat = snack.dat)
+variables.to.exclude.form <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = input.names,
+    interactions = interactions,
+    input.patterns = bp.pattern,
+    variables.to.exclude = variables.to.exclude,
+    dat = snack.dat
+  )
 
 
 print(variables.to.exclude.form)
@@ -283,7 +327,10 @@ Most formula objects would not include the outcome variable as an input. However
 input.names <- c("Income", "Age", "Income")
 income.name = "Income"
 
-outcomes.as.inputs.form <- create.formula(outcome.name = income.name, input.names = input.names, dat = snack.dat)
+outcomes.as.inputs.form <-
+  create.formula(outcome.name = income.name,
+                 input.names = input.names,
+                 dat = snack.dat)
 
 print(outcomes.as.inputs.form)
 ```
@@ -294,9 +341,16 @@ There is a chance that users accidentally or intentionally add the same variable
 
 ```{r create.formula example duplicated.inputs and interactions}
 duplicated.inputs <- c(rep.int(x = "Age", times = 2), "Income")
-duplicated.interactions <- list(c("Age", "Income"), c("Age", "Income"))
+duplicated.interactions <-
+  list(c("Age", "Income"), c("Age", "Income"))
 
-duplicated.form <- create.formula(outcome.name = outcome.name.awareness, input.names = duplicated.inputs, interactions = duplicated.interactions, dat = snack.dat)
+duplicated.form <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = duplicated.inputs,
+    interactions = duplicated.interactions,
+    dat = snack.dat
+  )
 
 print(duplicated.form)
 ```
@@ -309,13 +363,17 @@ A formula object in R can only be supplied to a model when all of its terms dire
 input.names <- c("Age", "Typo")
 income.name <- "Income"
 
-formula.with.typo <- create.formula(outcome.name = income.name, input.names = input.names)
+formula.with.typo <-
+  create.formula(outcome.name = income.name, input.names = input.names)
 print(formula.with.typo)
 ```
 
 
 ```{r create.formula example without typo}
-formula.without.typo <- create.formula(outcome.name = income.name, input.names = input.names, dat = snack.dat)
+formula.without.typo <-
+  create.formula(outcome.name = income.name,
+                 input.names = input.names,
+                 dat = snack.dat)
 print(formula.without.typo)
 ```
 
@@ -338,17 +396,27 @@ snack.dat[, .N, keyby = c("Awareness", "Consideration")]
 A model of consideration, estimated on the rows for which this outcome is measured, would therefore only include values of 1 for the respondents’ awareness. A logistic regression that includes awareness as an input would therefore generate a missing value for the coefficient of awareness:
 
 ```{r lack of contrast example numerical variables }
-formula.consideration <- create.formula(outcome.name = consideration.name, input.names = c(age.name, awareness.name))
+formula.consideration <-
+  create.formula(outcome.name = consideration.name,
+                 input.names = c(age.name, awareness.name))
 
 print(formula.consideration$formula)
 
-glm(formula = formula.consideration, data = snack.dat, family = "binomial")$coefficients
+glm(formula = formula.consideration,
+    data = snack.dat,
+    family = "binomial")$coefficients
 ```
 
 Because the awareness variable **lacks variation** in this subset, it is not suitable for use as a predictor of consideration. (It should instead be viewed as a prerequisite.) This matter can be resolved through the use of the **reduce parameter** in the create.formula function. When reduce = TRUE and a dataset is provided for inspection, create.formula automatically performs quality checks on all of the potential input variables. Any variables with a lack of variation will be identified and proactively excluded from the formula. Meanwhile, a record of this inspection is provided in the inclusion.table’s output:
 
 ```{r create.formula with lack of contrast categorical 1}
-formula.consideration <- create.formula(outcome.name = consideration.name, input.names = c(age.name, awareness.name), dat = snack.dat, reduce = TRUE)
+formula.consideration <-
+  create.formula(
+    outcome.name = consideration.name,
+    input.names = c(age.name, awareness.name),
+    dat = snack.dat,
+    reduce = TRUE
+  )
 
 print(formula.consideration)
 ```
@@ -361,7 +429,9 @@ To incorporate categorical variables with k > 1 different measured values, stati
 As an example, consider a model generated on the subset of respondents between the ages of 18 and 35 years old. This represents one category of the possible age groups. If a logistic regression model nonetheless attempted to include the age group as an input, this would lead to the following result:
 
 ```{r lack of contrast example categorical variables 0}
-formula.awareness <- create.formula(outcome.name = awareness.name, input.names = c(age.group.name, gender.name))
+formula.awareness <-
+  create.formula(outcome.name = awareness.name,
+                 input.names = c(age.group.name, gender.name))
 
 print(formula.awareness$formula)
 ```
@@ -373,9 +443,16 @@ print(formula.awareness$formula)
 This particular example is designed to demonstrate the issue with a simple contradiction, and its root cause is easy to identify. In real applications, significant investigation may be required to determine which variables may be causing such an effect. The error message provided informs the user of a lack of contrast, but it does not identify which variable is causing the issue. In a formula that incorporates many inputs, there may be a number of different variables that each contribute to the issue.
 
 Within the formulaic package, the create.formula’s **reduce** parameter can be used to automatically identify categorical variables with a lack of contrast. When **reduce = TRUE** and a data set is provided, inputs with no variation are excluded from the resulting formula. The **exclude.lack.contrast ** column of the output’s **inclusion.table** identifies which variables include a lack of contrast, and the **min.categories** column identifies the number of unique values for each variable. This is demonstrated with the call to create.formula below:
-```{r create.formula with lack of contrast 2}
+```{r create.formula with lack of contrast 2, eval=FALSE, include=TRUE}
 
-formula.awareness <- create.formula(outcome.name = awareness.name, input.names = c(age.group.name, gender.name), dat = snack.dat[get(age.group.name) == "[ 18, 35)",], reduce = TRUE)
+
+formula.awareness <-
+  create.formula(
+    outcome.name = awareness.name,
+    input.names = c(age.group.name, gender.name),
+    dat = snack.dat[get(age.group.name) == "[ 18, 35)", ],
+    reduce = TRUE
+  )
 
 print(formula.awareness)
 ```
@@ -387,7 +464,14 @@ Due to the snack.dat’s series of survey questions, many of the measured variab
 As an example, consider a model of consideration that attempts to utilize awareness as an input. The consideration outcome has two unique measured values (1 and 0). If **max.outcome.categories.to.search = 1**, then the subgroups of consideration will **not** be searched for a lack of contrast. Instead, the only quality check related to variation will examine each variable for a **global lack of contrast**. In the case of awareness, it exhibits variation at the global level with binary outcomes. This selection is depicted below:
 
 ```{r create.fomula lack of contrast 3}
-formula.consideration.1 <- create.formula(outcome.name = consideration.name, input.names = c(age.group.name, gender.name, awareness.name), dat = snack.dat, reduce = TRUE, max.outcome.categories.to.search = 1)
+formula.consideration.1 <-
+  create.formula(
+    outcome.name = consideration.name,
+    input.names = c(age.group.name, gender.name, awareness.name),
+    dat = snack.dat,
+    reduce = TRUE,
+    max.outcome.categories.to.search = 1
+  )
 
 print(formula.consideration.1)
 ```
@@ -395,7 +479,14 @@ print(formula.consideration.1)
 However, if **max.outcome.categories.to.search >= 2**, then the consideration variable would qualify as having sufficiently few unique values. Then each subset would subsequently be searched for a lack of contrast in each of the possible inputs. When consideration is 1 or 0, the awareness variable is always 1. Therefore, the inclusion.table’s calculation of the **min.categories** will be reduced from 2 (in the prior example) to 1 (below). As a result, the exclude.lack.contrast entry for the awareness variable will be flipped from FALSE to TRUE, and awareness will be removed from the formula.
 
 ```{r create.formula lack of contrast 4}
-formula.consideration.2 <- create.formula(outcome.name = consideration.name, input.names = c(age.group.name, gender.name, awareness.name), dat = snack.dat, reduce = TRUE, max.outcome.categories.to.search = 2)
+formula.consideration.2 <-
+  create.formula(
+    outcome.name = consideration.name,
+    input.names = c(age.group.name, gender.name, awareness.name),
+    dat = snack.dat,
+    reduce = TRUE,
+    max.outcome.categories.to.search = 2
+  )
 
 print(formula.consideration.2)
 ```
@@ -411,7 +502,13 @@ To avoid this issue, formulaic’s create.formula function allows the user to sp
 As an example, the snack.dat’s **User ID** variable is a character vector that indicates which of the 1000 respondents supplied the answers for the given row. Including the User ID in a model would therefore generate 999 columns of indicator variables. When **reduce = TRUE**, a data set is supplied, and **max.input.categories** is set at a value below 1000, then the User ID would be automatically excluded from the formula:
 
 ```{r create.formula large volume of categorical variables 01}
-create.formula(outcome.name = satisfaction.name, input.names = c(age.name, income.name, region.name, id.name), dat = snack.dat, reduce = TRUE, max.input.categories = 30)$formula
+create.formula(
+  outcome.name = satisfaction.name,
+  input.names = c(age.name, income.name, region.name, id.name),
+  dat = snack.dat,
+  reduce = TRUE,
+  max.input.categories = 30
+)$formula
 ```
 
 ### Inspection of All Variables
@@ -419,7 +516,13 @@ create.formula(outcome.name = satisfaction.name, input.names = c(age.name, incom
 When **reduce = TRUE** and a data set is supplied, the create.formula function provides a range of quality checks and information about the merits of including specific variables as possible inputs in a model. From the list of all of the variables, a user can quickly identify a reduced list for potential inclusion. As an example, we use the snack.dat to show that a model of awareness would need to be limited to a subset of the overall variables:
 
 ```{r create.formula large volume of categorical variables}
-create.formula(outcome.name = awareness.name, input.names = ".", reduce = TRUE, dat = snack.dat, max.input.categories = 30)$formula
+create.formula(
+  outcome.name = awareness.name,
+  input.names = ".",
+  reduce = TRUE,
+  dat = snack.dat,
+  max.input.categories = 30
+)$formula
 
 ```
 
@@ -444,9 +547,11 @@ As an example, we will demonstrate that a user-supplied formula will produce the
 ```{r reduce.existing.formula example}
 the.initial.formula <- Awareness ~ .
 
-reduce.existing.formula(the.initial.formula = the.initial.formula, dat = snack.dat, max.input.categories = 30)$formula
+reduce.existing.formula(
+  the.initial.formula = the.initial.formula,
+  dat = snack.dat,
+  max.input.categories = 30
+)$formula
 ```
 
-```{r }
 
-```

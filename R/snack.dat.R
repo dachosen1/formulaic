@@ -4,12 +4,12 @@
 #'
 #' @format A data frame of 23000 rows and 23 columns
 #' \describe{
-#'  \item{User ID}{Charater values assigning a unique customer value}
+#'  \item{User ID}{Character values assigning a unique customer value}
 #'  \item{Age}{Numeric values displaying the age of customer in years}
 #'  \item{Gender}{Character value describing gender of the customer}
 #'  \item{Income}{Numeric values displaying the income of the customer}
 #'  \item{Region}{Numeric values describing the region of the customer}
-#'  \item{Persona}{Character value describing the customer persona:"Millenial Muncher" "Righteous Reviewer" "Mainstream Maynard" "Savvy Samanth" "Easygoing Edith" "Old School Oliver"}
+#'  \item{Persona}{Character value describing the customer persona:"Millennial Muncher" "Righteous Reviewer" "Mainstream Maynard" "Savvy Samantha" "Easygoing Edith" "Old School Oliver"}
 #'  \item{Product}{Character value describing product consumed by the customer}
 #'  \item{Awareness}{Numeric values displaying the customer awareness level}
 #'  \item{BP_For_Me_0_10}{Numeric value displaying brand perception survey result scale (0-10)}
@@ -17,9 +17,9 @@
 #'  \item{BP_Tastes_Great_0_10}{Numeric value displaying brand perception survey results for tastes scale (0-10)}
 #'  \item{BP_Good_To_Share_0_10}{Numeric value displaying brand perception survey results for good to share scale (0-10)}
 #'  \item{BP_Like_Logo_0_10}{Numeric value displaying brand perception survey results for like logo scale (0-10)}
-#'  \item{BP_Special_Occasions_0_10}{Numeric value displaying brand perception survey results for special occations scale (0-10)}
+#'  \item{BP_Special_Occasions_0_10}{Numeric value displaying brand perception survey results for special occasion scale (0-10)}
 #'  \item{BP_Everyday_Snack_0_10}{Numeric value displaying brand perception survey results for everyday snack scale (0-10)}
-#'  \item{BP_Healthy_0_10}{Numeric value displaying brand perception survey results for healthly scale (0-10)}
+#'  \item{BP_Healthy_0_10}{Numeric value displaying brand perception survey results for healthy scale (0-10)}
 #'  \item{BP_Delicious_0_10}{Numeric value displaying brand perception survey results for delicious scale (0-10)}
 #'  \item{BP_Right_Amount_0_10}{Numeric value displaying brand perception survey results for right amount scale (0-10)}
 #'  \item{BP_Relaxing_0_10}{Numeric value displaying brand perception survey results for relaxing scale (0-10)}

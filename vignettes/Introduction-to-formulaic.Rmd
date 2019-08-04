@@ -1,6 +1,7 @@
 ---
 title: "Introduction to Formulaic"
 output: rmarkdown::html_vignette
+author: 'Authors: David Shilane, Caffrey Lee,Caffrey Lee, Anderson Nelson'
 date: "`r Sys.Date()`"
 vignette: >
   %\VignetteIndexEntry{Introduction to Formulaic}
@@ -526,7 +527,7 @@ create.formula(
 
 ```
 
-All of the brand perceptions and other states of engagement were removed from the formula. This was due to a lack of contrast arising from the structurally missing values when the respondents were not aware of the product. Meanwhile, the User ID was removed due to its large number of categories. Only the names of the products and the respondent-specific variables remain. From this list, an investigator could then make selections of which variables to include (e.g. Age or Age Group). However, much of the preliminary investigation would be handled automatically. This is especially helpful in settings in which the full relationship of the variables – such as the sequence and dependenciesof the marketing survey’s questions – is not yet fully understood.
+All of the brand perceptions and other states of engagement were removed from the formula. This was due to a lack of contrast arising from the structurally missing values when the respondents were not aware of the product. Meanwhile, the User ID was removed due to its large number of categories. Only the names of the products and the respondent-specific variables remain. From this list, an investigator could then make selections of which variables to include (e.g. Age or Age Group). However, much of the preliminary investigation would be handled automatically. This is especially helpful in settings in which the full relationship of the variables – such as the sequence and dependencies of the marketing survey’s questions – is not yet fully understood.
 
 ## Reducing an Existing Formula (reduce.existing.formula):
 
@@ -535,7 +536,7 @@ The **reduce.existing.formula** function was designed to perform quality checks 
 ### Parameter description:
 *  the.initial.formula  object of class "lm" or for multiple responses of class c("mlm", "lm").
 *  dat Data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model.
-*  max.input.categories This limits the maximum number of variables that will be employeed in the formula. As default it is set at 20, but users can still change at his/her convinence.
+*  max.input.categories This limits the maximum number of variables that will be employed in the formula. As default it is set at 20, but users can still change at his/her convinence.
 *  max.outcome.categories.to.search This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4, but users can still change at his/her convinence.
 *  force.main.effects This is a logical value.  When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.
 *  order.as  rearranges its first argument into ascending or descending order.

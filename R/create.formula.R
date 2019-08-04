@@ -2,7 +2,7 @@
 #'
 #' add.backtick is subsidiary function to create.formula that add backticks to the names of the variables.
 #'
-#' @param  x  variables
+#' @param  x  Character value specifying the name of input parameters.
 #' @param  include.backtick specifies whether a backtick should be added. Parameter values should be either 'all' or 'as.needed'
 add.backtick <- function(x, include.backtick = "as.needed"){
   if(include.backtick == "all"){
@@ -21,20 +21,20 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 #'
 #' Create formula is a tool to automatically create a formula from a provided variable and output names. Reduces the time required to manually input variables for modeling. Output can be used in linear regression, random forest, neural network etc. Create formula becomes useful when modeling data with multiple features. Reduces the time required for modeling and implementation :
 
-#' @param outcome.name The name of the variables serving as the outcome.
+#' @param outcome.name A character value specifying the name of the formula's outcome variable.  In this version, only a single outcome may be included.  The first entry of outcome.name will be used to build the formula.
 #' @param input.names The names of the variables with the full names delineated.
-#' @param input.patterns Includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector. However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.
+#' @param input.patterns Includes additional input variables. The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector. However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.
 #' @param dat User can specify a data.frame object that will be used to remove any variables that are not listed in names(dat. As default it is set as NULL. In this case, the formula is created simply from the outcome.name and input.names.
-#' @param interactions Each entry of the list is meant to specify all of the terms that will form a single interaction.
+#' @param interactions A list of character vectors. Each character vector includes the names of the variables that form a single interaction.  Specifying interactions = list(c("x", "y"), c("x", "z"), c("y", "z"), c("x", "y", "z")) would lead to the interactions x*y + x*z + y*z + x*y*z.
 #' @param force.main.effects This is a logical value.  When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.
-#' @param reduce  As default it is set as FALSE. When the user set it as TRUE, it will go through the logic of checking for too few contrasts or too many contrasts.
-#' @param max.input.categories Limits the maximum number of variables that will be employeed in the formula. As default it is set at 20, but users can still change at his/her convinence.
-#' @param max.outcome.categories.to.search Limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4.
+#' @param reduce  A logical value.  When dat is not NULL and reduce is TRUE, additional quality checks are performed to examine the input variables.  Any input variables that exhibit a lack of contrast will be excluded from the model.  This search is global by default but may be conducted separately in subsets of the outcome variables by specifying max.outcome.categories.to.search.  Additionally, any input variables that exhibit too many contrasts, as defined by max.input.categories, will also be excluded.
+#' @param max.input.categories Limits the maximum number of variables that will be employed in the formula. As default it is set at 20, but users can still change at his/her convenience.
+#' @param max.outcome.categories.to.search A numeric value.  The create.formula function includes a feature that identifies input variables exhibiting a lack of contrast.  When reduce = TRUE, these variables are automatically excluded from the resulting formula.  This search may be expanded to subsets of the outcome when the number of unique measured values of the outcome is no greater than max.outcome.categories.to.search.  In this case, each subset of the outcome will be separately examined, and any inputs that exhibit a lack of contrast within at least one subset will be excluded.
 #' @param order.as User can specify the order the input variables in the formula in a variety of ways for patterns: increasing for increasing alphabet order, decreasing for decreasing alphabet order, column.order for as they appear in data, and as.specified for maintaining the user's specified order.
 #' @param include.backtick Add backticks if needed. As default it is set as 'as.needed', which add backticks when only it is needed. The other option is 'all'. The use of include.backtick = "all" is limited to cases in which the output is generated as a character variable. When the output is generated as a formula object, then R automatically removes all unnecessary backticks. That is, it is only compatible when format.as != formula.
-#' @param format.as The data type of the output.  If not set as "formula", then a character vector will be returned.
-#' @param variables.to.exclude This will automatically drop the variable from the regression. It also supersede any variables metioned in input.names.
-#' @param include.intercept As a default it is set as TRUE; however, if user changes it to 'FALSE', then intercept will be removed from the result, the formula.
+#' @param format.as The data type of the output. If not set as "formula", then a character vector will be returned.
+#' @param variables.to.exclude A character vector. Any variable specified in variables.to.exclude will be dropped from the formula, both in the individual inputs and in any associated interactions.  This step supersedes the inclusion of any variables specified for inclusion in the other parameters.
+#' @param include.intercept A logical value.  When FALSE, the intercept will be removed from the formula.
 #'
 #' @details  Return as the data type of the output.  If not set as "formula", then a character vector will be returned.
 #' The input.names and names of variables matching the input.patterns will be concatenated to form the full list of input variables.
@@ -93,7 +93,6 @@ create.formula <-
       }
       input.patterns <- unique(input.patterns)
     }
-
     if (!is.null(variables.to.exclude)) {
       if (is.na(variables.to.exclude[1])) {
         variables.to.exclude <- NULL
@@ -108,8 +107,6 @@ create.formula <-
           input.names <- unique(c(input.names[input.names != "."], names(dat)))
         }
       }
-
-
       if (length(names(dat)) == 0) {
         return("Error:  dat must be an object with specified names.")
       }
@@ -118,13 +115,10 @@ create.formula <-
           "Error:  To create a formula, the outcome.name must match one of the values in names(dat)."
         )
       }
-
-
       variable.names.from.exclude <- c()
       if (!is.null(variables.to.exclude)) {
         variable.names.from.exclude <- unique(variables.to.exclude)
       }
-
 
       variable.names.from.patterns <- c()
 
@@ -135,6 +129,7 @@ create.formula <-
       }
 
       unlisted.interactions <- NULL
+
       if (!is.null(interactions)) {
         unlisted.interactions <- unlist(interactions)
       }
@@ -158,6 +153,7 @@ create.formula <-
       if (is.null(variables.to.exclude)) {
         num.from.variables.to.exclude <- 0
       }
+
       if (!is.null(variables.to.exclude)) {
         if (is.na(variables.to.exclude[1])) {
           num.from.variables.to.exclude <- 0
@@ -165,9 +161,11 @@ create.formula <-
         num.from.variables.to.exclude <-
           length(variables.to.exclude[!is.na(variables.to.exclude)])
       }
+
       if (is.null(input.names)) {
         num.from.input.names <- 0
       }
+
       if (!is.null(input.names)) {
         if (is.na(input.names[1])) {
           num.from.input.names <- 0
@@ -175,9 +173,11 @@ create.formula <-
         num.from.input.names <-
           length(input.names[!is.na(input.names)])
       }
+
       if (is.null(input.patterns)) {
         num.from.input.patterns <- 0
       }
+
       if (!is.null(input.patterns)) {
         if (is.na(input.patterns[1])) {
           num.from.input.patterns <- 0
@@ -185,9 +185,11 @@ create.formula <-
         num.from.input.patterns <-
           length(variable.names.from.patterns[!(variable.names.from.patterns %in% c(input.names))])
       }
+
       if (is.null(interactions)) {
         num.from.interactions <- 0
       }
+
       if (!is.null(interactions)) {
         if (is.na(interactions[1])) {
           num.from.interactions <- 0
@@ -230,6 +232,7 @@ create.formula <-
               }
             ), .SDcols = the.inputs, by = outcome.name]
         }
+
         if (num.outcome.categories > max.outcome.categories.to.search) {
           num.unique.tab <-
             dat[, lapply(
@@ -258,6 +261,7 @@ create.formula <-
         inclusion.table[, exclude.numerous.categories := min.categories > max.input.categories &
                           class %in% c("character", "factor")]
       }
+
       setorderv(x = inclusion.table,
                 cols = "order",
                 order = 1L)
@@ -270,6 +274,7 @@ create.formula <-
         all.input.names <-
           inclusion.table[include.variable == TRUE, variable]
       }
+
       if (force.main.effects == FALSE) {
         all.input.names <-
           inclusion.table[include.variable == TRUE &
@@ -279,7 +284,6 @@ create.formula <-
       if (order.as == "column.order") {
         all.input.names <- names(dat)[names(dat) %in% all.input.names]
       }
-
 
       # Compute included.interactions
 
@@ -308,7 +312,6 @@ create.formula <-
 
       interactions.table <-
         data.table(interactions = all.interaction.terms, include.interaction = include.interaction)
-
     }
 
     if (!is.data.frame(x = dat)) {
@@ -354,12 +357,14 @@ create.formula <-
     if (order.as == "increasing") {
       all.input.names <- sort(x = all.input.names, decreasing = FALSE)
     }
+
     if (order.as == "decreasing") {
       all.input.names <- sort(x = all.input.names, decreasing = TRUE)
     }
 
     input.names.delineated <-
       add.backtick(x =  all.input.names, include.backtick = include.backtick)
+
     outcome.name.delineated <-
       add.backtick(x = outcome.name, include.backtick = include.backtick)
 
@@ -393,14 +398,21 @@ create.formula <-
 
 #' Reduce Existing Formula
 #'
-#' @param  the.initial.formula  object of class "lm" or for multiple responses of class c("mlm", "lm").
+#' @param  the.initial.formula is an object of class "formula" or "character" that states the inputs and output in the form y ~ x1 + x2.
 #' @param  dat Data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model.
-#' @param  max.input.categories This limits the maximum number of variables that will be employeed in the formula. As default it is set at 20, but users can still change at his/her convinence.
-#' @param  max.outcome.categories.to.search This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4, but users can still change at his/her convinence.
+#' @param  max.input.categories A numeric value.  The create.formula function includes a feature that identifies input variables exhibiting a lack of contrast.  When reduce = TRUE, these variables are automatically excluded from the resulting formula.  This search may be expanded to subsets of the outcome when the number of unique measured values of the outcome is no greater than max.outcome.categories.to.search.  In this case, each subset of the outcome will be separately examined, and any inputs that exhibit a lack of contrast within at least one subset will be excluded.
+#' @param  max.outcome.categories.to.search This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4, but users can still change at his/her convenience.
 #' @param  force.main.effects This is a logical value.  When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.
 #' @param  order.as  rearranges its first argument into ascending or descending order.
 #' @param  include.backtick Add backticks to make a appropriate variable
 #' @param  format.as The data type of the output.  If not set as "formula", then a character vector will be returned.
+#'
+#' @export
+#' @examples
+#' the.initial.formula <- Awareness ~ .
+#'
+#' reduce.existing.formula(the.initial.formula = the.initial.formula,dat = snack.dat,
+#'   max.input.categories = 30)$formula
 #'
 #' @export
 reduce.existing.formula <-
@@ -416,6 +428,7 @@ reduce.existing.formula <-
     if (class(the.initial.formula) == "formula") {
       the.sides <- as.character(the.initial.formula)[2:3]
     }
+
     if (is.character(the.initial.formula)) {
       the.sides <- strsplit(x = the.initial.formula, split = "~")[[1]]
     }
@@ -452,6 +465,7 @@ reduce.existing.formula <-
     if (length(w.int) == 0) {
       interactions <- NULL
     }
+
     if (length(w.int) > 0) {
       untrimmed.interactions <-
         strsplit(x = the.pieces.trimmed[w.int],
@@ -459,7 +473,6 @@ reduce.existing.formula <-
                  fixed = TRUE)
       interactions <-
         lapply(X = untrimmed.interactions, FUN = "trimws", which = "both")
-
     }
 
     return(

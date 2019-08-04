@@ -1,0 +1,557 @@
+---
+title: "Introduction to Formulaic"
+output: rmarkdown::html_vignette
+date: "`r Sys.Date()`"
+vignette: >
+  %\VignetteIndexEntry{Introduction to Formulaic}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, echo=FALSE}
+library(formulaic)
+library(data.table)
+library(knitr)
+data("snack.dat", package = "formulaic")
+```
+
+```{r constant,echo=FALSE}
+id.name <- "User ID"
+awareness.name <- "Awareness"
+satisfaction.name <- "Satisfaction"
+age.name <- "Age"
+gender.name <- "Gender"
+income.name <- "Income"
+region.name <- "Region"
+persona.name <- "Persona"
+bp.patterns <- "BP_"
+consumption.name <- "Consumption"
+consideration.name <- "Consideration"
+advocacy.name <- "Advocacy"
+satisfaction.name <- "Satisfaction"
+age.group.name <- "Age Group"
+income.group.name <- "Income Group"
+
+max.input.categories <- 20
+max.outcome.categories.to.search <- 4
+order.as <- "as.specified"
+include.backtick <- "as.needed"
+format.as <- "formula"
+force.main.effects <- TRUE
+```
+
+# Introduction
+ 
+Across a wide variety of statistical techniques and machine learning algorithms, R’s formula object provides a standardized process for specifying the outcomes and inputs to be utilized when a method is applied to a data set. In typical examples, e.g. R’s help file for formula objects, a model is specified in a manual way with a formula such as **y ~ a + b + c**. For parsimonious models specified by a programmer, a manual selection and entry can be sufficient. However, a variety of applications can present more challenging circumstances in which manual specification may not be an effective strategy. Dynamically generated models may be specified by the user of a graphical interface (e.g. with R’s shiny package). In this case, a programmatic means of specifying a formula based on the user’s selections would be necessary. Even in manual settings, formula objects would benefit from additional quality checks that ensure that the model’s specification is appropriate for the data provided.
+
+Formulaic package has two main functions – **create.formula** and **reduce.existing.formula** – and one subsidiary function, **add.backtics**. The main purpose of developing the package is to help users to build a robust model faster and more convenient.
+ 
+**create.formula** automatically creates a formula from a provided list of input variables and the output variable. The variables will undergo a series of qualification tests such as automatic variable/categories reduction, typo, duplication, and lack of contrasted features elimination, etc. to make sure that a given feature is usable for modeling. This will reduce the time to build a model and set the users free from the trivial maneuver: manually inputting variables for modeling. The outcome of this formula can be used in a wide range from simple linear regression to any machine learning techniques such as random forest, neural network, etc. 
+ 
+The principal advantages of using create.formula are followed:
+ 
+1) Being able to dynamically generate a formula from a vector of inputs, without necessarily having to spell them all out by name. 
+
+2) Adding variables by searching for patterns.
+ 
+3) Simple integration of interactions.
+
+4) Easy removal of specific variables. 
+ 
+5) Quality checks that resolve a variety of issues -- typos, duplication, lack of contrast, etc. -- while providing a transparent explanation.
+ 
+ 
+**reduce.existing.formula** trims an existing formula down. Users plug an existing formula into the function, then it will undergo the same test as create.formula.
+ 
+**add.backticks** applies backticks the variables needs backticks to be employed in a formula as default. Users can also add backticks to all the variables; however, it is not necessary.   
+ 
+**Formulaic** is useful to create a dynamic formula with multiple features. It not only diminishes the time required for modeling and implementing, but also enriches the quality of the result.
+
+```{r example }
+awareness.name = "Awareness"
+variable.names = c("Age", "Gender", "Income Group", "Region", "Persona", "Typo")
+
+ex.form <-
+  create.formula(outcome.name = awareness.name,
+                 input.names = variable.names,
+                 dat = snack.dat)
+
+ex.form$formula
+lm_example <- lm(formula = ex.form, data = snack.dat)
+summary(lm_example)
+```
+
+
+## Dynamic Generation of a Formula
+
+A formula object may be one component of a larger system of software that processes data, generates models, and reports information. Dynamic applications with user interfaces, such as those generated with the shiny package, can allow a user to specify many of the parameters. This may include the type of model to fit, the outcome and input variables, and filters on the subset of the data to incorporate. 
+
+In this application, the user is provided with a wide array of choices. A variety of outcomes related to customer engagement may be modeled. The user can select a subset of data related to a specific brand or aggregate multiple brands together. The user may also choose from a menu of inputs spanning all relevant columns of the data set. Then these data can be filtered into specific subgroups based on selections across a number of variables, including age groups, gender, income groups, region, etc.
+
+Because the user’s selections are dynamic, the modeling formula must be generated programmatically. The create.formula function includes parameters for the **outcome.name** – a character vector of length 1 – and the **input.names** – a character vector of any length. As an example, if the user provides specific selections, then create.formula will automatically generate the corresponding formula object:
+
+```{r }
+user.outcome.name <- "Satisfaction"
+user.input.names <- c('Age Group', 'Gender', 'Region')
+
+create.formula(outcome.name = user.outcome.name, input.names = user.input.names)$formula
+```
+
+
+## Dataset (snack.dat)
+ 
+For the illustration of the basic functions of the formulaic package, we generated a dataset, named snack.dat.
+ 
+Formatted as data.table object, snack.dat contains 23000 observations and 25 columns. These data contain simulated information from a fictionalized marketing survey.  In this survey, a progression of questions was asked about the respondents' awareness, consideration, consumption, satisfaction with, and advocacy for different brands of snack foods.  Questions downstream of awareness, consideration, and then consumption would be asked only for those respondents who responded affirmatively to the previous question.  Otherwise, the values are missing.  Brand Perception questions are rated on a scale from 0 to 10 and indicated with a name starting with the prefix BP.
+ 
+```{r dataset }
+list(dim(snack.dat), names(snack.dat))
+```
+
+
+## Adding Backticks (add.backtick)
+ 
+As a subsidiary function, add.backtick is used inside of create.formula function that adds backticks to the names of the variables. Formula objects include the names of different variables within a data.frame.  When these names contain a space, the name must be encapsulated in backticks to ensure proper formatting.  For instance, if there are three variables called y, x1, and User ID, then a formula formatted as y ~ x1 + User ID will generate **errors due to the space in User ID**. Instead, this formula can be properly formatted as ``` y ~ x1 + `User ID` ```.  Meanwhile, it is also acceptable to add backticks to the other names, such as ``` `y` ~ `x1` + `User ID` ```, but this is not a necessary step.  As a default, the include.backtick is set to 'as.needed', which indicates that the function will only add backticks to the variables that require them. The user has the freedom to change the option to 'all'. Yet, it is only compatible when format.as != "formula", in which case a character object is returned.  In particular, a formula object will automatically remove unnecessary backticks.
+ 
+**NOTE**: In the snack.dat data, **User ID, Age Group, and Income Group** are the only variables that are affected by the function when the included.backtick is set as 'as.needed', while every variable has backticks when it is set as 'all'. 
+
+```{r add.backtics example}
+as.needed = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'as.needed')
+all = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'all')
+
+library(DT)
+datatable(data = cbind(as.needed, all))
+```
+
+This feature is automatically incorporated into formulaic’s create.formula method:
+
+```{r add.backtics example 2}
+create.formula(outcome.name = awareness.name, input.names = variable.names)$formula
+```
+
+```{r add.backtics example 3}
+create.formula(
+  outcome.name = awareness.name,
+  input.names = variable.names,
+  format.as = "character",
+  include.backtick = "all"
+)$formula
+```
+
+```{r add.backtics example 4}
+create.formula(
+  outcome.name = awareness.name,
+  input.names = variable.names,
+  format.as = "character",
+  include.backtick = "as.needed"
+)$formula
+```
+
+When the output is returned as a formula object, the backticks may only be provided on an as-needed basis. For character objects, either option may be selected.
+
+
+## Creating Formula (create.formula):
+ 
+The create.formula function is designed to automatically generate formulas from user-specified inputs and output. The range of inputs may include directly specified variables, patterns to search within the names of an associated data.frame, a list of interactions, and a vector of variables to directly exclude from consideration. The method also provides a range of quality checks that can detect issues with the construction of formula and, at the user's discretion, automatically remove variables that would otherwise generate errors.  These quality checks include formatting variables with backticks, de-duplication, ensuring correspondence with the names of the variables in an associated data.frame, excluding categorical variables that would generate errors due to a lack of contrast or exceed a user-specified threshold for the maximum number of categories, and automatically removing interactions involving variables that should be excluded.  When directed by the user, these quality checks can be implemented to effectively reduce a formula to the subset of variables and interactions that would be appropriate for consideration in a statistical model.  The output of the function can be formatted as either a formula object or a character.
+ 
+ 
+### Parameter description:
+
+ * outcome.name: The name of the variables serving as the outcome.
+ * input.names: The names of the variables with the full names delineated.
+ * input.patterns: Includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector.  However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.
+ * dat: User can specify a data.frame object that will be used to remove any variables not listed in names(dat). As a default, it is set as NULL. In this case, the formula is created simply from the outcome.name and input.names.
+ * interactions: This is meant to be a list of character vectors. Each entry of the list is meant to specify all of the terms that will form a single interaction.
+ * force.main.effects: This is a logical value. When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.
+ * reduce: This is an option that users can take. As a default, it is set as FALSE. When the user set it as TRUE, it will go through the logic of checking for too few contrasts or too many contrasts.
+ * max.input.categories: This limits the maximum number of variables that will be employed in the formula. As a default, it is set at 20, but users can still change at his/her convenience.
+ * max.outcome.categories.to.search: This limits the maximum number of outcome categories will be investigated in the formula. As a default, it is set at 4, but users can still change at his/her convenience.
+ * order.as: User can specify the order the input variables in the formula in a variety of ways for patterns: "increasing" for increasing alphabet order, "decreasing" for decreasing alphabet order, "column.order" for the order they appear in dataset, and "as.specified" for maintaining the user's specified order.
+ * include.backtick: Add backticks if needed. As a default, it is set as 'as.needed', which adds backticks to variables only when it is needed. The other option is 'all'. The use of include.backtick = "all" is limited to cases in which the output is generated as a character variable. When the output is generated as a formula object, then R automatically removes all unnecessary backticks. That is, it is only compatible when format.as != formula.
+ * format.as: The data type of the output. If not set as "formula", then a character vector will be returned.
+ * variables.to.exclude: This will automatically drop the variable from the regression. It also supersedes any variables mentioned in input.names.
+ * include.intercept: As a default it is set as 'TRUE'; however, if a user changes it to 'FALSE', then intercept will be removed from the result, the formula.
+
+
+### Basic format
+
+```{r create.formula examples basic}
+outcome.name.awareness <- "Awareness"
+input.names <-
+  c("Age", "Gender", "Income", "Region", "Persona", "Typo")
+
+basic.form <-
+  create.formula(outcome.name = outcome.name.awareness,
+                 input.names = input.names,
+                 dat = snack.dat)
+
+print(basic.form)
+```
+
+### Creating Interactions of Variables
+
+The function allows users to incorporate interaction terms easily with the **interactions** parameter. Each interaction would be specified as a character vector, and the entire range of interactions is entered as a list, which allows for different interactions to include a different number of variables:
+
+```{r create.formula example interactions}
+interactions = list(c("Age Group", "Gender"),
+                    c("Age Group", "Region"),
+                    c("Age Group", "Gender", "Region"))
+
+interaction.form <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = input.names,
+    dat = snack.dat,
+    interactions = interactions
+  )
+
+print(interaction.form)
+```
+
+
+### Selecting Variables from Patterns
+
+Large data sets may include classes of variables that are identified with a common pattern within their names. Rather than including each variable individually, it can be helpful to programmatically identify all of the variables that correspond to a specific pattern. For instance, the variables with prefix of BP_ in the snack.dat dataset. 
+
+When a set of patterns is specified with the **input.patterns** parameter, the create.formula function identifies any variable that includes at least one of these patterns for inclusion in the formula. In order to do so, the user must also specify the data to be searched. As an example, consider the example below:
+
+```{r create.formula example input.patterns}
+bp.pattern = "BP_"
+input.patterns = c("Gend", bp.pattern)
+
+pattern.form <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = input.names,
+    dat = snack.dat,
+    input.patterns = input.patterns
+  )
+
+print(pattern.form)
+```
+
+In this example, the age group was directly specified by the user. Gender was incorporated due to the first pattern, and then all of the brand perceptions were selected based on the second pattern, "BP_". 
+
+
+### Selecting All of the Variables
+
+The create.formula function maintains this capability when **“.”** is included in the input.names and a data set is provided:
+
+```{r create.formula example dot.1}
+dot.form.1 <-
+  create.formula(outcome.name = outcome.name.awareness,
+                 input.names = ".",
+                 dat = snack.dat)
+
+print(dot.form.1)
+```
+
+It is unnecessary, but user may want to add another variable as the following example demonstrates. create.formula will handle the duplicated variable, here "Gender", and incorporate the variables that pass the quality checks:  
+
+```{r create.formula example dot.2}
+
+input.names = c("Gender", ".")
+
+dot.form.2 <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, dat = snack.dat)
+
+print(dot.form.2)
+```
+
+Also, if user adds another variable and misspells it that it is not a column name of the dataset as the following example shows, create.formula will drop the misspelled variable, here "Typo", and incorporate the variables that pass the quality checks:  
+
+```{r create.formula example dot.3}
+
+input.names = c("Typo", ".")
+
+dot.form.2 <- create.formula(outcome.name = outcome.name.awareness, input.names = input.names, dat = snack.dat)
+
+print(dot.form.2)
+```
+
+### Removing Specific Variables
+
+With multiple ways to specify the variables to include in a formula, it can also be helpful to ensure that a specific variable may not be included. As an example, when utilizing the input.patterns to include all of the brand perception variables, we can specifically remove BP_Delicious_0_10 and Gender by specifying the **variables.to.exclude** parameter. The parameter supersedes any variables mentioned in input.names as well as interactions:
+
+```{r create.formual example variables.to.exclude.form}
+input.names <-
+  c("Age",
+    "Gender",
+    "Income",
+    "Region",
+    "Persona",
+    "Typo",
+    "Age Group")
+interactions <-
+  list(
+    c("Age", "Gender"),
+    c("Age", "Income"),
+    c("Age", "Gender", "Income"),
+    c("Gender", "Inco"),
+    c("Age", "Reg ion")
+  )
+bp.pattern = "BP_"
+variables.to.exclude = c("BP_Delicious_0_10", "Gender")
+
+variables.to.exclude.form <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = input.names,
+    interactions = interactions,
+    input.patterns = bp.pattern,
+    variables.to.exclude = variables.to.exclude,
+    dat = snack.dat
+  )
+
+
+print(variables.to.exclude.form)
+```
+
+### Quality Checks 
+
+With the create.formula function, the formulaic package devises a range of quality checks that investigate the design of a formula. The degree of quality checks can be controlled by the user at several levels. When the user specifies that quality checks should be performed, the create.formula method builds objects called **inclusion.table** and **interactions.table**, which form a portion of the method’s output. The inclusion.table object is a data.frame that reports on each variable that was considered for inclusion in the final list of inputs. Ultimately, the inclusion.table object will include a variety of columns, one for each quality check, that each indicates whether a variable should be excluded. Once all of the specified quality checks have been performed, the include.variable column is computed as an overall indicator of whether the specified variable should be included as an input in the formula object.
+
+The interactions.table follows a similar logic. An interaction will be excluded if any of the variables in its components was excluded based on the quality checks in the inclusion.table.
+
+### Outcomes as Inputs
+
+Most formula objects would not include the outcome variable as an input. However, when such a formula is constructed, whether by mistake or with intention, there is a lack of consistency is the way many common models handle the issue(outcomes as inputs situation). For instance, **Income ~ Age + Income**. The function drops the outcome variable in inputs automatically, and return the formula as followed: **Income ~ Age**.  
+
+```{r create.formula outcomes as inputs}
+input.names <- c("Income", "Age", "Income")
+income.name = "Income"
+
+outcomes.as.inputs.form <-
+  create.formula(outcome.name = income.name,
+                 input.names = input.names,
+                 dat = snack.dat)
+
+print(outcomes.as.inputs.form)
+```
+
+### Removing duplicated variables
+
+There is a chance that users accidentally or intentionally add the same variable more than once in input, which we call duplicated variables. The create.formula will build formula with the unique variable names into the formula: 
+
+```{r create.formula example duplicated.inputs and interactions}
+duplicated.inputs <- c(rep.int(x = "Age", times = 2), "Income")
+duplicated.interactions <-
+  list(c("Age", "Income"), c("Age", "Income"))
+
+duplicated.form <-
+  create.formula(
+    outcome.name = outcome.name.awareness,
+    input.names = duplicated.inputs,
+    interactions = duplicated.interactions,
+    dat = snack.dat
+  )
+
+print(duplicated.form)
+```
+
+### Misspecified Variables
+
+A formula object in R can only be supplied to a model when all of its terms directly match the names of the data.frame object on which the model will be fit. Misspecified variables within a formula, such as those arising from typographical errors, will typically lead to error messages in R’s implementation of a model. The formulaic package provides the option to either a) maintain this effect or b) automatically remove any misspecified variables. When a user supplies a dataset to the create.formula function, the variables intended for the formula receive a quality check to ensure that they match a corresponding name within the associated data.frame. Misspecified variables will be marked in the inclusion.table portion of the output of the create.formula function. Any misspecified variables or associated interactions will be removed from the formula in this setting.
+
+```{r create.formula example with typo}
+input.names <- c("Age", "Typo")
+income.name <- "Income"
+
+formula.with.typo <-
+  create.formula(outcome.name = income.name, input.names = input.names)
+print(formula.with.typo)
+```
+
+
+```{r create.formula example without typo}
+formula.without.typo <-
+  create.formula(outcome.name = income.name,
+                 input.names = input.names,
+                 dat = snack.dat)
+print(formula.without.typo)
+```
+
+### Considerations for Feature Engineering
+
+Selecting appropriate variables for a statistical model can include challenges associated with the domain, methodology, computational considerations, and practical limitations of the data. Some variables may not be suitable for inclusion based on either a lack of contrast or a large number of categories. This section will explore these problems in greater detail. In doing so, we will demonstrate how the formulaic package can automatically identify and handle these issues.
+
+
+### A Lack of Contrast
+
+Statistical models typically estimate the relationship between outcome and the inputs based upon the impact of changes in the inputs. When a variable is constant across all of its measured values, its variance is zero, and therefore the variable’s correlation with another variable is undefined. A constant input variable therefore exhibits a lack of contrast with regard to estimating its impact on an outcome. Many statistical models in R will return error messages when an input is a constant variable or consists only of missing data. If a large number of variables are included, then each error message will **only identify the first such variable**. An iterative process may be required to remove variables with a lack of contrast. Furthermore, even in variables that exhibit variation across the full range of the data, a lack of contrast may yet arise when a model is fit on a subset of these data.
+
+
+### Numeric Variables With No Variation
+  
+```{r Numeric variable with no variation}
+snack.dat[, .N, keyby = c("Awareness", "Consideration")]
+```
+
+A model of consideration, estimated on the rows for which this outcome is measured, would therefore only include values of 1 for the respondents’ awareness. A logistic regression that includes awareness as an input would therefore generate a missing value for the coefficient of awareness:
+
+```{r lack of contrast example numerical variables }
+formula.consideration <-
+  create.formula(outcome.name = consideration.name,
+                 input.names = c(age.name, awareness.name))
+
+print(formula.consideration$formula)
+
+glm(formula = formula.consideration,
+    data = snack.dat,
+    family = "binomial")$coefficients
+```
+
+Because the awareness variable **lacks variation** in this subset, it is not suitable for use as a predictor of consideration. (It should instead be viewed as a prerequisite.) This matter can be resolved through the use of the **reduce parameter** in the create.formula function. When reduce = TRUE and a dataset is provided for inspection, create.formula automatically performs quality checks on all of the potential input variables. Any variables with a lack of variation will be identified and proactively excluded from the formula. Meanwhile, a record of this inspection is provided in the inclusion.table’s output:
+
+```{r create.formula with lack of contrast categorical 1}
+formula.consideration <-
+  create.formula(
+    outcome.name = consideration.name,
+    input.names = c(age.name, awareness.name),
+    dat = snack.dat,
+    reduce = TRUE
+  )
+
+print(formula.consideration)
+```
+
+
+### Categorical Variables With No Variation
+
+To incorporate categorical variables with k > 1 different measured values, statistical models typically code separate columns of indicator variables across k-1 categories, while the kth category serves as a reference. Without variation (k <= 1), this procedure cannot code any indicator variables. Without a meaningful way to include such a variable as an input, the model will instead generate an error message.
+
+As an example, consider a model generated on the subset of respondents between the ages of 18 and 35 years old. This represents one category of the possible age groups. If a logistic regression model nonetheless attempted to include the age group as an input, this would lead to the following result:
+
+```{r lack of contrast example categorical variables 0}
+formula.awareness <-
+  create.formula(outcome.name = awareness.name,
+                 input.names = c(age.group.name, gender.name))
+
+print(formula.awareness$formula)
+```
+
+#```{r create.formula with lack of contrast 1}
+#glm(formula = formula.awareness$formula, data = #snack.dat[get(age.group.name) == "[ 18, 35)",], family = "binomial")
+#```
+
+This particular example is designed to demonstrate the issue with a simple contradiction, and its root cause is easy to identify. In real applications, significant investigation may be required to determine which variables may be causing such an effect. The error message provided informs the user of a lack of contrast, but it does not identify which variable is causing the issue. In a formula that incorporates many inputs, there may be a number of different variables that each contribute to the issue.
+
+Within the formulaic package, the create.formula’s **reduce** parameter can be used to automatically identify categorical variables with a lack of contrast. When **reduce = TRUE** and a data set is provided, inputs with no variation are excluded from the resulting formula. The **exclude.lack.contrast ** column of the output’s **inclusion.table** identifies which variables include a lack of contrast, and the **min.categories** column identifies the number of unique values for each variable. This is demonstrated with the call to create.formula below:
+```{r create.formula with lack of contrast 2, eval=FALSE, include=TRUE}
+
+
+formula.awareness <-
+  create.formula(
+    outcome.name = awareness.name,
+    input.names = c(age.group.name, gender.name),
+    dat = snack.dat[get(age.group.name) == "[ 18, 35)", ],
+    reduce = TRUE
+  )
+
+print(formula.awareness)
+```
+
+### A Lack of Contrast within Subsets of the Data
+
+Due to the snack.dat’s series of survey questions, many of the measured variables for a brand are recorded downstream from the initial question about the respondent’s awareness. These questions are only asked to the respondents who indicate awareness. As shown previously, the values of consideration (1 or 0) only occur when awareness is equal to 1. Across the full range of the data, the consideration variable includes multiple values and exhibits variation. However, within the subgroup of respondents who are not aware of the specific product, all of the values are missing. Due to this structurally missing design, it can be necessary to search for a lack of contrast within subsets of the outcome variable. The create.formula function allows the users to specify the **max.outcome.categories.to.search**. When the number of unique values of the outcome is less than or equal to the value of max.outcome.categories.to.search, a data set is provided, and reduce = TRUE, then the search for a lack of contrast is extended into the subsets based on the outcome variable.
+
+As an example, consider a model of consideration that attempts to utilize awareness as an input. The consideration outcome has two unique measured values (1 and 0). If **max.outcome.categories.to.search = 1**, then the subgroups of consideration will **not** be searched for a lack of contrast. Instead, the only quality check related to variation will examine each variable for a **global lack of contrast**. In the case of awareness, it exhibits variation at the global level with binary outcomes. This selection is depicted below:
+
+```{r create.fomula lack of contrast 3}
+formula.consideration.1 <-
+  create.formula(
+    outcome.name = consideration.name,
+    input.names = c(age.group.name, gender.name, awareness.name),
+    dat = snack.dat,
+    reduce = TRUE,
+    max.outcome.categories.to.search = 1
+  )
+
+print(formula.consideration.1)
+```
+
+However, if **max.outcome.categories.to.search >= 2**, then the consideration variable would qualify as having sufficiently few unique values. Then each subset would subsequently be searched for a lack of contrast in each of the possible inputs. When consideration is 1 or 0, the awareness variable is always 1. Therefore, the inclusion.table’s calculation of the **min.categories** will be reduced from 2 (in the prior example) to 1 (below). As a result, the exclude.lack.contrast entry for the awareness variable will be flipped from FALSE to TRUE, and awareness will be removed from the formula.
+
+```{r create.formula lack of contrast 4}
+formula.consideration.2 <-
+  create.formula(
+    outcome.name = consideration.name,
+    input.names = c(age.group.name, gender.name, awareness.name),
+    dat = snack.dat,
+    reduce = TRUE,
+    max.outcome.categories.to.search = 2
+  )
+
+print(formula.consideration.2)
+```
+
+
+
+### A Large Volume of Levels in a Categorical Variable
+
+As previously discussed, a statistical model that incorporates categorical variables with k > 1 unique values will code k-1 separate columns of indicator variables. Variables displaying user-generated text or unique identifiers may have unique values in all or nearly all of the rows of the data set. Large values of k in a single variable can create computational burdens or lead to intractable structures. Models with such a large number of additional columns may run nearly interminably without any indication of the underlying issue or an estimate of the time to completion.
+
+To avoid this issue, formulaic’s create.formula function allows the user to specify the **max.input.categories**. Each categorical variable’s number of levels k is computed at a global level. Any such variable with a value of k greater than max.input.categories is automatically excluded from consideration. This shows up in the calculation of the **min.categories** value and subsequently the **exclude.numerous.categories** of the **inclusion.table**.
+
+As an example, the snack.dat’s **User ID** variable is a character vector that indicates which of the 1000 respondents supplied the answers for the given row. Including the User ID in a model would therefore generate 999 columns of indicator variables. When **reduce = TRUE**, a data set is supplied, and **max.input.categories** is set at a value below 1000, then the User ID would be automatically excluded from the formula:
+
+```{r create.formula large volume of categorical variables 01}
+create.formula(
+  outcome.name = satisfaction.name,
+  input.names = c(age.name, income.name, region.name, id.name),
+  dat = snack.dat,
+  reduce = TRUE,
+  max.input.categories = 30
+)$formula
+```
+
+### Inspection of All Variables
+
+When **reduce = TRUE** and a data set is supplied, the create.formula function provides a range of quality checks and information about the merits of including specific variables as possible inputs in a model. From the list of all of the variables, a user can quickly identify a reduced list for potential inclusion. As an example, we use the snack.dat to show that a model of awareness would need to be limited to a subset of the overall variables:
+
+```{r create.formula large volume of categorical variables}
+create.formula(
+  outcome.name = awareness.name,
+  input.names = ".",
+  reduce = TRUE,
+  dat = snack.dat,
+  max.input.categories = 30
+)$formula
+
+```
+
+All of the brand perceptions and other states of engagement were removed from the formula. This was due to a lack of contrast arising from the structurally missing values when the respondents were not aware of the product. Meanwhile, the User ID was removed due to its large number of categories. Only the names of the products and the respondent-specific variables remain. From this list, an investigator could then make selections of which variables to include (e.g. Age or Age Group). However, much of the preliminary investigation would be handled automatically. This is especially helpful in settings in which the full relationship of the variables – such as the sequence and dependenciesof the marketing survey’s questions – is not yet fully understood.
+
+## Reducing an Existing Formula (reduce.existing.formula):
+
+The **reduce.existing.formula** function was designed to perform quality checks and automatic removal of impractical variables can also be accessed when an **existing formula** has been previously constructed. This method uses natural language processing techniques to deconstruct the components of a formula. Each variable and interaction is separately identified and aggregated. These variables are then supplied to create.formula as the input.names and interactions parameters. Otherwise, the parameters of reduce.existing.formula are designed to match those of create.formula. As a result, an initial formula can be evaluated in terms of the same set of quality checks, and the formula can be reduced based on the same set of exclusions.
+
+### Parameter description:
+*  the.initial.formula  object of class "lm" or for multiple responses of class c("mlm", "lm").
+*  dat Data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model.
+*  max.input.categories This limits the maximum number of variables that will be employeed in the formula. As default it is set at 20, but users can still change at his/her convinence.
+*  max.outcome.categories.to.search This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4, but users can still change at his/her convinence.
+*  force.main.effects This is a logical value.  When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.
+*  order.as  rearranges its first argument into ascending or descending order.
+*  include.backtick Add backticks to make a appropriate variable
+*  format.as The data type of the output.  If not set as "formula", then a character vector will be returned.
+
+As an example, we will demonstrate that a user-supplied formula will produce the same results as that created in the previous section:
+
+```{r reduce.existing.formula example}
+the.initial.formula <- Awareness ~ .
+
+reduce.existing.formula(
+  the.initial.formula = the.initial.formula,
+  dat = snack.dat,
+  max.input.categories = 30
+)$formula
+```
+
+

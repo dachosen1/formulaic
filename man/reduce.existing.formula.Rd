@@ -30,6 +30,7 @@ reduce.existing.formula(the.initial.formula, dat,
 Reduce Existing Formula
 }
 \examples{
+data('snack.dat')
 the.initial.formula <- Awareness ~ .
 
 reduce.existing.formula(the.initial.formula = the.initial.formula,dat = snack.dat,

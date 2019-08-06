@@ -1,6 +1,7 @@
 # formulaic
 [![Build Status](https://travis-ci.com/dachosen1/formulaic.svg?token=Vccc85T4kcPx9zLDqfTx&branch=master)](https://travis-ci.com/dachosen1/formulaic) 
 [![codecov](https://codecov.io/gh/dachosen1/formulaic/branch/master/graph/badge.svg)](https://codecov.io/gh/dachosen1/formulaic)
+[![CRAN status](https://www.r-pkg.org/badges/version/formulaic)](https://CRAN.R-project.org/package=formulaic)
 
 ## Overview 
 
@@ -22,7 +23,7 @@ devtools::install_github('dachosen1/formulaic')
 
 ## Usage 
 
-Formulaic package has two main functions – **create.formula** and **reduce.existing.formula** – and one subsidiary function, **add.backtics**. The main purpose of developing the package is to help users to build a robust model faster and more convenient.
+Formulaic package has two main functions – **create.formula** and **reduce.existing.formula** – and one subsidiary function, **add.backticks**. The main purpose of developing the package is to help users to build a robust model faster and more convenient.
  
 **create.formula** automatically creates a formula from a provided list of input variables and the output variable. The variables will undergo a series of qualification tests such as automatic variable/categories reduction, typo, duplication, and lack of contrasted features elimination, etc. to make sure that a given feature is usable for modeling. This will reduce the time to build a model and set the users free from the trivial maneuver: manually inputting variables for modeling. The outcome of this formula can be used in a wide range from simple linear regression to any machine learning techniques such as random forest, neural network, etc. 
  

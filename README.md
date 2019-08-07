@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.com/dachosen1/formulaic.svg?token=Vccc85T4kcPx9zLDqfTx&branch=master)](https://travis-ci.com/dachosen1/formulaic) 
 [![codecov](https://codecov.io/gh/dachosen1/formulaic/branch/master/graph/badge.svg)](https://codecov.io/gh/dachosen1/formulaic)
 [![CRAN status](https://www.r-pkg.org/badges/version/formulaic)](https://CRAN.R-project.org/package=formulaic)
+[![](https://cranlogs.r-pkg.org/badges/formulaic)](https://cran.r-project.org/package=formulaic)
 
 ## Overview 
 

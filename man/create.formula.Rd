@@ -46,7 +46,6 @@ Create formula is a tool to automatically create a formula from a provided varia
 \details{
 Return as the data type of the output.  If not set as "formula", then a character vector will be returned.
 The input.names and names of variables matching the input.patterns will be concatenated to form the full list of input variables.
-Note:  Does not account for interactions (a*b)
 }
 \examples{
  n <- 10

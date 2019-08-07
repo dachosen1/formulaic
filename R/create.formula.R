@@ -39,7 +39,7 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 #'
 #' @details  Return as the data type of the output.  If not set as "formula", then a character vector will be returned.
 #' The input.names and names of variables matching the input.patterns will be concatenated to form the full list of input variables.
-#' Note:  Does not account for interactions (a*b)
+#'
 #' @import data.table
 #' @export
 #' @examples
@@ -401,8 +401,8 @@ create.formula <-
 #'
 #' @param  the.initial.formula is an object of class "formula" or "character" that states the inputs and output in the form y ~ x1 + x2.
 #' @param  dat Data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model.
-#' @param  max.input.categories A numeric value.  The create.formula function includes a feature that identifies input variables exhibiting a lack of contrast.  When reduce = TRUE, these variables are automatically excluded from the resulting formula.  This search may be expanded to subsets of the outcome when the number of unique measured values of the outcome is no greater than max.outcome.categories.to.search.  In this case, each subset of the outcome will be separately examined, and any inputs that exhibit a lack of contrast within at least one subset will be excluded.
-#' @param  max.outcome.categories.to.search This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4, but users can still change at his/her convenience.
+#' @param  max.input.categories Limits the maximum number of variables that will be employed in the formula.As default it is set at 20, but users can still change at his/her convenience.
+#' @param  max.outcome.categories.to.search A numeric value. The create.formula function includes a feature that identifies input variables exhibiting a lack of contrast. When reduce = TRUE, these variables are automatically excluded from the resulting formula. This search may be expanded to subsets of the outcome when the number of unique measured values of the outcome is no greater than max.outcome.categories.to.search. In this case, each subset of the outcome will be separately examined, and any inputs builthat exhibit a lack of contrast within at least one subset will be excluded.
 #' @param  force.main.effects This is a logical value.  When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.
 #' @param  order.as  rearranges its first argument into ascending or descending order.
 #' @param  include.backtick Add backticks to make a appropriate variable

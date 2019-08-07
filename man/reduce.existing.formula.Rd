@@ -14,9 +14,9 @@ reduce.existing.formula(the.initial.formula, dat,
 
 \item{dat}{Data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model.}
 
-\item{max.input.categories}{A numeric value.  The create.formula function includes a feature that identifies input variables exhibiting a lack of contrast.  When reduce = TRUE, these variables are automatically excluded from the resulting formula.  This search may be expanded to subsets of the outcome when the number of unique measured values of the outcome is no greater than max.outcome.categories.to.search.  In this case, each subset of the outcome will be separately examined, and any inputs that exhibit a lack of contrast within at least one subset will be excluded.}
+\item{max.input.categories}{Limits the maximum number of variables that will be employed in the formula.As default it is set at 20, but users can still change at his/her convenience.}
 
-\item{max.outcome.categories.to.search}{This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4, but users can still change at his/her convenience.}
+\item{max.outcome.categories.to.search}{A numeric value. The create.formula function includes a feature that identifies input variables exhibiting a lack of contrast. When reduce = TRUE, these variables are automatically excluded from the resulting formula. This search may be expanded to subsets of the outcome when the number of unique measured values of the outcome is no greater than max.outcome.categories.to.search. In this case, each subset of the outcome will be separately examined, and any inputs builthat exhibit a lack of contrast within at least one subset will be excluded.}
 
 \item{force.main.effects}{This is a logical value.  When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.}
 

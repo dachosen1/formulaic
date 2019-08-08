@@ -12,5 +12,5 @@ add.backtick(x, include.backtick = "as.needed")
 \item{include.backtick}{specifies whether a backtick should be added. Parameter values should be either 'all' or 'as.needed'}
 }
 \description{
-Subsidiary function to create.formula that add backticks to the names of the variables.
+Function that add backticks to the names of the variables.
 }

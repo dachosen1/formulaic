@@ -1,6 +1,6 @@
 #' Add backtick
 #'
-#' Subsidiary function to create.formula that add backticks to the names of the variables.
+#' Function that add backticks to the names of the variables.
 #'
 #' @param  x  Character value specifying the name of input parameters.
 #' @param  include.backtick specifies whether a backtick should be added. Parameter values should be either 'all' or 'as.needed'
@@ -398,6 +398,8 @@ create.formula <-
   }
 
 #' Reduce Existing Formula
+#'
+#' The reduce.existing.formula function was designed to perform quality checks and automatic removal of impractical variables can also be accessed when an existing formula has been previously constructed. This method uses natural language processing techniques to deconstruct the components of a formula.
 #'
 #' @param  the.initial.formula is an object of class "formula" or "character" that states the inputs and output in the form y ~ x1 + x2.
 #' @param  dat Data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model.

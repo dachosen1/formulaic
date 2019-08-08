@@ -27,7 +27,7 @@ reduce.existing.formula(the.initial.formula, dat,
 \item{format.as}{The data type of the output.  If not set as "formula", then a character vector will be returned.}
 }
 \description{
-Reduce Existing Formula
+The reduce.existing.formula function was designed to perform quality checks and automatic removal of impractical variables can also be accessed when an existing formula has been previously constructed. This method uses natural language processing techniques to deconstruct the components of a formula.
 }
 \examples{
 data('snack.dat')

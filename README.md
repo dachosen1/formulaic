@@ -69,7 +69,7 @@ Traditionally, creating a formula in R required the user to manually select the 
 
 ``` r 
 # create formula object 
-formula1 <- create.formula(outcome.name = "y", input.names = c("x","Random error", "y"), input.patterns = c("pi", "xel"), dat = dd)
+formula1 <- create.formula(outcome.name = "y", input.names = c("x","Random error", "y"), input.patterns = c("pix"), dat = dd)
 
 formula1$formula
 y ~ x + pixel_1 + `pixel 2` + pixel_3

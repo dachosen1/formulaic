@@ -84,9 +84,10 @@ Details of the variables included is provided in the inclusion table
        variable   class order specified.from exclude.user.specified exclude.not.in.names.dat exclude.matches.outcome.name include.variable
 1:            x numeric     1    input.names                  FALSE                    FALSE                        FALSE             TRUE
 2: Random error    <NA>     2    input.names                  FALSE                     TRUE                        FALSE            FALSE
-3:      pixel_1 numeric     3 input.patterns                  FALSE                    FALSE                        FALSE             TRUE
-4:      pixel 2 numeric     4 input.patterns                  FALSE                    FALSE                        FALSE             TRUE
-5:      pixel_3 numeric     5 input.patterns                  FALSE                    FALSE                        FALSE             TRUE
+3:            y numeric     3    input.names                  FALSE                    FALSE                         TRUE            FALSE
+4:      pixel_1 numeric     4 input.patterns                  FALSE                    FALSE                        FALSE             TRUE
+5:      pixel 2 numeric     5 input.patterns                  FALSE                    FALSE                        FALSE             TRUE
+6:      pixel_3 numeric     6 input.patterns                  FALSE                    FALSE                        FALSE             TRUE
 
 # implement formula object
 model <- lm(formula = formula1, data = dd)

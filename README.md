@@ -51,11 +51,42 @@ The principal advantages of using create.formula are followed:
 ``` r 
 n <- 10
 dd <- data.table::data.table(w = rnorm(n= n), x = rnorm(n = n), pixel_1 = rnorm(n = n))
-dd[, pixel_2 := 0.3 * pixel_1 + rnorm(n)]
-dd[, y := 5 * x + 3 * pixel_1 + 2 * pixel_2 + rnorm(n)]
+dd[, 'pixel 2' := 0.3 * pixel_1 + rnorm(n)]
+dd[, pixel_3 := 0.3 * pixel_1 + rnorm(n)]
+dd[, item_1 := 0.3 * pixel_3 + rnorm(n)]
+dd[, item_2 := 0.3 * pixel_3 + rnorm(n)]
+dd[, y := 5 * x + 3 * pixel_1 + 2 * pixel_3 + rnorm(n)]
+```
+The resulting script create a data.table with 8 unique features 
 
+```r 
+names(dd)
+"w"       "x"       "pixel_1" "pixel 2" "pixel_3" "item_1"  "item_2"  "y"  
+```
+Traditionally, creating a formula in R required the user to manually select the desired variables or use the y~. notation to select all the features. **`formulaic`** is useful to programmatically select variables to include and performs quality check against the input. 
+
+**use case:** Creating a model with all pixel patterns 
+
+``` r 
 # create formula object 
-formula1 <- create.formula(outcome.name = "y", input.names = "x", input.patterns = c("pi", "xel"), dat = dd)
+formula1 <- create.formula(outcome.name = "y", input.names = c("x","Random error", "y"), input.patterns = c("pi", "xel"), dat = dd)
+
+formula1$formula
+y ~ x + pixel_1 + `pixel 2` + pixel_3
+```
+The result is a formula object of all the pixel variables and the input x. Notice that 'Random error' variable was automatically excluded from the output and a backtick was automatically added to the variable pixel 2. Since the the independent variable y was included as feature, it was excluded from the output formula. 
+
+Details of the variables included is provided in the inclusion table 
+
+```r 
+# inclustion table
+> formula1$inclusion.table
+       variable   class order specified.from exclude.user.specified exclude.not.in.names.dat exclude.matches.outcome.name include.variable
+1:            x numeric     1    input.names                  FALSE                    FALSE                        FALSE             TRUE
+2: Random error    <NA>     2    input.names                  FALSE                     TRUE                        FALSE            FALSE
+3:      pixel_1 numeric     3 input.patterns                  FALSE                    FALSE                        FALSE             TRUE
+4:      pixel 2 numeric     4 input.patterns                  FALSE                    FALSE                        FALSE             TRUE
+5:      pixel_3 numeric     5 input.patterns                  FALSE                    FALSE                        FALSE             TRUE
 
 # implement formula object
 model <- lm(formula = formula1, data = dd)

@@ -71,7 +71,7 @@
 
       
       </header><script src="Introduction-to-formulaic_files/htmlwidgets-1.3/htmlwidgets.js"></script><script src="Introduction-to-formulaic_files/jquery-1.12.4/jquery.min.js"></script><link href="Introduction-to-formulaic_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="Introduction-to-formulaic_files/datatables-binding-0.7/datatables.js"></script><link href="Introduction-to-formulaic_files/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+<script src="Introduction-to-formulaic_files/datatables-binding-0.8/datatables.js"></script><link href="Introduction-to-formulaic_files/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="Introduction-to-formulaic_files/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet">
 <script src="Introduction-to-formulaic_files/dt-core-1.10.16/js/jquery.dataTables.min.js"></script><link href="Introduction-to-formulaic_files/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet">
 <script src="Introduction-to-formulaic_files/crosstalk-1.0.0/js/crosstalk.min.js"></script><div class="row">
@@ -80,7 +80,7 @@
       <h1>Introduction to Formulaic</h1>
                         <h4 class="author">Authors: David Shilane, Caffrey Lee,Caffrey Lee, Anderson Nelson</h4>
             
-            <h4 class="date">2019-08-07</h4>
+            <h4 class="date">2019-08-11</h4>
       
       
       <div class="hidden name"><code>Introduction-to-formulaic.Rmd</code></div>
@@ -116,7 +116,7 @@
 <span id="cb1-8"><a href="#cb1-8"></a></span>
 <span id="cb1-9"><a href="#cb1-9"></a>ex.form<span class="op">$</span>formula</span>
 <span id="cb1-10"><a href="#cb1-10"></a><span class="co">#&gt; Awareness ~ Age + Gender + `Income Group` + Region + Persona</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co">#&gt; &lt;environment: 0x000000001b12b508&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co">#&gt; &lt;environment: 0x000000001b1d43d8&gt;</span></span>
 <span id="cb1-12"><a href="#cb1-12"></a>lm_example &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(<span class="dt">formula =</span> ex.form, <span class="dt">data =</span> snack.dat)</span>
 <span id="cb1-13"><a href="#cb1-13"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/summary">summary</a></span>(lm_example)</span>
 <span id="cb1-14"><a href="#cb1-14"></a><span class="co">#&gt; </span></span>
@@ -161,7 +161,7 @@
 <span id="cb2-3"><a href="#cb2-3"></a></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(<span class="dt">outcome.name =</span> user.outcome.name, <span class="dt">input.names =</span> user.input.names)<span class="op">$</span>formula</span>
 <span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt; Satisfaction ~ `Age Group` + Gender + Region</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt; &lt;environment: 0x000000001bb7bdb0&gt;</span></span></code></pre></div>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt; &lt;environment: 0x000000001bc8ab80&gt;</span></span></code></pre></div>
 </div>
 <div id="dataset-snack-dat" class="section level2">
 <h2 class="hasAnchor">
@@ -197,12 +197,12 @@
 <span id="cb4-3"><a href="#cb4-3"></a></span>
 <span id="cb4-4"><a href="#cb4-4"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(DT)</span>
 <span id="cb4-5"><a href="#cb4-5"></a><span class="kw">datatable</span>(<span class="dt">data =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(as.needed, all))</span></code></pre></div>
-<div id="htmlwidget-f5e73f9d56673577eca8" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f5e73f9d56673577eca8">{"x":{"filter":"none","data":[["Age","Gender","Income","Region","Persona","Product","Awareness","BP_For_Me_0_10","BP_Fits_Budget_0_10","BP_Tastes_Great_0_10","BP_Good_To_Share_0_10","BP_Like_Logo_0_10","BP_Special_Occasions_0_10","BP_Everyday_Snack_0_10","BP_Healthy_0_10","BP_Delicious_0_10","BP_Right_Amount_0_10","BP_Relaxing_0_10","Consideration","Consumption","Satisfaction","Advocacy","`Age Group`","`Income Group`","`User ID`"],["`Age`","`Gender`","`Income`","`Region`","`Persona`","`Product`","`Awareness`","`BP_For_Me_0_10`","`BP_Fits_Budget_0_10`","`BP_Tastes_Great_0_10`","`BP_Good_To_Share_0_10`","`BP_Like_Logo_0_10`","`BP_Special_Occasions_0_10`","`BP_Everyday_Snack_0_10`","`BP_Healthy_0_10`","`BP_Delicious_0_10`","`BP_Right_Amount_0_10`","`BP_Relaxing_0_10`","`Consideration`","`Consumption`","`Satisfaction`","`Advocacy`","`Age Group`","`Income Group`","`User ID`"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>as.needed<\/th>\n      <th>all<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>This feature is automatically incorporated into formulaic’s create.formula method:</p>
+<div id="htmlwidget-19e1e49716ac5f2b60c3" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-19e1e49716ac5f2b60c3">{"x":{"filter":"none","data":[["Age","Gender","Income","Region","Persona","Product","Awareness","BP_For_Me_0_10","BP_Fits_Budget_0_10","BP_Tastes_Great_0_10","BP_Good_To_Share_0_10","BP_Like_Logo_0_10","BP_Special_Occasions_0_10","BP_Everyday_Snack_0_10","BP_Healthy_0_10","BP_Delicious_0_10","BP_Right_Amount_0_10","BP_Relaxing_0_10","Consideration","Consumption","Satisfaction","Advocacy","`Age Group`","`Income Group`","`User ID`"],["`Age`","`Gender`","`Income`","`Region`","`Persona`","`Product`","`Awareness`","`BP_For_Me_0_10`","`BP_Fits_Budget_0_10`","`BP_Tastes_Great_0_10`","`BP_Good_To_Share_0_10`","`BP_Like_Logo_0_10`","`BP_Special_Occasions_0_10`","`BP_Everyday_Snack_0_10`","`BP_Healthy_0_10`","`BP_Delicious_0_10`","`BP_Right_Amount_0_10`","`BP_Relaxing_0_10`","`Consideration`","`Consumption`","`Satisfaction`","`Advocacy`","`Age Group`","`Income Group`","`User ID`"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>as.needed<\/th>\n      <th>all<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>This feature is automatically incorporated into formulaic’s create.formula method:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(<span class="dt">outcome.name =</span> awareness.name, <span class="dt">input.names =</span> variable.names)<span class="op">$</span>formula</span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt; Awareness ~ Age + Gender + `Income Group` + Region + Persona + </span></span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt;     Typo</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; &lt;environment: 0x000000001b34a4c8&gt;</span></span></code></pre></div>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; &lt;environment: 0x000000001b40d488&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(</span>
 <span id="cb6-2"><a href="#cb6-2"></a>  <span class="dt">outcome.name =</span> awareness.name,</span>
 <span id="cb6-3"><a href="#cb6-3"></a>  <span class="dt">input.names =</span> variable.names,</span>
@@ -257,7 +257,7 @@
 <span id="cb8-10"><a href="#cb8-10"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(basic.form)</span>
 <span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; &lt;environment: 0x000000001b9824d0&gt;</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; &lt;environment: 0x000000001ba7f140&gt;</span></span>
 <span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt; </span></span>
 <span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb8-16"><a href="#cb8-16"></a><span class="co">#&gt;    variable     class order specified.from exclude.user.specified</span></span>
@@ -299,7 +299,7 @@
 <span id="cb9-15"><a href="#cb9-15"></a><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona + `Age Group` + </span></span>
 <span id="cb9-16"><a href="#cb9-16"></a><span class="co">#&gt;     `Age Group` * Gender + `Age Group` * Region + `Age Group` * </span></span>
 <span id="cb9-17"><a href="#cb9-17"></a><span class="co">#&gt;     Gender * Region</span></span>
-<span id="cb9-18"><a href="#cb9-18"></a><span class="co">#&gt; &lt;environment: 0x000000001c0a07f8&gt;</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a><span class="co">#&gt; &lt;environment: 0x000000001c176a38&gt;</span></span>
 <span id="cb9-19"><a href="#cb9-19"></a><span class="co">#&gt; </span></span>
 <span id="cb9-20"><a href="#cb9-20"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb9-21"><a href="#cb9-21"></a><span class="co">#&gt;     variable     class order specified.from exclude.user.specified</span></span>
@@ -348,7 +348,7 @@
 <span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt;     BP_Like_Logo_0_10 + BP_Special_Occasions_0_10 + BP_Everyday_Snack_0_10 + </span></span>
 <span id="cb10-17"><a href="#cb10-17"></a><span class="co">#&gt;     BP_Healthy_0_10 + BP_Delicious_0_10 + BP_Right_Amount_0_10 + </span></span>
 <span id="cb10-18"><a href="#cb10-18"></a><span class="co">#&gt;     BP_Relaxing_0_10</span></span>
-<span id="cb10-19"><a href="#cb10-19"></a><span class="co">#&gt; &lt;environment: 0x00000000150a7510&gt;</span></span>
+<span id="cb10-19"><a href="#cb10-19"></a><span class="co">#&gt; &lt;environment: 0x000000001a0a64f8&gt;</span></span>
 <span id="cb10-20"><a href="#cb10-20"></a><span class="co">#&gt; </span></span>
 <span id="cb10-21"><a href="#cb10-21"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb10-22"><a href="#cb10-22"></a><span class="co">#&gt;                      variable     class order specified.from</span></span>
@@ -428,7 +428,7 @@
 <span id="cb11-12"><a href="#cb11-12"></a><span class="co">#&gt;     BP_Right_Amount_0_10 + BP_Relaxing_0_10 + Consideration + </span></span>
 <span id="cb11-13"><a href="#cb11-13"></a><span class="co">#&gt;     Consumption + Satisfaction + Advocacy + `Age Group` + `Income Group` + </span></span>
 <span id="cb11-14"><a href="#cb11-14"></a><span class="co">#&gt;     `User ID`</span></span>
-<span id="cb11-15"><a href="#cb11-15"></a><span class="co">#&gt; &lt;environment: 0x000000001aa73f40&gt;</span></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="co">#&gt; &lt;environment: 0x000000001ad6b1a0&gt;</span></span>
 <span id="cb11-16"><a href="#cb11-16"></a><span class="co">#&gt; </span></span>
 <span id="cb11-17"><a href="#cb11-17"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb11-18"><a href="#cb11-18"></a><span class="co">#&gt;                      variable     class order specified.from</span></span>
@@ -530,7 +530,7 @@
 <span id="cb12-12"><a href="#cb12-12"></a><span class="co">#&gt;     BP_Right_Amount_0_10 + BP_Relaxing_0_10 + Consideration + </span></span>
 <span id="cb12-13"><a href="#cb12-13"></a><span class="co">#&gt;     Consumption + Satisfaction + Advocacy + `Age Group` + `Income Group` + </span></span>
 <span id="cb12-14"><a href="#cb12-14"></a><span class="co">#&gt;     `User ID`</span></span>
-<span id="cb12-15"><a href="#cb12-15"></a><span class="co">#&gt; &lt;environment: 0x000000001b631368&gt;</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a><span class="co">#&gt; &lt;environment: 0x000000001b7137c8&gt;</span></span>
 <span id="cb12-16"><a href="#cb12-16"></a><span class="co">#&gt; </span></span>
 <span id="cb12-17"><a href="#cb12-17"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb12-18"><a href="#cb12-18"></a><span class="co">#&gt;                      variable     class order specified.from</span></span>
@@ -632,7 +632,7 @@
 <span id="cb13-12"><a href="#cb13-12"></a><span class="co">#&gt;     BP_Right_Amount_0_10 + BP_Relaxing_0_10 + Consideration + </span></span>
 <span id="cb13-13"><a href="#cb13-13"></a><span class="co">#&gt;     Consumption + Satisfaction + Advocacy + `Age Group` + `Income Group` + </span></span>
 <span id="cb13-14"><a href="#cb13-14"></a><span class="co">#&gt;     `User ID`</span></span>
-<span id="cb13-15"><a href="#cb13-15"></a><span class="co">#&gt; &lt;environment: 0x000000001c0f5a78&gt;</span></span>
+<span id="cb13-15"><a href="#cb13-15"></a><span class="co">#&gt; &lt;environment: 0x000000001c1f23b8&gt;</span></span>
 <span id="cb13-16"><a href="#cb13-16"></a><span class="co">#&gt; </span></span>
 <span id="cb13-17"><a href="#cb13-17"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb13-18"><a href="#cb13-18"></a><span class="co">#&gt;                      variable     class order specified.from</span></span>
@@ -764,7 +764,7 @@
 <span id="cb14-35"><a href="#cb14-35"></a><span class="co">#&gt;     BP_Like_Logo_0_10 + BP_Special_Occasions_0_10 + BP_Everyday_Snack_0_10 + </span></span>
 <span id="cb14-36"><a href="#cb14-36"></a><span class="co">#&gt;     BP_Healthy_0_10 + BP_Right_Amount_0_10 + BP_Relaxing_0_10 + </span></span>
 <span id="cb14-37"><a href="#cb14-37"></a><span class="co">#&gt;     Age * Income</span></span>
-<span id="cb14-38"><a href="#cb14-38"></a><span class="co">#&gt; &lt;environment: 0x0000000019b42d68&gt;</span></span>
+<span id="cb14-38"><a href="#cb14-38"></a><span class="co">#&gt; &lt;environment: 0x0000000019c529c0&gt;</span></span>
 <span id="cb14-39"><a href="#cb14-39"></a><span class="co">#&gt; </span></span>
 <span id="cb14-40"><a href="#cb14-40"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb14-41"><a href="#cb14-41"></a><span class="co">#&gt;                      variable     class order specified.from</span></span>
@@ -860,7 +860,7 @@
 <span id="cb15-9"><a href="#cb15-9"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(outcomes.as.inputs.form)</span>
 <span id="cb15-10"><a href="#cb15-10"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb15-11"><a href="#cb15-11"></a><span class="co">#&gt; Income ~ Age</span></span>
-<span id="cb15-12"><a href="#cb15-12"></a><span class="co">#&gt; &lt;environment: 0x000000001b434530&gt;</span></span>
+<span id="cb15-12"><a href="#cb15-12"></a><span class="co">#&gt; &lt;environment: 0x000000001b52f6c0&gt;</span></span>
 <span id="cb15-13"><a href="#cb15-13"></a><span class="co">#&gt; </span></span>
 <span id="cb15-14"><a href="#cb15-14"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb15-15"><a href="#cb15-15"></a><span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span></span>
@@ -892,7 +892,7 @@
 <span id="cb16-13"><a href="#cb16-13"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(duplicated.form)</span>
 <span id="cb16-14"><a href="#cb16-14"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb16-15"><a href="#cb16-15"></a><span class="co">#&gt; Awareness ~ Age + Income + Age * Income</span></span>
-<span id="cb16-16"><a href="#cb16-16"></a><span class="co">#&gt; &lt;environment: 0x000000001bb26dd0&gt;</span></span>
+<span id="cb16-16"><a href="#cb16-16"></a><span class="co">#&gt; &lt;environment: 0x000000001bc83220&gt;</span></span>
 <span id="cb16-17"><a href="#cb16-17"></a><span class="co">#&gt; </span></span>
 <span id="cb16-18"><a href="#cb16-18"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb16-19"><a href="#cb16-19"></a><span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span></span>
@@ -918,7 +918,7 @@
 <span id="cb17-6"><a href="#cb17-6"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(formula.with.typo)</span>
 <span id="cb17-7"><a href="#cb17-7"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb17-8"><a href="#cb17-8"></a><span class="co">#&gt; Income ~ Age + Typo</span></span>
-<span id="cb17-9"><a href="#cb17-9"></a><span class="co">#&gt; &lt;environment: 0x0000000017858fb0&gt;</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a><span class="co">#&gt; &lt;environment: 0x00000000175ff1b0&gt;</span></span>
 <span id="cb17-10"><a href="#cb17-10"></a><span class="co">#&gt; </span></span>
 <span id="cb17-11"><a href="#cb17-11"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb17-12"><a href="#cb17-12"></a><span class="co">#&gt; Null data.table (0 rows and 0 cols)</span></span>
@@ -932,7 +932,7 @@
 <span id="cb18-5"><a href="#cb18-5"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(formula.without.typo)</span>
 <span id="cb18-6"><a href="#cb18-6"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb18-7"><a href="#cb18-7"></a><span class="co">#&gt; Income ~ Age</span></span>
-<span id="cb18-8"><a href="#cb18-8"></a><span class="co">#&gt; &lt;environment: 0x0000000017174ab8&gt;</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a><span class="co">#&gt; &lt;environment: 0x0000000016bd1c38&gt;</span></span>
 <span id="cb18-9"><a href="#cb18-9"></a><span class="co">#&gt; </span></span>
 <span id="cb18-10"><a href="#cb18-10"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb18-11"><a href="#cb18-11"></a><span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span></span>
@@ -970,7 +970,7 @@
 <span id="cb20-4"><a href="#cb20-4"></a></span>
 <span id="cb20-5"><a href="#cb20-5"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(formula.consideration<span class="op">$</span>formula)</span>
 <span id="cb20-6"><a href="#cb20-6"></a><span class="co">#&gt; Consideration ~ Age + Awareness</span></span>
-<span id="cb20-7"><a href="#cb20-7"></a><span class="co">#&gt; &lt;environment: 0x0000000019af9c38&gt;</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="co">#&gt; &lt;environment: 0x0000000019c35a28&gt;</span></span>
 <span id="cb20-8"><a href="#cb20-8"></a></span>
 <span id="cb20-9"><a href="#cb20-9"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/glm">glm</a></span>(<span class="dt">formula =</span> formula.consideration,</span>
 <span id="cb20-10"><a href="#cb20-10"></a>    <span class="dt">data =</span> snack.dat,</span>
@@ -989,7 +989,7 @@
 <span id="cb21-9"><a href="#cb21-9"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(formula.consideration)</span>
 <span id="cb21-10"><a href="#cb21-10"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb21-11"><a href="#cb21-11"></a><span class="co">#&gt; Consideration ~ Age</span></span>
-<span id="cb21-12"><a href="#cb21-12"></a><span class="co">#&gt; &lt;environment: 0x000000001aa33600&gt;</span></span>
+<span id="cb21-12"><a href="#cb21-12"></a><span class="co">#&gt; &lt;environment: 0x000000001ad6f8d8&gt;</span></span>
 <span id="cb21-13"><a href="#cb21-13"></a><span class="co">#&gt; </span></span>
 <span id="cb21-14"><a href="#cb21-14"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb21-15"><a href="#cb21-15"></a><span class="co">#&gt;     variable   class order specified.from exclude.user.specified</span></span>
@@ -1016,7 +1016,7 @@
 <span id="cb22-4"><a href="#cb22-4"></a></span>
 <span id="cb22-5"><a href="#cb22-5"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(formula.awareness<span class="op">$</span>formula)</span>
 <span id="cb22-6"><a href="#cb22-6"></a><span class="co">#&gt; Awareness ~ `Age Group` + Gender</span></span>
-<span id="cb22-7"><a href="#cb22-7"></a><span class="co">#&gt; &lt;environment: 0x000000001b3f2280&gt;</span></span></code></pre></div>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="co">#&gt; &lt;environment: 0x000000001b508488&gt;</span></span></code></pre></div>
 <p>#<code>{r create.formula with lack of contrast 1} #glm(formula = formula.awareness$formula, data = #snack.dat[get(age.group.name) == "[ 18, 35)",], family = "binomial") #</code></p>
 <p>This particular example is designed to demonstrate the issue with a simple contradiction, and its root cause is easy to identify. In real applications, significant investigation may be required to determine which variables may be causing such an effect. The error message provided informs the user of a lack of contrast, but it does not identify which variable is causing the issue. In a formula that incorporates many inputs, there may be a number of different variables that each contribute to the issue.</p>
 <p>Within the formulaic package, the create.formula’s <strong>reduce</strong> parameter can be used to automatically identify categorical variables with a lack of contrast. When <strong>reduce = TRUE</strong> and a data set is provided, inputs with no variation are excluded from the resulting formula. The <strong>exclude.lack.contrast </strong> column of the output’s <strong>inclusion.table</strong> identifies which variables include a lack of contrast, and the <strong>min.categories</strong> column identifies the number of unique values for each variable. This is demonstrated with the call to create.formula below:</p>
@@ -1049,7 +1049,7 @@
 <span id="cb24-10"><a href="#cb24-10"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(formula.consideration<span class="fl">.1</span>)</span>
 <span id="cb24-11"><a href="#cb24-11"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb24-12"><a href="#cb24-12"></a><span class="co">#&gt; Consideration ~ `Age Group` + Gender + Awareness</span></span>
-<span id="cb24-13"><a href="#cb24-13"></a><span class="co">#&gt; &lt;environment: 0x000000001b683960&gt;</span></span>
+<span id="cb24-13"><a href="#cb24-13"></a><span class="co">#&gt; &lt;environment: 0x000000001b7c3740&gt;</span></span>
 <span id="cb24-14"><a href="#cb24-14"></a><span class="co">#&gt; </span></span>
 <span id="cb24-15"><a href="#cb24-15"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb24-16"><a href="#cb24-16"></a><span class="co">#&gt;     variable     class order specified.from exclude.user.specified</span></span>
@@ -1080,7 +1080,7 @@
 <span id="cb25-10"><a href="#cb25-10"></a><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(formula.consideration<span class="fl">.2</span>)</span>
 <span id="cb25-11"><a href="#cb25-11"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb25-12"><a href="#cb25-12"></a><span class="co">#&gt; Consideration ~ `Age Group` + Gender</span></span>
-<span id="cb25-13"><a href="#cb25-13"></a><span class="co">#&gt; &lt;environment: 0x000000001bf6c438&gt;</span></span>
+<span id="cb25-13"><a href="#cb25-13"></a><span class="co">#&gt; &lt;environment: 0x000000001c0a86c0&gt;</span></span>
 <span id="cb25-14"><a href="#cb25-14"></a><span class="co">#&gt; </span></span>
 <span id="cb25-15"><a href="#cb25-15"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb25-16"><a href="#cb25-16"></a><span class="co">#&gt;     variable     class order specified.from exclude.user.specified</span></span>
@@ -1113,7 +1113,7 @@
 <span id="cb26-6"><a href="#cb26-6"></a>  <span class="dt">max.input.categories =</span> <span class="dv">30</span></span>
 <span id="cb26-7"><a href="#cb26-7"></a>)<span class="op">$</span>formula</span>
 <span id="cb26-8"><a href="#cb26-8"></a><span class="co">#&gt; Satisfaction ~ Age + Income + Region</span></span>
-<span id="cb26-9"><a href="#cb26-9"></a><span class="co">#&gt; &lt;environment: 0x00000000156b5d70&gt;</span></span></code></pre></div>
+<span id="cb26-9"><a href="#cb26-9"></a><span class="co">#&gt; &lt;environment: 0x0000000015317da0&gt;</span></span></code></pre></div>
 </div>
 <div id="inspection-of-all-variables" class="section level3">
 <h3 class="hasAnchor">
@@ -1128,7 +1128,7 @@
 <span id="cb27-7"><a href="#cb27-7"></a>)<span class="op">$</span>formula</span>
 <span id="cb27-8"><a href="#cb27-8"></a><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona + Product + </span></span>
 <span id="cb27-9"><a href="#cb27-9"></a><span class="co">#&gt;     `Age Group` + `Income Group`</span></span>
-<span id="cb27-10"><a href="#cb27-10"></a><span class="co">#&gt; &lt;environment: 0x0000000019e04b28&gt;</span></span></code></pre></div>
+<span id="cb27-10"><a href="#cb27-10"></a><span class="co">#&gt; &lt;environment: 0x000000001a9a2838&gt;</span></span></code></pre></div>
 <p>All of the brand perceptions and other states of engagement were removed from the formula. This was due to a lack of contrast arising from the structurally missing values when the respondents were not aware of the product. Meanwhile, the User ID was removed due to its large number of categories. Only the names of the products and the respondent-specific variables remain. From this list, an investigator could then make selections of which variables to include (e.g. Age or Age Group). However, much of the preliminary investigation would be handled automatically. This is especially helpful in settings in which the full relationship of the variables – such as the sequence and dependencies of the marketing survey’s questions – is not yet fully understood.</p>
 </div>
 </div>
@@ -1158,7 +1158,7 @@
 <span id="cb28-7"><a href="#cb28-7"></a>)<span class="op">$</span>formula</span>
 <span id="cb28-8"><a href="#cb28-8"></a><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona + Product + </span></span>
 <span id="cb28-9"><a href="#cb28-9"></a><span class="co">#&gt;     `Age Group` + `Income Group`</span></span>
-<span id="cb28-10"><a href="#cb28-10"></a><span class="co">#&gt; &lt;environment: 0x000000001b648920&gt;</span></span></code></pre></div>
+<span id="cb28-10"><a href="#cb28-10"></a><span class="co">#&gt; &lt;environment: 0x000000001b776508&gt;</span></span></code></pre></div>
 </div>
 </div>
 </div>

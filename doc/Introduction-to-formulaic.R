@@ -56,17 +56,17 @@ create.formula(outcome.name = user.outcome.name, input.names = user.input.names)
 ## ----dataset-------------------------------------------------------------
 list(dim(snack.dat), names(snack.dat))
 
-## ----add.backtics example------------------------------------------------
+## ----add.backtick example------------------------------------------------
 as.needed = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'as.needed')
 all = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'all')
 
 library(DT)
 datatable(data = cbind(as.needed, all))
 
-## ----add.backtics example 2----------------------------------------------
+## ----add.backtick example 2----------------------------------------------
 create.formula(outcome.name = awareness.name, input.names = variable.names)$formula
 
-## ----add.backtics example 3----------------------------------------------
+## ----add.backtick example 3----------------------------------------------
 create.formula(
   outcome.name = awareness.name,
   input.names = variable.names,
@@ -74,7 +74,7 @@ create.formula(
   include.backtick = "all"
 )$formula
 
-## ----add.backtics example 4----------------------------------------------
+## ----add.backtick example 4----------------------------------------------
 create.formula(
   outcome.name = awareness.name,
   input.names = variable.names,

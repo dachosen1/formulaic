@@ -1,5 +1,7 @@
 # formulaic 0.0.3
 
+* now depends on R (>= 3.1.0). #feedback from reddit user 
+
 # formulaic 0.0.2
 
 * Added a `NEWS.md` file to track changes to the package.

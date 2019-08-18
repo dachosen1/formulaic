@@ -6,6 +6,7 @@
 ^\.Rprofile$
 ^doc$
 ^Meta$
+^.github
 =======
 ^data-raw$
 >>>>>>> origin

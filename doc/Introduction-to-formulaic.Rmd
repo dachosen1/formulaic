@@ -1,6 +1,7 @@
 ---
 title: "Introduction to Formulaic"
 output: rmarkdown::html_vignette
+author: 'Authors: David Shilane, Caffrey Lee,Caffrey Lee, Anderson Nelson'
 date: "`r Sys.Date()`"
 vignette: >
   %\VignetteIndexEntry{Introduction to Formulaic}
@@ -51,9 +52,9 @@ force.main.effects <- TRUE
  
 Across a wide variety of statistical techniques and machine learning algorithms, R’s formula object provides a standardized process for specifying the outcomes and inputs to be utilized when a method is applied to a data set. In typical examples, e.g. R’s help file for formula objects, a model is specified in a manual way with a formula such as **y ~ a + b + c**. For parsimonious models specified by a programmer, a manual selection and entry can be sufficient. However, a variety of applications can present more challenging circumstances in which manual specification may not be an effective strategy. Dynamically generated models may be specified by the user of a graphical interface (e.g. with R’s shiny package). In this case, a programmatic means of specifying a formula based on the user’s selections would be necessary. Even in manual settings, formula objects would benefit from additional quality checks that ensure that the model’s specification is appropriate for the data provided.
 
-Formulaic package has two main functions – **create.formula** and **reduce.existing.formula** – and one subsidiary function, **add.backtics**. The main purpose of developing the package is to help users to build a robust model faster and more convenient.
+Formulaic package has two main functions – **create.formula** and **reduce.existing.formula** – and one subsidiary function, **add.backtick**. The main purpose of developing the package is to help users to build a robust model faster and more convenient.
  
-**create.formula** automatically creates a formula from a provided list of input variables and the output variable. The variables will undergo a series of qualification tests such as automatic variable/categories reduction, typo, duplication, and lack of contrasted features elimination, etc. to make sure that a given feature is usable for modeling. This will reduce the time to build a model and set the users free from the trivial maneuver: manually inputting variables for modeling. The outcome of this formula can be used in a wide range from simple linear regression to any machine learning techniques such as random forest, neural network, etc. 
+**create.formula** automatically creates a formula from a provided list of input variables and the output variable. The variables will undergo a series of qualification tests such as automatic variable/categories reduction, typo, duplication, and lack of contrasted features elimination, etc. to make sure that a given feature is usable for modeling. This will reduce the time to build a model and set the users free from the trivial maneuver: manually inputting variables for modeling. The outcome of this formula can be used in a wide range from simple linear regression to more complex machine learning techniques such as random forest, neural network, etc. 
  
 The principal advantages of using create.formula are followed:
  
@@ -122,7 +123,7 @@ As a subsidiary function, add.backtick is used inside of create.formula function
  
 **NOTE**: In the snack.dat data, **User ID, Age Group, and Income Group** are the only variables that are affected by the function when the included.backtick is set as 'as.needed', while every variable has backticks when it is set as 'all'. 
 
-```{r add.backtics example}
+```{r add.backtick example}
 as.needed = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'as.needed')
 all = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'all')
 
@@ -132,11 +133,11 @@ datatable(data = cbind(as.needed, all))
 
 This feature is automatically incorporated into formulaic’s create.formula method:
 
-```{r add.backtics example 2}
+```{r add.backtick example 2}
 create.formula(outcome.name = awareness.name, input.names = variable.names)$formula
 ```
 
-```{r add.backtics example 3}
+```{r add.backtick example 3}
 create.formula(
   outcome.name = awareness.name,
   input.names = variable.names,
@@ -145,7 +146,7 @@ create.formula(
 )$formula
 ```
 
-```{r add.backtics example 4}
+```{r add.backtick example 4}
 create.formula(
   outcome.name = awareness.name,
   input.names = variable.names,
@@ -164,20 +165,33 @@ The create.formula function is designed to automatically generate formulas from 
  
 ### Parameter description:
 
- * outcome.name: The name of the variables serving as the outcome.
- * input.names: The names of the variables with the full names delineated.
- * input.patterns: Includes additional input variables.  The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector.  However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.
- * dat: User can specify a data.frame object that will be used to remove any variables not listed in names(dat). As a default, it is set as NULL. In this case, the formula is created simply from the outcome.name and input.names.
- * interactions: This is meant to be a list of character vectors. Each entry of the list is meant to specify all of the terms that will form a single interaction.
- * force.main.effects: This is a logical value. When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.
- * reduce: This is an option that users can take. As a default, it is set as FALSE. When the user set it as TRUE, it will go through the logic of checking for too few contrasts or too many contrasts.
- * max.input.categories: This limits the maximum number of variables that will be employed in the formula. As a default, it is set at 20, but users can still change at his/her convenience.
- * max.outcome.categories.to.search: This limits the maximum number of outcome categories will be investigated in the formula. As a default, it is set at 4, but users can still change at his/her convenience.
- * order.as: User can specify the order the input variables in the formula in a variety of ways for patterns: "increasing" for increasing alphabet order, "decreasing" for decreasing alphabet order, "column.order" for the order they appear in dataset, and "as.specified" for maintaining the user's specified order.
- * include.backtick: Add backticks if needed. As a default, it is set as 'as.needed', which adds backticks to variables only when it is needed. The other option is 'all'. The use of include.backtick = "all" is limited to cases in which the output is generated as a character variable. When the output is generated as a formula object, then R automatically removes all unnecessary backticks. That is, it is only compatible when format.as != formula.
- * format.as: The data type of the output. If not set as "formula", then a character vector will be returned.
- * variables.to.exclude: This will automatically drop the variable from the regression. It also supersedes any variables mentioned in input.names.
- * include.intercept: As a default it is set as 'TRUE'; however, if a user changes it to 'FALSE', then intercept will be removed from the result, the formula.
+- **outcome.name** A character value specifying the name of the formula's outcome variable.  In this version, only a single outcome may be included.  The first entry of outcome.name will be used to build the formula.
+
+- **input.names** The names of the variables with the full names delineated.
+ 
+- **input.patterns** Includes additional input variables. The user may enter patterns -- e.g. to include every variable with a name that includes the pattern.  Multiple patterns may be included as a character vector. However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.
+
+- **dat** User can specify a data.frame object that will be used to remove any variables that are not listed in names(dat. As default it is set as NULL. In this case, the formula is created simply from the outcome.name and input.names.
+
+- **interactions** A list of character vectors. Each character vector includes the names of the variables that form a single interaction.  Specifying interactions = list(c("x", "y"), c("x", "z"), c("y", "z"), c("x", "y", "z")) would lead to the interactions x*y + x*z + y*z + x*y*z.
+#' @param force.main.effects This is a logical value.  When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.
+
+- **reduce**  A logical value.  When dat is not NULL and reduce is TRUE, additional quality checks are performed to examine the input variables.  Any input variables that exhibit a lack of contrast will be excluded from the model. This search is global by default but may be conducted separately in subsets of the outcome variables by specifying max.outcome.categories.to.search.  Additionally, any input variables that exhibit too many contrasts, as defined by max.input.categories, will also be excluded.
+
+- **max.input.categories** Limits the maximum number of variables that will be employed in the formula. As default it is set at 20, but users can still change at his/her convenience.
+
+- **max.outcome.categories.to.search** A numeric value.  The create.formula function includes a feature that identifies input variables exhibiting a lack of contrast.  When reduce = TRUE, these variables are automatically excluded from the resulting formula.  This search may be expanded to subsets of the outcome when the number of unique measured values of the outcome is no greater than max.outcome.categories.to.search.  In this case, each subset of the outcome will be separately examined, and any inputs that exhibit a lack of contrast within at least one subset will be excluded.
+
+- **order.as** User can specify the order the input variables in the formula in a variety of ways for patterns: increasing for increasing alphabet order, decreasing for decreasing alphabet order, column.order for as they appear in data, and as.specified for maintaining the user's specified order.
+
+- **include.backtick** Add backticks if needed. As default it is set as 'as.needed', which add backticks when only it is needed. The other option is 'all'. The use of include.backtick = "all" is limited to cases in which the output is generated as a character variable. When the output is generated as a formula object, then R
+automatically removes all unnecessary backticks. That is, it is only compatible when format.as != formula.
+
+- **format.as** The data type of the output. If not set as "formula", then a character vector will be returned.
+ 
+- **variables.to.exclude**  A character vector. Any variable specified in variables.to.exclude will be dropped from the formula, both in the individual inputs and in any associated interactions.  This step supersedes the inclusion of any variables specified for inclusion in the other parameters.
+
+- **include.intercept** A logical value.  When FALSE, the intercept will be removed from the formula.
 
 
 ### Basic format
@@ -526,7 +540,7 @@ create.formula(
 
 ```
 
-All of the brand perceptions and other states of engagement were removed from the formula. This was due to a lack of contrast arising from the structurally missing values when the respondents were not aware of the product. Meanwhile, the User ID was removed due to its large number of categories. Only the names of the products and the respondent-specific variables remain. From this list, an investigator could then make selections of which variables to include (e.g. Age or Age Group). However, much of the preliminary investigation would be handled automatically. This is especially helpful in settings in which the full relationship of the variables – such as the sequence and dependenciesof the marketing survey’s questions – is not yet fully understood.
+All of the brand perceptions and other states of engagement were removed from the formula. This was due to a lack of contrast arising from the structurally missing values when the respondents were not aware of the product. Meanwhile, the User ID was removed due to its large number of categories. Only the names of the products and the respondent-specific variables remain. From this list, an investigator could then make selections of which variables to include (e.g. Age or Age Group). However, much of the preliminary investigation would be handled automatically. This is especially helpful in settings in which the full relationship of the variables – such as the sequence and dependencies of the marketing survey’s questions – is not yet fully understood.
 
 ## Reducing an Existing Formula (reduce.existing.formula):
 
@@ -535,9 +549,8 @@ The **reduce.existing.formula** function was designed to perform quality checks 
 ### Parameter description:
 *  the.initial.formula  object of class "lm" or for multiple responses of class c("mlm", "lm").
 *  dat Data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model.
-*  max.input.categories This limits the maximum number of variables that will be employeed in the formula. As default it is set at 20, but users can still change at his/her convinence.
-*  max.outcome.categories.to.search This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4, but users can still change at his/her convinence.
-*  force.main.effects This is a logical value.  When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.
+*  max.input.categories This limits the maximum number of variables that will be employed in the formula. As default it is set at 20, but users can still change at his/her convenience.
+*  max.outcome.categories.to.search This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4, but users can still change at his/her convenience
 *  order.as  rearranges its first argument into ascending or descending order.
 *  include.backtick Add backticks to make a appropriate variable
 *  format.as The data type of the output.  If not set as "formula", then a character vector will be returned.

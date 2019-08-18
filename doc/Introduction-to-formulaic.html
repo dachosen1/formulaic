@@ -11,8 +11,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<meta name="author" content="Authors: David Shilane, Caffrey Lee,Caffrey Lee, Anderson Nelson" />
 
-<meta name="date" content="2019-08-03" />
+<meta name="date" content="2019-08-18" />
 
 <title>Introduction to Formulaic</title>
 
@@ -2617,15 +2618,16 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 
 <h1 class="title toc-ignore">Introduction to Formulaic</h1>
-<h4 class="date">2019-08-03</h4>
+<h4 class="author">Authors: David Shilane, Caffrey Lee,Caffrey Lee, Anderson Nelson</h4>
+<h4 class="date">2019-08-18</h4>
 
 
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <p>Across a wide variety of statistical techniques and machine learning algorithms, R’s formula object provides a standardized process for specifying the outcomes and inputs to be utilized when a method is applied to a data set. In typical examples, e.g. R’s help file for formula objects, a model is specified in a manual way with a formula such as <strong>y ~ a + b + c</strong>. For parsimonious models specified by a programmer, a manual selection and entry can be sufficient. However, a variety of applications can present more challenging circumstances in which manual specification may not be an effective strategy. Dynamically generated models may be specified by the user of a graphical interface (e.g. with R’s shiny package). In this case, a programmatic means of specifying a formula based on the user’s selections would be necessary. Even in manual settings, formula objects would benefit from additional quality checks that ensure that the model’s specification is appropriate for the data provided.</p>
-<p>Formulaic package has two main functions – <strong>create.formula</strong> and <strong>reduce.existing.formula</strong> – and one subsidiary function, <strong>add.backtics</strong>. The main purpose of developing the package is to help users to build a robust model faster and more convenient.</p>
-<p><strong>create.formula</strong> automatically creates a formula from a provided list of input variables and the output variable. The variables will undergo a series of qualification tests such as automatic variable/categories reduction, typo, duplication, and lack of contrasted features elimination, etc. to make sure that a given feature is usable for modeling. This will reduce the time to build a model and set the users free from the trivial maneuver: manually inputting variables for modeling. The outcome of this formula can be used in a wide range from simple linear regression to any machine learning techniques such as random forest, neural network, etc.</p>
+<p>Formulaic package has two main functions – <strong>create.formula</strong> and <strong>reduce.existing.formula</strong> – and one subsidiary function, <strong>add.backtick</strong>. The main purpose of developing the package is to help users to build a robust model faster and more convenient.</p>
+<p><strong>create.formula</strong> automatically creates a formula from a provided list of input variables and the output variable. The variables will undergo a series of qualification tests such as automatic variable/categories reduction, typo, duplication, and lack of contrasted features elimination, etc. to make sure that a given feature is usable for modeling. This will reduce the time to build a model and set the users free from the trivial maneuver: manually inputting variables for modeling. The outcome of this formula can be used in a wide range from simple linear regression to more complex machine learning techniques such as random forest, neural network, etc.</p>
 <p>The principal advantages of using create.formula are followed:</p>
 <ol style="list-style-type: decimal">
 <li><p>Being able to dynamically generate a formula from a vector of inputs, without necessarily having to spell them all out by name.</p></li>
@@ -2647,7 +2649,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb1-8"><a href="#cb1-8"></a></span>
 <span id="cb1-9"><a href="#cb1-9"></a>ex.form<span class="op">$</span>formula</span>
 <span id="cb1-10"><a href="#cb1-10"></a><span class="co">#&gt; Awareness ~ Age + Gender + `Income Group` + Region + Persona</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co">#&gt; &lt;environment: 0x000000003047d198&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co">#&gt; &lt;environment: 0x000000002c546c50&gt;</span></span>
 <span id="cb1-12"><a href="#cb1-12"></a>lm_example &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formula =</span> ex.form, <span class="dt">data =</span> snack.dat)</span>
 <span id="cb1-13"><a href="#cb1-13"></a><span class="kw">summary</span>(lm_example)</span>
 <span id="cb1-14"><a href="#cb1-14"></a><span class="co">#&gt; </span></span>
@@ -2691,7 +2693,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb2-3"><a href="#cb2-3"></a></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="kw">create.formula</span>(<span class="dt">outcome.name =</span> user.outcome.name, <span class="dt">input.names =</span> user.input.names)<span class="op">$</span>formula</span>
 <span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt; Satisfaction ~ `Age Group` + Gender + Region</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt; &lt;environment: 0x0000000016e201a0&gt;</span></span></code></pre></div>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt; &lt;environment: 0x0000000016c60220&gt;</span></span></code></pre></div>
 </div>
 <div id="dataset-snack.dat" class="section level2">
 <h2>Dataset (snack.dat)</h2>
@@ -2725,13 +2727,13 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb4-3"><a href="#cb4-3"></a></span>
 <span id="cb4-4"><a href="#cb4-4"></a><span class="kw">library</span>(DT)</span>
 <span id="cb4-5"><a href="#cb4-5"></a><span class="kw">datatable</span>(<span class="dt">data =</span> <span class="kw">cbind</span>(as.needed, all))</span></code></pre></div>
-<div id="htmlwidget-dd88c9e30f4e014f362b" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-dd88c9e30f4e014f362b">{"x":{"filter":"none","data":[["Age","Gender","Income","Region","Persona","Product","Awareness","BP_For_Me_0_10","BP_Fits_Budget_0_10","BP_Tastes_Great_0_10","BP_Good_To_Share_0_10","BP_Like_Logo_0_10","BP_Special_Occasions_0_10","BP_Everyday_Snack_0_10","BP_Healthy_0_10","BP_Delicious_0_10","BP_Right_Amount_0_10","BP_Relaxing_0_10","Consideration","Consumption","Satisfaction","Advocacy","`Age Group`","`Income Group`","`User ID`"],["`Age`","`Gender`","`Income`","`Region`","`Persona`","`Product`","`Awareness`","`BP_For_Me_0_10`","`BP_Fits_Budget_0_10`","`BP_Tastes_Great_0_10`","`BP_Good_To_Share_0_10`","`BP_Like_Logo_0_10`","`BP_Special_Occasions_0_10`","`BP_Everyday_Snack_0_10`","`BP_Healthy_0_10`","`BP_Delicious_0_10`","`BP_Right_Amount_0_10`","`BP_Relaxing_0_10`","`Consideration`","`Consumption`","`Satisfaction`","`Advocacy`","`Age Group`","`Income Group`","`User ID`"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>as.needed<\/th>\n      <th>all<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-df1f43d9d52665a8c3ee" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-df1f43d9d52665a8c3ee">{"x":{"filter":"none","data":[["Age","Gender","Income","Region","Persona","Product","Awareness","BP_For_Me_0_10","BP_Fits_Budget_0_10","BP_Tastes_Great_0_10","BP_Good_To_Share_0_10","BP_Like_Logo_0_10","BP_Special_Occasions_0_10","BP_Everyday_Snack_0_10","BP_Healthy_0_10","BP_Delicious_0_10","BP_Right_Amount_0_10","BP_Relaxing_0_10","Consideration","Consumption","Satisfaction","Advocacy","`Age Group`","`Income Group`","`User ID`"],["`Age`","`Gender`","`Income`","`Region`","`Persona`","`Product`","`Awareness`","`BP_For_Me_0_10`","`BP_Fits_Budget_0_10`","`BP_Tastes_Great_0_10`","`BP_Good_To_Share_0_10`","`BP_Like_Logo_0_10`","`BP_Special_Occasions_0_10`","`BP_Everyday_Snack_0_10`","`BP_Healthy_0_10`","`BP_Delicious_0_10`","`BP_Right_Amount_0_10`","`BP_Relaxing_0_10`","`Consideration`","`Consumption`","`Satisfaction`","`Advocacy`","`Age Group`","`Income Group`","`User ID`"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>as.needed<\/th>\n      <th>all<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p>This feature is automatically incorporated into formulaic’s create.formula method:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">create.formula</span>(<span class="dt">outcome.name =</span> awareness.name, <span class="dt">input.names =</span> variable.names)<span class="op">$</span>formula</span>
 <span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt; Awareness ~ Age + Gender + `Income Group` + Region + Persona + </span></span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt;     Typo</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; &lt;environment: 0x00000000308d6a90&gt;</span></span></code></pre></div>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#&gt; &lt;environment: 0x000000002c99ddf8&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">create.formula</span>(</span>
 <span id="cb6-2"><a href="#cb6-2"></a>  <span class="dt">outcome.name =</span> awareness.name,</span>
 <span id="cb6-3"><a href="#cb6-3"></a>  <span class="dt">input.names =</span> variable.names,</span>
@@ -2754,20 +2756,19 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="parameter-description" class="section level3">
 <h3>Parameter description:</h3>
 <ul>
-<li>outcome.name: The name of the variables serving as the outcome.</li>
-<li>input.names: The names of the variables with the full names delineated.</li>
-<li>input.patterns: Includes additional input variables. The user may enter patterns – e.g. to include every variable with a name that includes the pattern. Multiple patterns may be included as a character vector. However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.</li>
-<li>dat: User can specify a data.frame object that will be used to remove any variables not listed in names(dat). As a default, it is set as NULL. In this case, the formula is created simply from the outcome.name and input.names.</li>
-<li>interactions: This is meant to be a list of character vectors. Each entry of the list is meant to specify all of the terms that will form a single interaction.</li>
-<li>force.main.effects: This is a logical value. When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.</li>
-<li>reduce: This is an option that users can take. As a default, it is set as FALSE. When the user set it as TRUE, it will go through the logic of checking for too few contrasts or too many contrasts.</li>
-<li>max.input.categories: This limits the maximum number of variables that will be employed in the formula. As a default, it is set at 20, but users can still change at his/her convenience.</li>
-<li>max.outcome.categories.to.search: This limits the maximum number of outcome categories will be investigated in the formula. As a default, it is set at 4, but users can still change at his/her convenience.</li>
-<li>order.as: User can specify the order the input variables in the formula in a variety of ways for patterns: “increasing” for increasing alphabet order, “decreasing” for decreasing alphabet order, “column.order” for the order they appear in dataset, and “as.specified” for maintaining the user’s specified order.</li>
-<li>include.backtick: Add backticks if needed. As a default, it is set as ‘as.needed’, which adds backticks to variables only when it is needed. The other option is ‘all’. The use of include.backtick = “all” is limited to cases in which the output is generated as a character variable. When the output is generated as a formula object, then R automatically removes all unnecessary backticks. That is, it is only compatible when format.as != formula.</li>
-<li>format.as: The data type of the output. If not set as “formula”, then a character vector will be returned.</li>
-<li>variables.to.exclude: This will automatically drop the variable from the regression. It also supersedes any variables mentioned in input.names.</li>
-<li>include.intercept: As a default it is set as ‘TRUE’; however, if a user changes it to ‘FALSE’, then intercept will be removed from the result, the formula.</li>
+<li><p><strong>outcome.name</strong> A character value specifying the name of the formula’s outcome variable. In this version, only a single outcome may be included. The first entry of outcome.name will be used to build the formula.</p></li>
+<li><p><strong>input.names</strong> The names of the variables with the full names delineated.</p></li>
+<li><p><strong>input.patterns</strong> Includes additional input variables. The user may enter patterns – e.g. to include every variable with a name that includes the pattern. Multiple patterns may be included as a character vector. However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.</p></li>
+<li><p><strong>dat</strong> User can specify a data.frame object that will be used to remove any variables that are not listed in names(dat. As default it is set as NULL. In this case, the formula is created simply from the outcome.name and input.names.</p></li>
+<li><p><strong>interactions</strong> A list of character vectors. Each character vector includes the names of the variables that form a single interaction. Specifying interactions = list(c(“x”, “y”), c(“x”, “z”), c(“y”, “z”), c(“x”, “y”, “z”)) would lead to the interactions x<em>y + x</em>z + y<em>z + x</em>y*z. #’ <span class="citation">@param</span> force.main.effects This is a logical value. When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.</p></li>
+<li><p><strong>reduce</strong> A logical value. When dat is not NULL and reduce is TRUE, additional quality checks are performed to examine the input variables. Any input variables that exhibit a lack of contrast will be excluded from the model. This search is global by default but may be conducted separately in subsets of the outcome variables by specifying max.outcome.categories.to.search. Additionally, any input variables that exhibit too many contrasts, as defined by max.input.categories, will also be excluded.</p></li>
+<li><p><strong>max.input.categories</strong> Limits the maximum number of variables that will be employed in the formula. As default it is set at 20, but users can still change at his/her convenience.</p></li>
+<li><p><strong>max.outcome.categories.to.search</strong> A numeric value. The create.formula function includes a feature that identifies input variables exhibiting a lack of contrast. When reduce = TRUE, these variables are automatically excluded from the resulting formula. This search may be expanded to subsets of the outcome when the number of unique measured values of the outcome is no greater than max.outcome.categories.to.search. In this case, each subset of the outcome will be separately examined, and any inputs that exhibit a lack of contrast within at least one subset will be excluded.</p></li>
+<li><p><strong>order.as</strong> User can specify the order the input variables in the formula in a variety of ways for patterns: increasing for increasing alphabet order, decreasing for decreasing alphabet order, column.order for as they appear in data, and as.specified for maintaining the user’s specified order.</p></li>
+<li><p><strong>include.backtick</strong> Add backticks if needed. As default it is set as ‘as.needed’, which add backticks when only it is needed. The other option is ‘all’. The use of include.backtick = “all” is limited to cases in which the output is generated as a character variable. When the output is generated as a formula object, then R automatically removes all unnecessary backticks. That is, it is only compatible when format.as != formula.</p></li>
+<li><p><strong>format.as</strong> The data type of the output. If not set as “formula”, then a character vector will be returned.</p></li>
+<li><p><strong>variables.to.exclude</strong> A character vector. Any variable specified in variables.to.exclude will be dropped from the formula, both in the individual inputs and in any associated interactions. This step supersedes the inclusion of any variables specified for inclusion in the other parameters.</p></li>
+<li><p><strong>include.intercept</strong> A logical value. When FALSE, the intercept will be removed from the formula.</p></li>
 </ul>
 </div>
 <div id="basic-format" class="section level3">
@@ -2784,7 +2785,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb8-10"><a href="#cb8-10"></a><span class="kw">print</span>(basic.form)</span>
 <span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; &lt;environment: 0x00000000315d5f98&gt;</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; &lt;environment: 0x000000002d678188&gt;</span></span>
 <span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt; </span></span>
 <span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb8-16"><a href="#cb8-16"></a><span class="co">#&gt;    variable     class order specified.from exclude.user.specified</span></span>
@@ -2825,7 +2826,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb9-15"><a href="#cb9-15"></a><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona + `Age Group` + </span></span>
 <span id="cb9-16"><a href="#cb9-16"></a><span class="co">#&gt;     `Age Group` * Gender + `Age Group` * Region + `Age Group` * </span></span>
 <span id="cb9-17"><a href="#cb9-17"></a><span class="co">#&gt;     Gender * Region</span></span>
-<span id="cb9-18"><a href="#cb9-18"></a><span class="co">#&gt; &lt;environment: 0x00000000156f1b48&gt;</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a><span class="co">#&gt; &lt;environment: 0x000000002bee4c48&gt;</span></span>
 <span id="cb9-19"><a href="#cb9-19"></a><span class="co">#&gt; </span></span>
 <span id="cb9-20"><a href="#cb9-20"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb9-21"><a href="#cb9-21"></a><span class="co">#&gt;     variable     class order specified.from exclude.user.specified</span></span>
@@ -2873,7 +2874,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb10-16"><a href="#cb10-16"></a><span class="co">#&gt;     BP_Like_Logo_0_10 + BP_Special_Occasions_0_10 + BP_Everyday_Snack_0_10 + </span></span>
 <span id="cb10-17"><a href="#cb10-17"></a><span class="co">#&gt;     BP_Healthy_0_10 + BP_Delicious_0_10 + BP_Right_Amount_0_10 + </span></span>
 <span id="cb10-18"><a href="#cb10-18"></a><span class="co">#&gt;     BP_Relaxing_0_10</span></span>
-<span id="cb10-19"><a href="#cb10-19"></a><span class="co">#&gt; &lt;environment: 0x000000003119ef28&gt;</span></span>
+<span id="cb10-19"><a href="#cb10-19"></a><span class="co">#&gt; &lt;environment: 0x000000002d29c000&gt;</span></span>
 <span id="cb10-20"><a href="#cb10-20"></a><span class="co">#&gt; </span></span>
 <span id="cb10-21"><a href="#cb10-21"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb10-22"><a href="#cb10-22"></a><span class="co">#&gt;                      variable     class order specified.from</span></span>
@@ -2952,7 +2953,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb11-12"><a href="#cb11-12"></a><span class="co">#&gt;     BP_Right_Amount_0_10 + BP_Relaxing_0_10 + Consideration + </span></span>
 <span id="cb11-13"><a href="#cb11-13"></a><span class="co">#&gt;     Consumption + Satisfaction + Advocacy + `Age Group` + `Income Group` + </span></span>
 <span id="cb11-14"><a href="#cb11-14"></a><span class="co">#&gt;     `User ID`</span></span>
-<span id="cb11-15"><a href="#cb11-15"></a><span class="co">#&gt; &lt;environment: 0x0000000016b45298&gt;</span></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="co">#&gt; &lt;environment: 0x00000000151d2b88&gt;</span></span>
 <span id="cb11-16"><a href="#cb11-16"></a><span class="co">#&gt; </span></span>
 <span id="cb11-17"><a href="#cb11-17"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb11-18"><a href="#cb11-18"></a><span class="co">#&gt;                      variable     class order specified.from</span></span>
@@ -3054,7 +3055,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb12-12"><a href="#cb12-12"></a><span class="co">#&gt;     BP_Right_Amount_0_10 + BP_Relaxing_0_10 + Consideration + </span></span>
 <span id="cb12-13"><a href="#cb12-13"></a><span class="co">#&gt;     Consumption + Satisfaction + Advocacy + `Age Group` + `Income Group` + </span></span>
 <span id="cb12-14"><a href="#cb12-14"></a><span class="co">#&gt;     `User ID`</span></span>
-<span id="cb12-15"><a href="#cb12-15"></a><span class="co">#&gt; &lt;environment: 0x00000000310f65a0&gt;</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a><span class="co">#&gt; &lt;environment: 0x000000002d241180&gt;</span></span>
 <span id="cb12-16"><a href="#cb12-16"></a><span class="co">#&gt; </span></span>
 <span id="cb12-17"><a href="#cb12-17"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb12-18"><a href="#cb12-18"></a><span class="co">#&gt;                      variable     class order specified.from</span></span>
@@ -3156,7 +3157,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb13-12"><a href="#cb13-12"></a><span class="co">#&gt;     BP_Right_Amount_0_10 + BP_Relaxing_0_10 + Consideration + </span></span>
 <span id="cb13-13"><a href="#cb13-13"></a><span class="co">#&gt;     Consumption + Satisfaction + Advocacy + `Age Group` + `Income Group` + </span></span>
 <span id="cb13-14"><a href="#cb13-14"></a><span class="co">#&gt;     `User ID`</span></span>
-<span id="cb13-15"><a href="#cb13-15"></a><span class="co">#&gt; &lt;environment: 0x0000000014cba268&gt;</span></span>
+<span id="cb13-15"><a href="#cb13-15"></a><span class="co">#&gt; &lt;environment: 0x000000002c258040&gt;</span></span>
 <span id="cb13-16"><a href="#cb13-16"></a><span class="co">#&gt; </span></span>
 <span id="cb13-17"><a href="#cb13-17"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb13-18"><a href="#cb13-18"></a><span class="co">#&gt;                      variable     class order specified.from</span></span>
@@ -3287,7 +3288,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb14-35"><a href="#cb14-35"></a><span class="co">#&gt;     BP_Like_Logo_0_10 + BP_Special_Occasions_0_10 + BP_Everyday_Snack_0_10 + </span></span>
 <span id="cb14-36"><a href="#cb14-36"></a><span class="co">#&gt;     BP_Healthy_0_10 + BP_Right_Amount_0_10 + BP_Relaxing_0_10 + </span></span>
 <span id="cb14-37"><a href="#cb14-37"></a><span class="co">#&gt;     Age * Income</span></span>
-<span id="cb14-38"><a href="#cb14-38"></a><span class="co">#&gt; &lt;environment: 0x00000000316b2d90&gt;</span></span>
+<span id="cb14-38"><a href="#cb14-38"></a><span class="co">#&gt; &lt;environment: 0x0000000017495e98&gt;</span></span>
 <span id="cb14-39"><a href="#cb14-39"></a><span class="co">#&gt; </span></span>
 <span id="cb14-40"><a href="#cb14-40"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb14-41"><a href="#cb14-41"></a><span class="co">#&gt;                      variable     class order specified.from</span></span>
@@ -3381,7 +3382,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb15-9"><a href="#cb15-9"></a><span class="kw">print</span>(outcomes.as.inputs.form)</span>
 <span id="cb15-10"><a href="#cb15-10"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb15-11"><a href="#cb15-11"></a><span class="co">#&gt; Income ~ Age</span></span>
-<span id="cb15-12"><a href="#cb15-12"></a><span class="co">#&gt; &lt;environment: 0x0000000030a48220&gt;</span></span>
+<span id="cb15-12"><a href="#cb15-12"></a><span class="co">#&gt; &lt;environment: 0x000000002cfae160&gt;</span></span>
 <span id="cb15-13"><a href="#cb15-13"></a><span class="co">#&gt; </span></span>
 <span id="cb15-14"><a href="#cb15-14"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb15-15"><a href="#cb15-15"></a><span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span></span>
@@ -3412,7 +3413,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb16-13"><a href="#cb16-13"></a><span class="kw">print</span>(duplicated.form)</span>
 <span id="cb16-14"><a href="#cb16-14"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb16-15"><a href="#cb16-15"></a><span class="co">#&gt; Awareness ~ Age + Income + Age * Income</span></span>
-<span id="cb16-16"><a href="#cb16-16"></a><span class="co">#&gt; &lt;environment: 0x00000000317513a8&gt;</span></span>
+<span id="cb16-16"><a href="#cb16-16"></a><span class="co">#&gt; &lt;environment: 0x000000002d1baec0&gt;</span></span>
 <span id="cb16-17"><a href="#cb16-17"></a><span class="co">#&gt; </span></span>
 <span id="cb16-18"><a href="#cb16-18"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb16-19"><a href="#cb16-19"></a><span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span></span>
@@ -3437,7 +3438,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb17-6"><a href="#cb17-6"></a><span class="kw">print</span>(formula.with.typo)</span>
 <span id="cb17-7"><a href="#cb17-7"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb17-8"><a href="#cb17-8"></a><span class="co">#&gt; Income ~ Age + Typo</span></span>
-<span id="cb17-9"><a href="#cb17-9"></a><span class="co">#&gt; &lt;environment: 0x00000000156aac70&gt;</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a><span class="co">#&gt; &lt;environment: 0x000000002be8edc0&gt;</span></span>
 <span id="cb17-10"><a href="#cb17-10"></a><span class="co">#&gt; </span></span>
 <span id="cb17-11"><a href="#cb17-11"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb17-12"><a href="#cb17-12"></a><span class="co">#&gt; Null data.table (0 rows and 0 cols)</span></span>
@@ -3451,7 +3452,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb18-5"><a href="#cb18-5"></a><span class="kw">print</span>(formula.without.typo)</span>
 <span id="cb18-6"><a href="#cb18-6"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb18-7"><a href="#cb18-7"></a><span class="co">#&gt; Income ~ Age</span></span>
-<span id="cb18-8"><a href="#cb18-8"></a><span class="co">#&gt; &lt;environment: 0x000000002ff1afa0&gt;</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a><span class="co">#&gt; &lt;environment: 0x000000002c327030&gt;</span></span>
 <span id="cb18-9"><a href="#cb18-9"></a><span class="co">#&gt; </span></span>
 <span id="cb18-10"><a href="#cb18-10"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb18-11"><a href="#cb18-11"></a><span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span></span>
@@ -3486,7 +3487,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb20-4"><a href="#cb20-4"></a></span>
 <span id="cb20-5"><a href="#cb20-5"></a><span class="kw">print</span>(formula.consideration<span class="op">$</span>formula)</span>
 <span id="cb20-6"><a href="#cb20-6"></a><span class="co">#&gt; Consideration ~ Age + Awareness</span></span>
-<span id="cb20-7"><a href="#cb20-7"></a><span class="co">#&gt; &lt;environment: 0x000000003112a648&gt;</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="co">#&gt; &lt;environment: 0x000000002d3fe3d0&gt;</span></span>
 <span id="cb20-8"><a href="#cb20-8"></a></span>
 <span id="cb20-9"><a href="#cb20-9"></a><span class="kw">glm</span>(<span class="dt">formula =</span> formula.consideration,</span>
 <span id="cb20-10"><a href="#cb20-10"></a>    <span class="dt">data =</span> snack.dat,</span>
@@ -3505,7 +3506,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb21-9"><a href="#cb21-9"></a><span class="kw">print</span>(formula.consideration)</span>
 <span id="cb21-10"><a href="#cb21-10"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb21-11"><a href="#cb21-11"></a><span class="co">#&gt; Consideration ~ Age</span></span>
-<span id="cb21-12"><a href="#cb21-12"></a><span class="co">#&gt; &lt;environment: 0x0000000031717638&gt;</span></span>
+<span id="cb21-12"><a href="#cb21-12"></a><span class="co">#&gt; &lt;environment: 0x000000002d89d520&gt;</span></span>
 <span id="cb21-13"><a href="#cb21-13"></a><span class="co">#&gt; </span></span>
 <span id="cb21-14"><a href="#cb21-14"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb21-15"><a href="#cb21-15"></a><span class="co">#&gt;     variable   class order specified.from exclude.user.specified</span></span>
@@ -3531,7 +3532,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb22-4"><a href="#cb22-4"></a></span>
 <span id="cb22-5"><a href="#cb22-5"></a><span class="kw">print</span>(formula.awareness<span class="op">$</span>formula)</span>
 <span id="cb22-6"><a href="#cb22-6"></a><span class="co">#&gt; Awareness ~ `Age Group` + Gender</span></span>
-<span id="cb22-7"><a href="#cb22-7"></a><span class="co">#&gt; &lt;environment: 0x0000000016e262f0&gt;</span></span></code></pre></div>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="co">#&gt; &lt;environment: 0x0000000016e12120&gt;</span></span></code></pre></div>
 <p>#<code>{r create.formula with lack of contrast 1} #glm(formula = formula.awareness$formula, data = #snack.dat[get(age.group.name) == &quot;[ 18, 35)&quot;,], family = &quot;binomial&quot;) #</code></p>
 <p>This particular example is designed to demonstrate the issue with a simple contradiction, and its root cause is easy to identify. In real applications, significant investigation may be required to determine which variables may be causing such an effect. The error message provided informs the user of a lack of contrast, but it does not identify which variable is causing the issue. In a formula that incorporates many inputs, there may be a number of different variables that each contribute to the issue.</p>
 <p>Within the formulaic package, the create.formula’s <strong>reduce</strong> parameter can be used to automatically identify categorical variables with a lack of contrast. When <strong>reduce = TRUE</strong> and a data set is provided, inputs with no variation are excluded from the resulting formula. The <strong>exclude.lack.contrast </strong> column of the output’s <strong>inclusion.table</strong> identifies which variables include a lack of contrast, and the <strong>min.categories</strong> column identifies the number of unique values for each variable. This is demonstrated with the call to create.formula below:</p>
@@ -3563,7 +3564,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb24-10"><a href="#cb24-10"></a><span class="kw">print</span>(formula.consideration<span class="fl">.1</span>)</span>
 <span id="cb24-11"><a href="#cb24-11"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb24-12"><a href="#cb24-12"></a><span class="co">#&gt; Consideration ~ `Age Group` + Gender + Awareness</span></span>
-<span id="cb24-13"><a href="#cb24-13"></a><span class="co">#&gt; &lt;environment: 0x0000000015f21d80&gt;</span></span>
+<span id="cb24-13"><a href="#cb24-13"></a><span class="co">#&gt; &lt;environment: 0x000000002c7185e8&gt;</span></span>
 <span id="cb24-14"><a href="#cb24-14"></a><span class="co">#&gt; </span></span>
 <span id="cb24-15"><a href="#cb24-15"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb24-16"><a href="#cb24-16"></a><span class="co">#&gt;     variable     class order specified.from exclude.user.specified</span></span>
@@ -3594,7 +3595,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb25-10"><a href="#cb25-10"></a><span class="kw">print</span>(formula.consideration<span class="fl">.2</span>)</span>
 <span id="cb25-11"><a href="#cb25-11"></a><span class="co">#&gt; $formula</span></span>
 <span id="cb25-12"><a href="#cb25-12"></a><span class="co">#&gt; Consideration ~ `Age Group` + Gender</span></span>
-<span id="cb25-13"><a href="#cb25-13"></a><span class="co">#&gt; &lt;environment: 0x0000000030fd0b38&gt;</span></span>
+<span id="cb25-13"><a href="#cb25-13"></a><span class="co">#&gt; &lt;environment: 0x000000002d0a0238&gt;</span></span>
 <span id="cb25-14"><a href="#cb25-14"></a><span class="co">#&gt; </span></span>
 <span id="cb25-15"><a href="#cb25-15"></a><span class="co">#&gt; $inclusion.table</span></span>
 <span id="cb25-16"><a href="#cb25-16"></a><span class="co">#&gt;     variable     class order specified.from exclude.user.specified</span></span>
@@ -3626,7 +3627,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb26-6"><a href="#cb26-6"></a>  <span class="dt">max.input.categories =</span> <span class="dv">30</span></span>
 <span id="cb26-7"><a href="#cb26-7"></a>)<span class="op">$</span>formula</span>
 <span id="cb26-8"><a href="#cb26-8"></a><span class="co">#&gt; Satisfaction ~ Age + Income + Region</span></span>
-<span id="cb26-9"><a href="#cb26-9"></a><span class="co">#&gt; &lt;environment: 0x0000000031aa8000&gt;</span></span></code></pre></div>
+<span id="cb26-9"><a href="#cb26-9"></a><span class="co">#&gt; &lt;environment: 0x000000002dc96aa8&gt;</span></span></code></pre></div>
 </div>
 <div id="inspection-of-all-variables" class="section level3">
 <h3>Inspection of All Variables</h3>
@@ -3640,8 +3641,8 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb27-7"><a href="#cb27-7"></a>)<span class="op">$</span>formula</span>
 <span id="cb27-8"><a href="#cb27-8"></a><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona + Product + </span></span>
 <span id="cb27-9"><a href="#cb27-9"></a><span class="co">#&gt;     `Age Group` + `Income Group`</span></span>
-<span id="cb27-10"><a href="#cb27-10"></a><span class="co">#&gt; &lt;environment: 0x000000001709fa38&gt;</span></span></code></pre></div>
-<p>All of the brand perceptions and other states of engagement were removed from the formula. This was due to a lack of contrast arising from the structurally missing values when the respondents were not aware of the product. Meanwhile, the User ID was removed due to its large number of categories. Only the names of the products and the respondent-specific variables remain. From this list, an investigator could then make selections of which variables to include (e.g. Age or Age Group). However, much of the preliminary investigation would be handled automatically. This is especially helpful in settings in which the full relationship of the variables – such as the sequence and dependenciesof the marketing survey’s questions – is not yet fully understood.</p>
+<span id="cb27-10"><a href="#cb27-10"></a><span class="co">#&gt; &lt;environment: 0x0000000016fa9da8&gt;</span></span></code></pre></div>
+<p>All of the brand perceptions and other states of engagement were removed from the formula. This was due to a lack of contrast arising from the structurally missing values when the respondents were not aware of the product. Meanwhile, the User ID was removed due to its large number of categories. Only the names of the products and the respondent-specific variables remain. From this list, an investigator could then make selections of which variables to include (e.g. Age or Age Group). However, much of the preliminary investigation would be handled automatically. This is especially helpful in settings in which the full relationship of the variables – such as the sequence and dependencies of the marketing survey’s questions – is not yet fully understood.</p>
 </div>
 </div>
 <div id="reducing-an-existing-formula-reduce.existing.formula" class="section level2">
@@ -3652,9 +3653,8 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <ul>
 <li>the.initial.formula object of class “lm” or for multiple responses of class c(“mlm”, “lm”).</li>
 <li>dat Data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model.</li>
-<li>max.input.categories This limits the maximum number of variables that will be employeed in the formula. As default it is set at 20, but users can still change at his/her convinence.</li>
-<li>max.outcome.categories.to.search This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4, but users can still change at his/her convinence.</li>
-<li>force.main.effects This is a logical value. When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.</li>
+<li>max.input.categories This limits the maximum number of variables that will be employed in the formula. As default it is set at 20, but users can still change at his/her convenience.</li>
+<li>max.outcome.categories.to.search This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4, but users can still change at his/her convenience</li>
 <li>order.as rearranges its first argument into ascending or descending order.</li>
 <li>include.backtick Add backticks to make a appropriate variable</li>
 <li>format.as The data type of the output. If not set as “formula”, then a character vector will be returned.</li>
@@ -3669,7 +3669,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <span id="cb28-7"><a href="#cb28-7"></a>)<span class="op">$</span>formula</span>
 <span id="cb28-8"><a href="#cb28-8"></a><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona + Product + </span></span>
 <span id="cb28-9"><a href="#cb28-9"></a><span class="co">#&gt;     `Age Group` + `Income Group`</span></span>
-<span id="cb28-10"><a href="#cb28-10"></a><span class="co">#&gt; &lt;environment: 0x00000000310e85c8&gt;</span></span></code></pre></div>
+<span id="cb28-10"><a href="#cb28-10"></a><span class="co">#&gt; &lt;environment: 0x000000002d16b698&gt;</span></span></code></pre></div>
 </div>
 </div>
 </div>

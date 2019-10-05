@@ -5,6 +5,7 @@
 #' @param  x  Character value specifying the name of input parameters.
 #' @param  include.backtick specifies whether a backtick should be added. Parameter values should be either 'all' or 'as.needed'
 #' @export
+
 add.backtick <- function(x, include.backtick = "as.needed"){
   if(include.backtick == "all"){
     w <- 1:length(x)

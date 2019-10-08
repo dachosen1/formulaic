@@ -41,7 +41,7 @@ create.formula(outcome.name, input.names = NULL, input.patterns = NULL,
 \item{include.intercept}{A logical value. When FALSE, the intercept will be removed from the formula.}
 }
 \description{
-Create formula is a tool to automatically create a formula from a provided variable and output names. Reduces the time required to manually input variables for modeling. Output can be used in linear regression, random forest, neural network etc. Create formula becomes useful when modeling data with multiple features. Reduces the time required for modeling and implementation :
+Create formula is a tool to automatically create a formula object from a provided variable and output names. Reduces the time required to manually input variables for modeling. Output can be used in linear regression, random forest, neural network etc. Create formula becomes useful when modeling data with multiple features. Reduces the time required for modeling and implementation :
 }
 \details{
 Return as the data type of the output.  If not set as "formula", then a character vector will be returned.

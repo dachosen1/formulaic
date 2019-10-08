@@ -1,18 +1,20 @@
 #' Add backtick
 #'
-#' Function that add backticks to the names of the variables.
+#' Function that add backticks to the input variables.
 #'
 #' @param  x  Character value specifying the name of input parameters.
 #' @param  include.backtick specifies whether a backtick should be added. Parameter values should be either 'all' or 'as.needed'
 #' @export
-add.backtick <- function(x, include.backtick = "as.needed"){
-  if(include.backtick == "all"){
+add.backtick <- function(x, include.backtick = "as.needed") {
+  if (include.backtick == "all") {
     w <- 1:length(x)
   }
-  if(include.backtick == "as.needed"){
-    w <- grep(pattern = " ", x = x, fixed = TRUE)
+  if (include.backtick == "as.needed") {
+    w <- grep(pattern = " ",
+              x = x,
+              fixed = TRUE)
   }
-  if(length(w) > 0){
+  if (length(w) > 0) {
     x[w] <- sprintf("`%s`", x[w])
   }
   return(x)
@@ -20,7 +22,7 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 
 #' Create Formula
 #'
-#' Create formula is a tool to automatically create a formula from a provided variable and output names. Reduces the time required to manually input variables for modeling. Output can be used in linear regression, random forest, neural network etc. Create formula becomes useful when modeling data with multiple features. Reduces the time required for modeling and implementation :
+#' Create formula is a tool to automatically create a formula object from a provided variable and output names. Reduces the time required to manually input variables for modeling. Output can be used in linear regression, random forest, neural network etc. Create formula becomes useful when modeling data with multiple features. Reduces the time required for modeling and implementation :
 
 #' @param outcome.name A character value specifying the name of the formula's outcome variable. In this version, only a single outcome may be included. The first entry of outcome.name will be used to build the formula.
 #' @param input.names The names of the variables with the full names delineated.
@@ -66,7 +68,6 @@ create.formula <-
            format.as = "formula",
            variables.to.exclude = NULL,
            include.intercept = TRUE) {
-
     specified.from <-
       exclude.not.in.names.dat <-
       exclude.matches.outcome.name <-
@@ -105,7 +106,8 @@ create.formula <-
 
       if (!is.null(input.names)) {
         if ("." %in% input.names) {
-          input.names <- unique(c(input.names[input.names != "."], names(dat)))
+          input.names <-
+            unique(c(input.names[input.names != "."], names(dat)))
         }
       }
       if (length(names(dat)) == 0) {
@@ -379,7 +381,7 @@ create.formula <-
     the.formula <-
       sprintf("%s ~ %s", outcome.name.delineated, paste(rhs, collapse = " + "))
 
-    if(include.intercept == FALSE){
+    if (include.intercept == FALSE) {
       the.formula <- sprintf("%s - 1", the.formula)
     }
 
@@ -428,7 +430,6 @@ reduce.existing.formula <-
            order.as = "as.specified",
            include.backtick = "as.needed",
            format.as = "formula") {
-
     if (class(the.initial.formula) == "formula") {
       the.sides <- as.character(the.initial.formula)[2:3]
     }

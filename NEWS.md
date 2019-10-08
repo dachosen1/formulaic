@@ -1,3 +1,8 @@
+# formulaic 0.0.4
+* Export function add.backtick 
+* Modified Formulaic Vignette
+
+
 # formulaic 0.0.3
 
 * now depends on R (>= 3.1.0). #feedback from reddit user 

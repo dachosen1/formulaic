@@ -1,6 +1,6 @@
 Package: formulaic
 Title: Dynamic Generation and Quality Checks of Formula Objects
-Version: 0.0.3
+Version: 0.0.4
 Authors@R: c(
     person("David", "Shilane", , "david.shilane@columbia.edu", c("aut")),
     person("Caffrey", "Lee", , "cl3802@columbia.edu", c("ctb")),

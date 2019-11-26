@@ -4,10 +4,16 @@
 \alias{reduce.existing.formula}
 \title{Reduce Existing Formula}
 \usage{
-reduce.existing.formula(the.initial.formula, dat,
-  max.input.categories = 20, max.outcome.categories.to.search = 4,
-  force.main.effects = TRUE, order.as = "as.specified",
-  include.backtick = "as.needed", format.as = "formula")
+reduce.existing.formula(
+  the.initial.formula,
+  dat,
+  max.input.categories = 20,
+  max.outcome.categories.to.search = 4,
+  force.main.effects = TRUE,
+  order.as = "as.specified",
+  include.backtick = "as.needed",
+  format.as = "formula"
+)
 }
 \arguments{
 \item{the.initial.formula}{is an object of class "formula" or "character" that states the inputs and output in the form y ~ x1 + x2.}

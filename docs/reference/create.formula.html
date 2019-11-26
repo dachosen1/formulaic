@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">formulaic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5</span>
       </span>
     </div>
 
@@ -124,12 +124,22 @@
     <p>Create formula is a tool to automatically create a formula object from a provided variable and output names. Reduces the time required to manually input variables for modeling. Output can be used in linear regression, random forest, neural network etc. Create formula becomes useful when modeling data with multiple features. Reduces the time required for modeling and implementation :</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create.formula</span>(<span class='no'>outcome.name</span>, <span class='kw'>input.names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>input.patterns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>force.main.effects</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>reduce</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>max.input.categories</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-  <span class='kw'>max.outcome.categories.to.search</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>order.as</span> <span class='kw'>=</span> <span class='st'>"as.specified"</span>,
-  <span class='kw'>include.backtick</span> <span class='kw'>=</span> <span class='st'>"as.needed"</span>, <span class='kw'>format.as</span> <span class='kw'>=</span> <span class='st'>"formula"</span>,
-  <span class='kw'>variables.to.exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>include.intercept</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>create.formula</span>(
+  <span class='no'>outcome.name</span>,
+  <span class='kw'>input.names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>input.patterns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>force.main.effects</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>reduce</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>max.input.categories</span> <span class='kw'>=</span> <span class='fl'>20</span>,
+  <span class='kw'>max.outcome.categories.to.search</span> <span class='kw'>=</span> <span class='fl'>4</span>,
+  <span class='kw'>order.as</span> <span class='kw'>=</span> <span class='st'>"as.specified"</span>,
+  <span class='kw'>include.backtick</span> <span class='kw'>=</span> <span class='st'>"as.needed"</span>,
+  <span class='kw'>format.as</span> <span class='kw'>=</span> <span class='st'>"formula"</span>,
+  <span class='kw'>variables.to.exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>include.intercept</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -199,7 +209,7 @@ The input.names and names of variables matching the input.patterns will be conca
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'> <span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>
- <span class='no'>dd</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/data.table/man/data.table.html'>data.table</a></span>(<span class='kw'>w</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span><span class='kw'>=</span> <span class='no'>n</span>), <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='no'>n</span>), <span class='kw'>pixel_1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='no'>n</span>))
+ <span class='no'>dd</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(<span class='kw'>w</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span><span class='kw'>=</span> <span class='no'>n</span>), <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='no'>n</span>), <span class='kw'>pixel_1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='no'>n</span>))
  <span class='no'>dd</span>[, <span class='no'>pixel_2</span> <span class='kw'>:=</span> <span class='fl'>0.3</span> * <span class='no'>pixel_1</span> + <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>n</span>)]</div><div class='output co'>#&gt;                w           x     pixel_1    pixel_2
 #&gt;  1: -1.400043517 -0.55369938  0.46815442  1.0758095
 #&gt;  2:  0.255317055  0.62898204  0.36295126  0.2853740
@@ -223,7 +233,7 @@ The input.names and names of variables matching the input.patterns will be conca
 #&gt; 10: -0.282705449 -0.91407483 -1.51239965  0.6135880 -9.7921176</div><div class='input'>
  <span class='fu'>create.formula</span>(<span class='kw'>outcome.name</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>input.names</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>input.patterns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pi"</span>, <span class='st'>"xel"</span>), <span class='kw'>dat</span> <span class='kw'>=</span> <span class='no'>dd</span>)</div><div class='output co'>#&gt; $formula
 #&gt; y ~ x + pixel_1 + pixel_2
-#&gt; &lt;environment: 0x0000000020e77050&gt;
+#&gt; &lt;environment: 0x0000000020b749b0&gt;
 #&gt; 
 #&gt; $inclusion.table
 #&gt;    variable   class order specified.from exclude.user.specified

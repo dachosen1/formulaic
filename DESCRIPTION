@@ -1,6 +1,6 @@
 Package: formulaic
 Title: Dynamic Generation and Quality Checks of Formula Objects
-Version: 0.0.4
+Version: 0.0.5
 Authors@R: c(
     person("David", "Shilane", , "david.shilane@columbia.edu", c("aut")),
     person("Caffrey", "Lee", , "cl3802@columbia.edu", c("ctb")),
@@ -14,7 +14,7 @@ BugReports: https://github.com/dachosen1/formulaic/issues
 License: GPL-3 
 Encoding: UTF-8
 LazyData: TRUE
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.1
 Imports: 
     data.table,
     stats,

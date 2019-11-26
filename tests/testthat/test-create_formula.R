@@ -19,14 +19,6 @@ formula.1 <- create.formula(
 )
 
 
-formula.2 <- create.formula(
-  outcome.name = "y",
-  input.names = c("x", "Random error", "y"),
-  input.patterns = c("pix"),
-  dat = dd,
-  include.backtick = FALSE
-)
-
 test_that('Formula resutls',
           {
             expect_equal(formula.1$formula, y ~ x + pixel_1 + `pixel 2` + pixel_3)

@@ -9,10 +9,8 @@
 
 ## Overview 
 
-**Formulaic** is useful to create a dynamic formula with multiple features. It not only diminishes the time required for modeling and implementing, but also enriches the quality of the result.
-
-Many statistical models and analyses in R are implemented through formula objects. The formulaic package creates a unified approach for programmatically and dynamically generating formula objects in R. Users may specify the inputs and outcomes of a model directly, search for variables to include based upon naming patterns, and identify variables to exclude. A wide range of quality checks are implemented to identify issues such as misspecified variables, duplication, a lack of contrast in the inputs, and a large number of levels in categorical data. These issues are documented and reported in a manner that provides greater accountability and useful information to guide an investigators choices in selecting features.
-
+**Formulaic** is useful in creating a dynamic formula with multiple features. It not only diminishes the time required for modeling and implementing, but also enriches the quality of the result.
+Many statistical models and analyses in R are implemented through formula objects. The formulaic package creates a unified approach for programmatically and dynamically generating formula objects in R. Users may specify the inputs and outcomes of a model directly, search for variables to include based upon naming patterns, and identify variables to exclude. A wide range of quality checks is implemented to identify issues such as misspecified variables, duplication, a lack of contrast in the inputs, and a large number of levels in categorical data. These issues are documented and reported in a manner that provides greater accountability and useful information to guide the investigator's choices in selecting features.
 Dynamically generated formula objects can enable the development of applications that incorporate a user's inputs for selecting the variables of a model and the subsets of data to include. The quality checks enable a programmatic reduction of the inputs to those that are appropriate for inclusion in the model. By automatically limiting these selections, many models that would lead to errors or intractable computations may be proactively avoided. By performing this process in the creation of the formula, all statistical models and analyses relying on formula objects can easily make use of these features. Furthermore, the list of quality checks can be easily expanded to incorporate additional concerns.
 
 ## Install the current release from CRAN:
@@ -29,9 +27,9 @@ devtools::install_github('dachosen1/formulaic')
 
 Formulaic package has two main functions – **create.formula** and **reduce.existing.formula** – and one subsidiary function, **add.backticks**. The main purpose of developing the package is to help users to build a robust model faster and more convenient.
  
-**create.formula** automatically creates a formula from a provided list of input variables and the output variable. The variables will undergo a series of qualification tests such as automatic variable/categories reduction, typo, duplication, and lack of contrasted features elimination, etc. to make sure that a given feature is usable for modeling. This will reduce the time to build a model and set the users free from the trivial maneuver: manually inputting variables for modeling. The outcome of this formula can be used in a wide range from simple linear regression to any machine learning techniques such as random forest, neural network, etc. 
- 
-The principal advantages of using create.formula are followed:
+**create.formula** automatically creates a formula from a provided list of input variables and the output variable. The variables will undergo a series of qualification tests such as automatic variable/categories reduction, typo, duplication, and lack of contrasted features elimination, etc. to make sure that a given feature is used for modeling. This will reduce the time to build a model and set the users free from the trivial maneuver: manually inputting variables for modeling. The outcome of this formula can be used in a wide range from simple linear regression to any machine learning techniques such as random forest, neural network, etc. 
+
+The principal advantages of using create.formula are as followed:
  
 1) Being able to dynamically generate a formula from a vector of inputs, without necessarily having to spell them all out by name. 
 
@@ -43,9 +41,10 @@ The principal advantages of using create.formula are followed:
  
 5) Quality checks that resolve a variety of issues -- typos, duplication, lack of contrast, etc. -- while providing a transparent explanation.
  
-**reduce.existing.formula** trims an existing formula down. Users plug an existing formula into the function, then it will undergo the same test as create.formula.
+**reduce.existing.formula** Trims existing formula . Users plug an existing formula into the function; then, it will undergo the same test as create.formula.
  
-**add.backticks** applies backticks the variables needs backticks to be employed in a formula as default. Users can also add backticks to all the variables; however, it is not necessary.   
+**add.backticks** applies backticks to the variables that require backticks to be employed in a formula as default. Users can also add backticks to all the variables; however, it is not necessary.   
+
  
 ### Example 
  
@@ -58,13 +57,13 @@ dd[, item_1 := 0.3 * pixel_3 + rnorm(n)]
 dd[, item_2 := 0.3 * pixel_3 + rnorm(n)]
 dd[, y := 5 * x + 3 * pixel_1 + 2 * pixel_3 + rnorm(n)]
 ```
-The resulting script create a data.table with 8 unique features 
+The resulting script create a data.table with 8 unique features.
 
 ```r 
 names(dd)
 "w"       "x"       "pixel_1" "pixel 2" "pixel_3" "item_1"  "item_2"  "y"  
 ```
-Traditionally, creating a formula in R required the user to manually select the desired variables or use the y~. notation to select all the features. **`formulaic`** is useful to programmatically select variables to include and performs quality check against the input. 
+Traditionally, creating a formula in R required the user to select the desired variables or use the y~ . notation to select all the features. **`formulaic`** is useful to choose variables programmatically to include and perform a quality check against the input.
 
 **use case:** Creating a model with all pixel patterns 
 
@@ -75,9 +74,9 @@ formula1 <- create.formula(outcome.name = "y", input.names = c("x","Random error
 formula1$formula
 y ~ x + pixel_1 + `pixel 2` + pixel_3
 ```
-The result is a formula object of all the pixel variables and the input x. Notice that 'Random error' variable was automatically excluded from the output and a backtick was automatically added to the variable pixel 2. Since the the independent variable y was included as feature, it was excluded from the output formula. 
+The result is a formula object of all the pixel variables and the input x. Notice that the 'Random error' variable was automatically excluded from the output, and a backtick was automatically added to the variable pixel 2. Since the independent variable y was included as a feature, it was excluded from the output formula. 
 
-Details of the variables included is provided in the inclusion table 
+Details of the variables included are provided in the inclusion table 
 
 ```r 
 # inclustion table

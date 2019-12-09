@@ -81,7 +81,7 @@ variable.names = c("Age", "Gender", "Income Group", "Region", "Persona", "Typo")
 
 ex.form <-
   create.formula(outcome.name = awareness.name,
-                 input.names = variable.names,
+                 input.names = 'variable.names',
                  dat = snack.dat)
 
 ex.form$formula
@@ -151,7 +151,7 @@ create.formula(
   outcome.name = awareness.name,
   input.names = variable.names,
   format.as = "character",
-  include.backtick = "as.needed"
+  include.backtick = "all"
 )$formula
 ```
 

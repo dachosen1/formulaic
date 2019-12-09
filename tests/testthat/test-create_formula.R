@@ -18,16 +18,32 @@ formula.1 <- create.formula(
   dat = dd
 )
 
+formula.2 <- create.formula(
+  outcome.name = "y",
+  input.names = '.',
+  input.patterns = c("pix"),
+  dat = dd,
+  include.backtick = 'all'
+)
 
-test_that('Formula resutls',
+all.inputs <- `y`~ `w` + `x` + `pixel_1` + `pixel 2` + `pixel_3` + `item_1` + `item_2`
+
+test_that('Inclusion table: input names',
           {
             expect_equal(formula.1$formula, y ~ x + pixel_1 + `pixel 2` + pixel_3)
+            expect_equal(nrow(formula.1$inclusion.table), ncol(dd))
             expect_false(formula.1$inclusion.table[formula.1$inclusion.table$variable == "Random error"]$include.variable)
+            expect_false(formula.1$inclusion.table[formula.1$inclusion.table$variable == "y"]$include.variable)
           })
 
+test_that('Formula output',
+          expect_that(formula.1$formula, is_a('formula')))
 
-
-
-
+test_that(
+  'input names all',
+  expect_equal(
+    formula.2$formula,all.inputs
+  )
+)
 
 

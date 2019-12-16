@@ -124,8 +124,8 @@ As a subsidiary function, add.backtick is used inside of create.formula function
 **NOTE**: In the snack.dat data, **User ID, Age Group, and Income Group** are the only variables that are affected by the function when the included.backtick is set as 'as.needed', while every variable has backticks when it is set as 'all'. 
 
 ```{r add.backtick example}
-as.needed = formulaic:::add.backtick(x = names(snack.dat), i.backtick = 'as.needed')
-all = formulaic:::add.backtick(x = names(snack.dat), i.backtick = 'all')
+as.needed = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'as.needed')
+all = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'all')
 
 library(DT)
 datatable(data = cbind(as.needed, all))

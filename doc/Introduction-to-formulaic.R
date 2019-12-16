@@ -57,8 +57,8 @@ create.formula(outcome.name = user.outcome.name, input.names = user.input.names)
 list(dim(snack.dat), names(snack.dat))
 
 ## ----add.backtick example-----------------------------------------------------
-as.needed = formulaic:::add.backtick(x = names(snack.dat), i.backtick = 'as.needed')
-all = formulaic:::add.backtick(x = names(snack.dat), i.backtick = 'all')
+as.needed = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'as.needed')
+all = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'all')
 
 library(DT)
 datatable(data = cbind(as.needed, all))

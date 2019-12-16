@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
@@ -13,7 +12,7 @@
 
 <meta name="author" content="Authors: David Shilane, Caffrey Lee, Zoe Huang, Anderson Nelson" />
 
-<meta name="date" content="2019-11-26" />
+<meta name="date" content="2019-12-15" />
 
 <title>Introduction to Formulaic</title>
 
@@ -2704,7 +2703,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Introduction to Formulaic</h1>
 <h4 class="author">Authors: David Shilane, Caffrey Lee, Zoe Huang, Anderson Nelson</h4>
-<h4 class="date">2019-11-26</h4>
+<h4 class="date">2019-12-15</h4>
 
 
 
@@ -2734,7 +2733,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb1-8" title="8"></a>
 <a class="sourceLine" id="cb1-9" title="9">ex.form<span class="op">$</span>formula</a>
 <a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; Awareness ~ 1</span></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; &lt;environment: 0x000000001758fc20&gt;</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; &lt;environment: 0x000000002cf58e88&gt;</span></a>
 <a class="sourceLine" id="cb1-12" title="12">lm_example &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="dt">formula =</span> ex.form, <span class="dt">data =</span> snack.dat)</a>
 <a class="sourceLine" id="cb1-13" title="13"><span class="kw">summary</span>(lm_example)</a>
 <a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt; </span></a>
@@ -2762,7 +2761,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb2-3" title="3"></a>
 <a class="sourceLine" id="cb2-4" title="4"><span class="kw">create.formula</span>(<span class="dt">outcome.name =</span> user.outcome.name, <span class="dt">input.names =</span> user.input.names)<span class="op">$</span>formula</a>
 <a class="sourceLine" id="cb2-5" title="5"><span class="co">#&gt; Satisfaction ~ `Age Group` + Gender + Region</span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt; &lt;environment: 0x000000002c5b2ae8&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt; &lt;environment: 0x00000000173257a8&gt;</span></a></code></pre></div>
 </div>
 <div id="dataset-snack.dat" class="section level2">
 <h2>Dataset (snack.dat)</h2>
@@ -2791,18 +2790,18 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <h2>Adding Backticks (add.backtick)</h2>
 <p>As a subsidiary function, add.backtick is used inside of create.formula function that adds backticks to the names of the variables. Formula objects include the names of different variables within a data.frame. When these names contain a space, the name must be encapsulated in backticks to ensure proper formatting. For instance, if there are three variables called y, x1, and User ID, then a formula formatted as y ~ x1 + User ID will generate <strong>errors due to the space in User ID</strong>. Instead, this formula can be properly formatted as <code>y ~ x1 + `User ID`</code>. Meanwhile, it is also acceptable to add backticks to the other names, such as <code>`y` ~ `x1` + `User ID`</code>, but this is not a necessary step. As a default, the include.backtick is set to ‘as.needed’, which indicates that the function will only add backticks to the variables that require them. The user has the freedom to change the option to ‘all’. Yet, it is only compatible when format.as != “formula”, in which case a character object is returned. In particular, a formula object will automatically remove unnecessary backticks.</p>
 <p><strong>NOTE</strong>: In the snack.dat data, <strong>User ID, Age Group, and Income Group</strong> are the only variables that are affected by the function when the included.backtick is set as ‘as.needed’, while every variable has backticks when it is set as ‘all’.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">as.needed =<span class="st"> </span>formulaic<span class="op">:::</span><span class="kw">add.backtick</span>(<span class="dt">x =</span> <span class="kw">names</span>(snack.dat), <span class="dt">i.backtick =</span> <span class="st">&#39;as.needed&#39;</span>)</a>
-<a class="sourceLine" id="cb4-2" title="2">all =<span class="st"> </span>formulaic<span class="op">:::</span><span class="kw">add.backtick</span>(<span class="dt">x =</span> <span class="kw">names</span>(snack.dat), <span class="dt">i.backtick =</span> <span class="st">&#39;all&#39;</span>)</a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">as.needed =<span class="st"> </span>formulaic<span class="op">:::</span><span class="kw">add.backtick</span>(<span class="dt">x =</span> <span class="kw">names</span>(snack.dat), <span class="dt">include.backtick =</span> <span class="st">&#39;as.needed&#39;</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2">all =<span class="st"> </span>formulaic<span class="op">:::</span><span class="kw">add.backtick</span>(<span class="dt">x =</span> <span class="kw">names</span>(snack.dat), <span class="dt">include.backtick =</span> <span class="st">&#39;all&#39;</span>)</a>
 <a class="sourceLine" id="cb4-3" title="3"></a>
 <a class="sourceLine" id="cb4-4" title="4"><span class="kw">library</span>(DT)</a>
 <a class="sourceLine" id="cb4-5" title="5"><span class="kw">datatable</span>(<span class="dt">data =</span> <span class="kw">cbind</span>(as.needed, all))</a></code></pre></div>
-<div id="htmlwidget-e398ff042548127b191e" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e398ff042548127b191e">{"x":{"filter":"none","data":[["`User ID`","Age","Gender","Income","Region","Persona","Product","Awareness","BP_For_Me_0_10","BP_Fits_Budget_0_10","BP_Tastes_Great_0_10","BP_Good_To_Share_0_10","BP_Like_Logo_0_10","BP_Special_Occasions_0_10","BP_Everyday_Snack_0_10","BP_Healthy_0_10","BP_Delicious_0_10","BP_Right_Amount_0_10","BP_Relaxing_0_10","Consideration","Consumption","Satisfaction","Advocacy","`Age Group`","`Income Group`"],["`User ID`","`Age`","`Gender`","`Income`","`Region`","`Persona`","`Product`","`Awareness`","`BP_For_Me_0_10`","`BP_Fits_Budget_0_10`","`BP_Tastes_Great_0_10`","`BP_Good_To_Share_0_10`","`BP_Like_Logo_0_10`","`BP_Special_Occasions_0_10`","`BP_Everyday_Snack_0_10`","`BP_Healthy_0_10`","`BP_Delicious_0_10`","`BP_Right_Amount_0_10`","`BP_Relaxing_0_10`","`Consideration`","`Consumption`","`Satisfaction`","`Advocacy`","`Age Group`","`Income Group`"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>as.needed<\/th>\n      <th>all<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-357fc66ee5d5b82753fe" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-357fc66ee5d5b82753fe">{"x":{"filter":"none","data":[["`User ID`","Age","Gender","Income","Region","Persona","Product","Awareness","BP_For_Me_0_10","BP_Fits_Budget_0_10","BP_Tastes_Great_0_10","BP_Good_To_Share_0_10","BP_Like_Logo_0_10","BP_Special_Occasions_0_10","BP_Everyday_Snack_0_10","BP_Healthy_0_10","BP_Delicious_0_10","BP_Right_Amount_0_10","BP_Relaxing_0_10","Consideration","Consumption","Satisfaction","Advocacy","`Age Group`","`Income Group`"],["`User ID`","`Age`","`Gender`","`Income`","`Region`","`Persona`","`Product`","`Awareness`","`BP_For_Me_0_10`","`BP_Fits_Budget_0_10`","`BP_Tastes_Great_0_10`","`BP_Good_To_Share_0_10`","`BP_Like_Logo_0_10`","`BP_Special_Occasions_0_10`","`BP_Everyday_Snack_0_10`","`BP_Healthy_0_10`","`BP_Delicious_0_10`","`BP_Right_Amount_0_10`","`BP_Relaxing_0_10`","`Consideration`","`Consumption`","`Satisfaction`","`Advocacy`","`Age Group`","`Income Group`"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>as.needed<\/th>\n      <th>all<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p>This feature is automatically incorporated into formulaic’s create.formula method:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">create.formula</span>(<span class="dt">outcome.name =</span> awareness.name, <span class="dt">input.names =</span> variable.names)<span class="op">$</span>formula</a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt; Awareness ~ Age + Gender + `Income Group` + Region + Persona + </span></a>
 <a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt;     Typo</span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt; &lt;environment: 0x000000002d48dc38&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt; &lt;environment: 0x000000002c4b3af8&gt;</span></a></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">create.formula</span>(</a>
 <a class="sourceLine" id="cb6-2" title="2">  <span class="dt">outcome.name =</span> awareness.name,</a>
 <a class="sourceLine" id="cb6-3" title="3">  <span class="dt">input.names =</span> variable.names,</a>
@@ -2854,7 +2853,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb8-10" title="10"><span class="kw">print</span>(basic.form)</a>
 <a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona</span></a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; &lt;environment: 0x000000001532f3d0&gt;</span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; &lt;environment: 0x000000002ce18d58&gt;</span></a>
 <a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span></a>
@@ -2895,7 +2894,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb9-15" title="15"><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona + `Age Group` + </span></a>
 <a class="sourceLine" id="cb9-16" title="16"><span class="co">#&gt;     `Age Group` * Gender + `Age Group` * Region + `Age Group` * </span></a>
 <a class="sourceLine" id="cb9-17" title="17"><span class="co">#&gt;     Gender * Region</span></a>
-<a class="sourceLine" id="cb9-18" title="18"><span class="co">#&gt; &lt;environment: 0x000000002cad7a48&gt;</span></a>
+<a class="sourceLine" id="cb9-18" title="18"><span class="co">#&gt; &lt;environment: 0x0000000017315f50&gt;</span></a>
 <a class="sourceLine" id="cb9-19" title="19"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-20" title="20"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb9-21" title="21"><span class="co">#&gt;     variable   class order specified.from exclude.user.specified</span></a>
@@ -2943,7 +2942,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb10-16" title="16"><span class="co">#&gt;     BP_Like_Logo_0_10 + BP_Special_Occasions_0_10 + BP_Everyday_Snack_0_10 + </span></a>
 <a class="sourceLine" id="cb10-17" title="17"><span class="co">#&gt;     BP_Healthy_0_10 + BP_Delicious_0_10 + BP_Right_Amount_0_10 + </span></a>
 <a class="sourceLine" id="cb10-18" title="18"><span class="co">#&gt;     BP_Relaxing_0_10</span></a>
-<a class="sourceLine" id="cb10-19" title="19"><span class="co">#&gt; &lt;environment: 0x000000002d74a838&gt;</span></a>
+<a class="sourceLine" id="cb10-19" title="19"><span class="co">#&gt; &lt;environment: 0x000000002c558538&gt;</span></a>
 <a class="sourceLine" id="cb10-20" title="20"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb10-21" title="21"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb10-22" title="22"><span class="co">#&gt;                      variable   class order specified.from</span></a>
@@ -3021,7 +3020,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb11-11" title="11"><span class="co">#&gt;     BP_Everyday_Snack_0_10 + BP_Healthy_0_10 + BP_Delicious_0_10 + </span></a>
 <a class="sourceLine" id="cb11-12" title="12"><span class="co">#&gt;     BP_Right_Amount_0_10 + BP_Relaxing_0_10 + Consideration + </span></a>
 <a class="sourceLine" id="cb11-13" title="13"><span class="co">#&gt;     Consumption + Satisfaction + Advocacy + `Age Group` + `Income Group`</span></a>
-<a class="sourceLine" id="cb11-14" title="14"><span class="co">#&gt; &lt;environment: 0x000000002c3c4848&gt;</span></a>
+<a class="sourceLine" id="cb11-14" title="14"><span class="co">#&gt; &lt;environment: 0x000000002d115b00&gt;</span></a>
 <a class="sourceLine" id="cb11-15" title="15"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-16" title="16"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb11-17" title="17"><span class="co">#&gt;                      variable   class order specified.from</span></a>
@@ -3122,7 +3121,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb12-11" title="11"><span class="co">#&gt;     BP_Everyday_Snack_0_10 + BP_Healthy_0_10 + BP_Delicious_0_10 + </span></a>
 <a class="sourceLine" id="cb12-12" title="12"><span class="co">#&gt;     BP_Right_Amount_0_10 + BP_Relaxing_0_10 + Consideration + </span></a>
 <a class="sourceLine" id="cb12-13" title="13"><span class="co">#&gt;     Consumption + Satisfaction + Advocacy + `Age Group` + `Income Group`</span></a>
-<a class="sourceLine" id="cb12-14" title="14"><span class="co">#&gt; &lt;environment: 0x000000002d413e90&gt;</span></a>
+<a class="sourceLine" id="cb12-14" title="14"><span class="co">#&gt; &lt;environment: 0x000000002be576b0&gt;</span></a>
 <a class="sourceLine" id="cb12-15" title="15"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb12-16" title="16"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb12-17" title="17"><span class="co">#&gt;                      variable   class order specified.from</span></a>
@@ -3223,7 +3222,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb13-11" title="11"><span class="co">#&gt;     BP_Everyday_Snack_0_10 + BP_Healthy_0_10 + BP_Delicious_0_10 + </span></a>
 <a class="sourceLine" id="cb13-12" title="12"><span class="co">#&gt;     BP_Right_Amount_0_10 + BP_Relaxing_0_10 + Consideration + </span></a>
 <a class="sourceLine" id="cb13-13" title="13"><span class="co">#&gt;     Consumption + Satisfaction + Advocacy + `Age Group` + `Income Group`</span></a>
-<a class="sourceLine" id="cb13-14" title="14"><span class="co">#&gt; &lt;environment: 0x000000002c38e090&gt;</span></a>
+<a class="sourceLine" id="cb13-14" title="14"><span class="co">#&gt; &lt;environment: 0x000000002cde25d8&gt;</span></a>
 <a class="sourceLine" id="cb13-15" title="15"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb13-16" title="16"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb13-17" title="17"><span class="co">#&gt;                      variable   class order specified.from</span></a>
@@ -3354,7 +3353,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb14-35" title="35"><span class="co">#&gt;     BP_Like_Logo_0_10 + BP_Special_Occasions_0_10 + BP_Everyday_Snack_0_10 + </span></a>
 <a class="sourceLine" id="cb14-36" title="36"><span class="co">#&gt;     BP_Healthy_0_10 + BP_Right_Amount_0_10 + BP_Relaxing_0_10 + </span></a>
 <a class="sourceLine" id="cb14-37" title="37"><span class="co">#&gt;     Age * Income</span></a>
-<a class="sourceLine" id="cb14-38" title="38"><span class="co">#&gt; &lt;environment: 0x000000002d5b22a8&gt;</span></a>
+<a class="sourceLine" id="cb14-38" title="38"><span class="co">#&gt; &lt;environment: 0x000000002be66b40&gt;</span></a>
 <a class="sourceLine" id="cb14-39" title="39"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb14-40" title="40"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb14-41" title="41"><span class="co">#&gt;                      variable   class order specified.from</span></a>
@@ -3448,7 +3447,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb15-9" title="9"><span class="kw">print</span>(outcomes.as.inputs.form)</a>
 <a class="sourceLine" id="cb15-10" title="10"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb15-11" title="11"><span class="co">#&gt; Income ~ Age</span></a>
-<a class="sourceLine" id="cb15-12" title="12"><span class="co">#&gt; &lt;environment: 0x000000002cacdf88&gt;</span></a>
+<a class="sourceLine" id="cb15-12" title="12"><span class="co">#&gt; &lt;environment: 0x000000002d174980&gt;</span></a>
 <a class="sourceLine" id="cb15-13" title="13"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb15-14" title="14"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb15-15" title="15"><span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span></a>
@@ -3479,7 +3478,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb16-13" title="13"><span class="kw">print</span>(duplicated.form)</a>
 <a class="sourceLine" id="cb16-14" title="14"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb16-15" title="15"><span class="co">#&gt; Awareness ~ Age + Income + Age * Income</span></a>
-<a class="sourceLine" id="cb16-16" title="16"><span class="co">#&gt; &lt;environment: 0x000000002d49cf50&gt;</span></a>
+<a class="sourceLine" id="cb16-16" title="16"><span class="co">#&gt; &lt;environment: 0x00000000151917a8&gt;</span></a>
 <a class="sourceLine" id="cb16-17" title="17"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb16-18" title="18"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb16-19" title="19"><span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span></a>
@@ -3504,7 +3503,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb17-6" title="6"><span class="kw">print</span>(formula.with.typo)</a>
 <a class="sourceLine" id="cb17-7" title="7"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb17-8" title="8"><span class="co">#&gt; Income ~ Age + Typo</span></a>
-<a class="sourceLine" id="cb17-9" title="9"><span class="co">#&gt; &lt;environment: 0x0000000014cb1a80&gt;</span></a>
+<a class="sourceLine" id="cb17-9" title="9"><span class="co">#&gt; &lt;environment: 0x000000002c5d3fd0&gt;</span></a>
 <a class="sourceLine" id="cb17-10" title="10"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb17-11" title="11"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb17-12" title="12"><span class="co">#&gt; Null data.table (0 rows and 0 cols)</span></a>
@@ -3518,7 +3517,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb18-5" title="5"><span class="kw">print</span>(formula.without.typo)</a>
 <a class="sourceLine" id="cb18-6" title="6"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb18-7" title="7"><span class="co">#&gt; Income ~ Age</span></a>
-<a class="sourceLine" id="cb18-8" title="8"><span class="co">#&gt; &lt;environment: 0x000000002c4d3570&gt;</span></a>
+<a class="sourceLine" id="cb18-8" title="8"><span class="co">#&gt; &lt;environment: 0x000000002cb9e7c0&gt;</span></a>
 <a class="sourceLine" id="cb18-9" title="9"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb18-10" title="10"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb18-11" title="11"><span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span></a>
@@ -3553,7 +3552,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb20-4" title="4"></a>
 <a class="sourceLine" id="cb20-5" title="5"><span class="kw">print</span>(formula.consideration<span class="op">$</span>formula)</a>
 <a class="sourceLine" id="cb20-6" title="6"><span class="co">#&gt; Consideration ~ Age + Awareness</span></a>
-<a class="sourceLine" id="cb20-7" title="7"><span class="co">#&gt; &lt;environment: 0x000000002cfe1900&gt;</span></a>
+<a class="sourceLine" id="cb20-7" title="7"><span class="co">#&gt; &lt;environment: 0x000000002bf5fb88&gt;</span></a>
 <a class="sourceLine" id="cb20-8" title="8"></a>
 <a class="sourceLine" id="cb20-9" title="9"><span class="kw">glm</span>(<span class="dt">formula =</span> formula.consideration,</a>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="dt">data =</span> snack.dat,</a>
@@ -3572,7 +3571,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb21-9" title="9"><span class="kw">print</span>(formula.consideration)</a>
 <a class="sourceLine" id="cb21-10" title="10"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb21-11" title="11"><span class="co">#&gt; Consideration ~ Age</span></a>
-<a class="sourceLine" id="cb21-12" title="12"><span class="co">#&gt; &lt;environment: 0x00000000168e38c0&gt;</span></a>
+<a class="sourceLine" id="cb21-12" title="12"><span class="co">#&gt; &lt;environment: 0x00000000174d49e0&gt;</span></a>
 <a class="sourceLine" id="cb21-13" title="13"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb21-14" title="14"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb21-15" title="15"><span class="co">#&gt;     variable   class order specified.from exclude.user.specified</span></a>
@@ -3598,7 +3597,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb22-4" title="4"></a>
 <a class="sourceLine" id="cb22-5" title="5"><span class="kw">print</span>(formula.awareness<span class="op">$</span>formula)</a>
 <a class="sourceLine" id="cb22-6" title="6"><span class="co">#&gt; Awareness ~ `Age Group` + Gender</span></a>
-<a class="sourceLine" id="cb22-7" title="7"><span class="co">#&gt; &lt;environment: 0x000000002c6657b8&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb22-7" title="7"><span class="co">#&gt; &lt;environment: 0x000000002c29a770&gt;</span></a></code></pre></div>
 <p>#<code>{r create.formula with lack of contrast 1} #glm(formula = formula.awareness$formula, data = #snack.dat[get(age.group.name) == &quot;[ 18, 35)&quot;,], family = &quot;binomial&quot;) #</code></p>
 <p>This particular example is designed to demonstrate the issue with a simple contradiction, and its root cause is easy to identify. In real applications, significant investigation may be required to determine which variables may be causing such an effect. The error message provided informs the user of a lack of contrast, but it does not identify which variable is causing the issue. In a formula that incorporates many inputs, there may be a number of different variables that each contribute to the issue.</p>
 <p>Within the formulaic package, the create.formula’s <strong>reduce</strong> parameter can be used to automatically identify categorical variables with a lack of contrast. When <strong>reduce = TRUE</strong> and a data set is provided, inputs with no variation are excluded from the resulting formula. The <strong>exclude.lack.contrast </strong> column of the output’s <strong>inclusion.table</strong> identifies which variables include a lack of contrast, and the <strong>min.categories</strong> column identifies the number of unique values for each variable. This is demonstrated with the call to create.formula below:</p>
@@ -3630,7 +3629,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb24-10" title="10"><span class="kw">print</span>(formula.consideration<span class="fl">.1</span>)</a>
 <a class="sourceLine" id="cb24-11" title="11"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb24-12" title="12"><span class="co">#&gt; Consideration ~ `Age Group` + Gender + Awareness</span></a>
-<a class="sourceLine" id="cb24-13" title="13"><span class="co">#&gt; &lt;environment: 0x000000002cc276a8&gt;</span></a>
+<a class="sourceLine" id="cb24-13" title="13"><span class="co">#&gt; &lt;environment: 0x000000002c618c90&gt;</span></a>
 <a class="sourceLine" id="cb24-14" title="14"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb24-15" title="15"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb24-16" title="16"><span class="co">#&gt;     variable   class order specified.from exclude.user.specified</span></a>
@@ -3661,7 +3660,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb25-10" title="10"><span class="kw">print</span>(formula.consideration<span class="fl">.2</span>)</a>
 <a class="sourceLine" id="cb25-11" title="11"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb25-12" title="12"><span class="co">#&gt; Consideration ~ `Age Group` + Gender</span></a>
-<a class="sourceLine" id="cb25-13" title="13"><span class="co">#&gt; &lt;environment: 0x000000002d7fc718&gt;</span></a>
+<a class="sourceLine" id="cb25-13" title="13"><span class="co">#&gt; &lt;environment: 0x0000000017323ac8&gt;</span></a>
 <a class="sourceLine" id="cb25-14" title="14"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb25-15" title="15"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb25-16" title="16"><span class="co">#&gt;     variable   class order specified.from exclude.user.specified</span></a>
@@ -3693,7 +3692,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb26-6" title="6">  <span class="dt">max.input.categories =</span> <span class="dv">30</span></a>
 <a class="sourceLine" id="cb26-7" title="7">)<span class="op">$</span>formula</a>
 <a class="sourceLine" id="cb26-8" title="8"><span class="co">#&gt; Satisfaction ~ Age + Income + Region</span></a>
-<a class="sourceLine" id="cb26-9" title="9"><span class="co">#&gt; &lt;environment: 0x000000002d401128&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb26-9" title="9"><span class="co">#&gt; &lt;environment: 0x000000002c43bfa8&gt;</span></a></code></pre></div>
 </div>
 <div id="inspection-of-all-variables" class="section level3">
 <h3>Inspection of All Variables</h3>
@@ -3707,7 +3706,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb27-7" title="7">)<span class="op">$</span>formula</a>
 <a class="sourceLine" id="cb27-8" title="8"><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona + Product + </span></a>
 <a class="sourceLine" id="cb27-9" title="9"><span class="co">#&gt;     `Age Group` + `Income Group`</span></a>
-<a class="sourceLine" id="cb27-10" title="10"><span class="co">#&gt; &lt;environment: 0x000000002c2b4e28&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb27-10" title="10"><span class="co">#&gt; &lt;environment: 0x000000002ce2dbd8&gt;</span></a></code></pre></div>
 <p>All of the brand perceptions and other states of engagement were removed from the formula. This was due to a lack of contrast arising from the structurally missing values when the respondents were not aware of the product. Meanwhile, the User ID was removed due to its large number of categories. Only the names of the products and the respondent-specific variables remain. From this list, an investigator could then make selections of which variables to include (e.g. Age or Age Group). However, much of the preliminary investigation would be handled automatically. This is especially helpful in settings in which the full relationship of the variables – such as the sequence and dependencies of the marketing survey’s questions – is not yet fully understood.</p>
 </div>
 </div>
@@ -3735,7 +3734,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb28-7" title="7">)<span class="op">$</span>formula</a>
 <a class="sourceLine" id="cb28-8" title="8"><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona + Product + </span></a>
 <a class="sourceLine" id="cb28-9" title="9"><span class="co">#&gt;     `Age Group` + `Income Group`</span></a>
-<a class="sourceLine" id="cb28-10" title="10"><span class="co">#&gt; &lt;environment: 0x000000002d5b7bd0&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb28-10" title="10"><span class="co">#&gt; &lt;environment: 0x0000000017341098&gt;</span></a></code></pre></div>
 </div>
 </div>
 </div>

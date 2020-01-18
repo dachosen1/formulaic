@@ -1,3 +1,7 @@
+# formulaic 0.0.6
+* modified package citations
+* added code coverage 
+
 # formulaic 0.0.5
 * Create formula now supports 'all' in input names 
 * Added coverage test files

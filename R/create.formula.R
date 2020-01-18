@@ -93,7 +93,8 @@ create.formula <-
         }
       }
       if (length(names(dat)) == 0) {
-        return("Error:  dat must be an object with specified names.")
+
+                return("Error:  dat must be an object with specified names.")
       }
       if (!(outcome.name %in% names(dat))) {
         return(
@@ -126,7 +127,7 @@ create.formula <-
           unlisted.interactions
         ))
 
-      if (length(unique.names) == 0) {
+      if (length(unique.names) == 0 | is.null(length(unique.names))) {
         unique.names <- NA
       }
 

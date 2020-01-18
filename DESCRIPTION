@@ -1,11 +1,11 @@
 Package: formulaic
 Title: Dynamic Generation and Quality Checks of Formula Objects
-Version: 0.0.5
+Version: 0.0.6
 Authors@R: c(
     person("David", "Shilane", , "david.shilane@columbia.edu", c("aut")),
-    person("Caffrey", "Lee", , "cl3802@columbia.edu", c("ctb")),
-    person("Zichen", "Huang", , "zh2380@columbia.edu", c("ctb")),
-    person("Anderson", "Nelson", , "an2908@columbia.edu", c("ctb","cre"))
+    person("Caffrey", "Lee", , "cl3802@columbia.edu", c("aut","ctb")),
+    person("Zichen", "Huang", , "zh2380@columbia.edu", c("aut","ctb")),
+    person("Anderson", "Nelson", , "an2908@columbia.edu", c("aut","ctb","cre"))
     )
 Description: Many statistical models and analyses in R are implemented through formula objects. The formulaic package creates a unified approach for programmatically and dynamically generating formula objects. Users may specify the outcome and inputs of a model directly, search for variables to include based upon naming patterns, incorporate interactions, and identify variables to exclude. A wide range of quality checks are implemented to identify issues such as misspecified variables, duplication, a lack of contrast in the inputs, and a large number of levels in categorical data.  Variables that do not meet these quality checks can be automatically excluded from the model.  These issues are documented and reported in a manner that provides greater accountability and useful information to guide an investigation of the data.
 Depends: R (>= 3.1.0)

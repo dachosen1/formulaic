@@ -6,14 +6,12 @@ cache: packages
 # build matrix; turn on vdiffr only on r release
 matrix:
   include:
-  - r: devel
-    # avoind errors due to world clock API (hopefully can be removed in future)
-    env: _R_CHECK_SYSTEM_CLOCK_=false
   - r: release
     env: VDIFFR_RUN_TESTS=true
     before_cache:
     - Rscript -e 'remotes::install_cran("pkgdown")'
     
+  - r: 3.6    
   - r: 3.5
   - r: 3.4
   - r: 3.3

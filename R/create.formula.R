@@ -136,17 +136,6 @@ create.formula <-
       inclusion.table <-
         data.table(variable = unique.names)[!is.na(variable)]
 
-      if (is.null(variables.to.exclude)) {
-        num.from.variables.to.exclude <- 0
-      }
-
-      if (!is.null(variables.to.exclude)) {
-        if (is.na(variables.to.exclude[1])) {
-          num.from.variables.to.exclude <- 0
-        }
-        num.from.variables.to.exclude <-
-          length(variables.to.exclude[!is.na(variables.to.exclude)])
-      }
 
       if (is.null(input.names)) {
         num.from.input.names <- 0
@@ -257,18 +246,18 @@ create.formula <-
       inclusion.table[, include.variable := rowMeans(.SD, na.rm = TRUE) == 0, .SDcols = exclusion.columns]
 
       if (force.main.effects == TRUE) {
-        all.input.names <-
+        input.names <-
           inclusion.table[include.variable == TRUE, variable]
       }
 
       if (force.main.effects == FALSE) {
-        all.input.names <-
+        input.names <-
           inclusion.table[include.variable == TRUE &
                             specified.from != "interactions", variable]
       }
 
       if (order.as == "column.order") {
-        all.input.names <- names(dat)[names(dat) %in% all.input.names]
+        input.names <- names(dat)[names(dat) %in% input.names]
       }
 
       # Compute included.interactions
@@ -318,38 +307,25 @@ create.formula <-
         interaction.terms <- NULL
       }
 
-      all.input.names <- input.names
       inclusion.table <- data.table()
       interactions.table <- data.table()
 
-      if (is.null(dat)) {
-        inclusion.table.statement <-
-          "dat was not provided (NA); no inclusion table was computed."
-        interactions.table.statement <-
-          "dat was not provided (NA); no interactions.table object was computed."
-      }
-      if (!is.null(dat)) {
-        inclusion.table.statement <-
-          "dat was not a data.frame; no inclusion table was computed."
-        interactions.table.statement <-
-          "dat was not a data.frame; no interactions.table object was computed."
-      }
     }
 
-    if (length(c(all.input.names[!is.null(all.input.names)], interaction.terms[!is.null(interaction.terms)])) == 0) {
-      all.input.names <- "1"
+    if (length(c(input.names[!is.null(input.names)], interaction.terms[!is.null(interaction.terms)])) == 0) {
+      input.names <- "1"
     }
 
     if (order.as == "increasing") {
-      all.input.names <- sort(x = all.input.names, decreasing = FALSE)
+      input.names <- sort(x = input.names, decreasing = FALSE)
     }
 
     if (order.as == "decreasing") {
-      all.input.names <- sort(x = all.input.names, decreasing = TRUE)
+      input.names <- sort(x = input.names, decreasing = TRUE)
     }
 
     input.names.delineated <-
-      add.backtick(x =  all.input.names, include.backtick = include.backtick)
+      add.backtick(x =  input.names, include.backtick = include.backtick)
 
     outcome.name.delineated <-
       add.backtick(x = outcome.name, include.backtick = include.backtick)

@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">formulaic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6</span>
       </span>
     </div>
 
@@ -73,7 +73,7 @@
       
 
       </header><script src="Introduction-to-formulaic_files/htmlwidgets-1.5.1/htmlwidgets.js"></script><script src="Introduction-to-formulaic_files/jquery-1.12.4/jquery.min.js"></script><link href="Introduction-to-formulaic_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="Introduction-to-formulaic_files/datatables-binding-0.10/datatables.js"></script><link href="Introduction-to-formulaic_files/dt-core-1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+<script src="Introduction-to-formulaic_files/datatables-binding-0.11/datatables.js"></script><link href="Introduction-to-formulaic_files/dt-core-1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="Introduction-to-formulaic_files/dt-core-1.10.19/css/jquery.dataTables.extra.css" rel="stylesheet">
 <script src="Introduction-to-formulaic_files/dt-core-1.10.19/js/jquery.dataTables.min.js"></script><link href="Introduction-to-formulaic_files/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet">
 <script src="Introduction-to-formulaic_files/crosstalk-1.0.0/js/crosstalk.min.js"></script><div class="row">
@@ -82,7 +82,7 @@
       <h1>Introduction to Formulaic</h1>
                         <h4 class="author">Authors: David Shilane, Caffrey Lee, Zoe Huang, Anderson Nelson</h4>
             
-            <h4 class="date">2019-11-26</h4>
+            <h4 class="date">2020-03-06</h4>
       
       
       <div class="hidden name"><code>Introduction-to-formulaic.Rmd</code></div>
@@ -113,12 +113,12 @@
 <a class="sourceLine" id="cb1-3" title="3"></a>
 <a class="sourceLine" id="cb1-4" title="4">ex.form &lt;-</a>
 <a class="sourceLine" id="cb1-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(<span class="dt">outcome.name =</span> awareness.name,</a>
-<a class="sourceLine" id="cb1-6" title="6">                 <span class="dt">input.names =</span> variable.names,</a>
+<a class="sourceLine" id="cb1-6" title="6">                 <span class="dt">input.names =</span> <span class="st">'variable.names'</span>,</a>
 <a class="sourceLine" id="cb1-7" title="7">                 <span class="dt">dat =</span> snack.dat)</a>
 <a class="sourceLine" id="cb1-8" title="8"></a>
 <a class="sourceLine" id="cb1-9" title="9">ex.form<span class="op">$</span>formula</a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; Awareness ~ Age + Gender + `Income Group` + Region + Persona</span></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; &lt;environment: 0x000000001b045670&gt;</span></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; Awareness ~ 1</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; &lt;environment: 0x000000001b0e3a10&gt;</span></a>
 <a class="sourceLine" id="cb1-12" title="12">lm_example &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="dt">formula =</span> ex.form, <span class="dt">data =</span> snack.dat)</a>
 <a class="sourceLine" id="cb1-13" title="13"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(lm_example)</a>
 <a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt; </span></a>
@@ -127,31 +127,15 @@
 <a class="sourceLine" id="cb1-17" title="17"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb1-18" title="18"><span class="co">#&gt; Residuals:</span></a>
 <a class="sourceLine" id="cb1-19" title="19"><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></a>
-<a class="sourceLine" id="cb1-20" title="20"><span class="co">#&gt; -0.5853 -0.5245  0.4440  0.4743  0.5196 </span></a>
+<a class="sourceLine" id="cb1-20" title="20"><span class="co">#&gt; -0.5258 -0.5258  0.4742  0.4742  0.4742 </span></a>
 <a class="sourceLine" id="cb1-21" title="21"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb1-22" title="22"><span class="co">#&gt; Coefficients:</span></a>
-<a class="sourceLine" id="cb1-23" title="23"><span class="co">#&gt;                                 Estimate Std. Error t value Pr(&gt;|t|)    </span></a>
-<a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt; (Intercept)                    0.5593478  0.0149319  37.460  &lt; 2e-16 ***</span></a>
-<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt; Age                           -0.0001466  0.0001554  -0.943 0.345786    </span></a>
-<a class="sourceLine" id="cb1-26" title="26"><span class="co">#&gt; GenderMale                    -0.0217796  0.0066156  -3.292 0.000996 ***</span></a>
-<a class="sourceLine" id="cb1-27" title="27"><span class="co">#&gt; `Income Group`[ 50000, 75000)  0.0090771  0.0100586   0.902 0.366845    </span></a>
-<a class="sourceLine" id="cb1-28" title="28"><span class="co">#&gt; `Income Group`[ 75000,100000)  0.0057200  0.0102907   0.556 0.578322    </span></a>
-<a class="sourceLine" id="cb1-29" title="29"><span class="co">#&gt; `Income Group`[100000,150000)  0.0066225  0.0084932   0.780 0.435549    </span></a>
-<a class="sourceLine" id="cb1-30" title="30"><span class="co">#&gt; `Income Group`[150000,250000]  0.0377699  0.0376171   1.004 0.315359    </span></a>
-<a class="sourceLine" id="cb1-31" title="31"><span class="co">#&gt; RegionNortheast               -0.0009939  0.0097772  -0.102 0.919034    </span></a>
-<a class="sourceLine" id="cb1-32" title="32"><span class="co">#&gt; RegionSouth                   -0.0096367  0.0117113  -0.823 0.410600    </span></a>
-<a class="sourceLine" id="cb1-33" title="33"><span class="co">#&gt; RegionWest                    -0.0327901  0.0094162  -3.482 0.000498 ***</span></a>
-<a class="sourceLine" id="cb1-34" title="34"><span class="co">#&gt; PersonaMainstream Maynard     -0.0030736  0.0105171  -0.292 0.770099    </span></a>
-<a class="sourceLine" id="cb1-35" title="35"><span class="co">#&gt; PersonaMillenial Muncher      -0.0108831  0.0112126  -0.971 0.331752    </span></a>
-<a class="sourceLine" id="cb1-36" title="36"><span class="co">#&gt; PersonaOld School Oliver      -0.0078579  0.0132893  -0.591 0.554332    </span></a>
-<a class="sourceLine" id="cb1-37" title="37"><span class="co">#&gt; PersonaRighteous Reviewer     -0.0057425  0.0121762  -0.472 0.637203    </span></a>
-<a class="sourceLine" id="cb1-38" title="38"><span class="co">#&gt; PersonaSavvy Samantha         -0.0111625  0.0110298  -1.012 0.311536    </span></a>
-<a class="sourceLine" id="cb1-39" title="39"><span class="co">#&gt; ---</span></a>
-<a class="sourceLine" id="cb1-40" title="40"><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></a>
-<a class="sourceLine" id="cb1-41" title="41"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb1-42" title="42"><span class="co">#&gt; Residual standard error: 0.4991 on 22985 degrees of freedom</span></a>
-<a class="sourceLine" id="cb1-43" title="43"><span class="co">#&gt; Multiple R-squared:  0.001567,   Adjusted R-squared:  0.0009586 </span></a>
-<a class="sourceLine" id="cb1-44" title="44"><span class="co">#&gt; F-statistic: 2.576 on 14 and 22985 DF,  p-value: 0.001026</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-23" title="23"><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></a>
+<a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt; (Intercept) 0.525826   0.003293   159.7   &lt;2e-16 ***</span></a>
+<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt; ---</span></a>
+<a class="sourceLine" id="cb1-26" title="26"><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></a>
+<a class="sourceLine" id="cb1-27" title="27"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb1-28" title="28"><span class="co">#&gt; Residual standard error: 0.4993 on 22999 degrees of freedom</span></a></code></pre></div>
 <div id="dynamic-generation-of-a-formula" class="section level2">
 <h2 class="hasAnchor">
 <a href="#dynamic-generation-of-a-formula" class="anchor"></a>Dynamic Generation of a Formula</h2>
@@ -163,7 +147,7 @@
 <a class="sourceLine" id="cb2-3" title="3"></a>
 <a class="sourceLine" id="cb2-4" title="4"><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(<span class="dt">outcome.name =</span> user.outcome.name, <span class="dt">input.names =</span> user.input.names)<span class="op">$</span>formula</a>
 <a class="sourceLine" id="cb2-5" title="5"><span class="co">#&gt; Satisfaction ~ `Age Group` + Gender + Region</span></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt; &lt;environment: 0x000000001bac1320&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt; &lt;environment: 0x000000001b9dd968&gt;</span></a></code></pre></div>
 </div>
 <div id="dataset-snack-dat" class="section level2">
 <h2 class="hasAnchor">
@@ -199,12 +183,12 @@
 <a class="sourceLine" id="cb4-3" title="3"></a>
 <a class="sourceLine" id="cb4-4" title="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(DT)</a>
 <a class="sourceLine" id="cb4-5" title="5"><span class="kw">datatable</span>(<span class="dt">data =</span> <span class="kw"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(as.needed, all))</a></code></pre></div>
-<div id="htmlwidget-1e07ec42a9c99e574af3" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1e07ec42a9c99e574af3">{"x":{"filter":"none","data":[["`User ID`","Age","Gender","Income","Region","Persona","Product","Awareness","BP_For_Me_0_10","BP_Fits_Budget_0_10","BP_Tastes_Great_0_10","BP_Good_To_Share_0_10","BP_Like_Logo_0_10","BP_Special_Occasions_0_10","BP_Everyday_Snack_0_10","BP_Healthy_0_10","BP_Delicious_0_10","BP_Right_Amount_0_10","BP_Relaxing_0_10","Consideration","Consumption","Satisfaction","Advocacy","`Age Group`","`Income Group`"],["`User ID`","`Age`","`Gender`","`Income`","`Region`","`Persona`","`Product`","`Awareness`","`BP_For_Me_0_10`","`BP_Fits_Budget_0_10`","`BP_Tastes_Great_0_10`","`BP_Good_To_Share_0_10`","`BP_Like_Logo_0_10`","`BP_Special_Occasions_0_10`","`BP_Everyday_Snack_0_10`","`BP_Healthy_0_10`","`BP_Delicious_0_10`","`BP_Right_Amount_0_10`","`BP_Relaxing_0_10`","`Consideration`","`Consumption`","`Satisfaction`","`Advocacy`","`Age Group`","`Income Group`"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>as.needed<\/th>\n      <th>all<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>This feature is automatically incorporated into formulaic’s create.formula method:</p>
+<div id="htmlwidget-e64c9ffd3a8d2e10d6fa" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e64c9ffd3a8d2e10d6fa">{"x":{"filter":"none","data":[["`User ID`","Age","Gender","Income","Region","Persona","Product","Awareness","BP_For_Me_0_10","BP_Fits_Budget_0_10","BP_Tastes_Great_0_10","BP_Good_To_Share_0_10","BP_Like_Logo_0_10","BP_Special_Occasions_0_10","BP_Everyday_Snack_0_10","BP_Healthy_0_10","BP_Delicious_0_10","BP_Right_Amount_0_10","BP_Relaxing_0_10","Consideration","Consumption","Satisfaction","Advocacy","`Age Group`","`Income Group`"],["`User ID`","`Age`","`Gender`","`Income`","`Region`","`Persona`","`Product`","`Awareness`","`BP_For_Me_0_10`","`BP_Fits_Budget_0_10`","`BP_Tastes_Great_0_10`","`BP_Good_To_Share_0_10`","`BP_Like_Logo_0_10`","`BP_Special_Occasions_0_10`","`BP_Everyday_Snack_0_10`","`BP_Healthy_0_10`","`BP_Delicious_0_10`","`BP_Right_Amount_0_10`","`BP_Relaxing_0_10`","`Consideration`","`Consumption`","`Satisfaction`","`Advocacy`","`Age Group`","`Income Group`"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>as.needed<\/th>\n      <th>all<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>This feature is automatically incorporated into formulaic’s create.formula method:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(<span class="dt">outcome.name =</span> awareness.name, <span class="dt">input.names =</span> variable.names)<span class="op">$</span>formula</a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt; Awareness ~ Age + Gender + `Income Group` + Region + Persona + </span></a>
 <a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt;     Typo</span></a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt; &lt;environment: 0x000000001b53ffb0&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt; &lt;environment: 0x000000001b491ca8&gt;</span></a></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(</a>
 <a class="sourceLine" id="cb6-2" title="2">  <span class="dt">outcome.name =</span> awareness.name,</a>
 <a class="sourceLine" id="cb6-3" title="3">  <span class="dt">input.names =</span> variable.names,</a>
@@ -216,9 +200,9 @@
 <a class="sourceLine" id="cb7-2" title="2">  <span class="dt">outcome.name =</span> awareness.name,</a>
 <a class="sourceLine" id="cb7-3" title="3">  <span class="dt">input.names =</span> variable.names,</a>
 <a class="sourceLine" id="cb7-4" title="4">  <span class="dt">format.as =</span> <span class="st">"character"</span>,</a>
-<a class="sourceLine" id="cb7-5" title="5">  <span class="dt">include.backtick =</span> <span class="st">"as.needed"</span></a>
+<a class="sourceLine" id="cb7-5" title="5">  <span class="dt">include.backtick =</span> <span class="st">"all"</span></a>
 <a class="sourceLine" id="cb7-6" title="6">)<span class="op">$</span>formula</a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; [1] "Awareness ~ Age + Gender + `Income Group` + Region + Persona + Typo"</span></a></code></pre></div>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; [1] "`Awareness` ~ `Age` + `Gender` + `Income Group` + `Region` + `Persona` + `Typo`"</span></a></code></pre></div>
 <p>When the output is returned as a formula object, the backticks may only be provided on an as-needed basis. For character objects, either option may be selected.</p>
 </div>
 <div id="creating-formula-create-formula" class="section level2">
@@ -247,19 +231,19 @@
 <div id="basic-format" class="section level3">
 <h3 class="hasAnchor">
 <a href="#basic-format" class="anchor"></a>Basic format</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">outcome.name.awareness &lt;-<span class="st"> "Awareness"</span></a>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"></a>
 <a class="sourceLine" id="cb8-2" title="2">input.names &lt;-</a>
 <a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Age"</span>, <span class="st">"Gender"</span>, <span class="st">"Income"</span>, <span class="st">"Region"</span>, <span class="st">"Persona"</span>, <span class="st">"Typo"</span>)</a>
 <a class="sourceLine" id="cb8-4" title="4"></a>
 <a class="sourceLine" id="cb8-5" title="5">basic.form &lt;-</a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="st">  </span><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(<span class="dt">outcome.name =</span> outcome.name.awareness,</a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="st">  </span><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(<span class="dt">outcome.name =</span> awareness.name,</a>
 <a class="sourceLine" id="cb8-7" title="7">                 <span class="dt">input.names =</span> input.names,</a>
 <a class="sourceLine" id="cb8-8" title="8">                 <span class="dt">dat =</span> snack.dat)</a>
 <a class="sourceLine" id="cb8-9" title="9"></a>
 <a class="sourceLine" id="cb8-10" title="10"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(basic.form)</a>
 <a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona</span></a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; &lt;environment: 0x000000001bceab40&gt;</span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; &lt;environment: 0x000000001bb0d778&gt;</span></a>
 <a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span></a>
@@ -290,7 +274,7 @@
 <a class="sourceLine" id="cb9-4" title="4"></a>
 <a class="sourceLine" id="cb9-5" title="5">interaction.form &lt;-</a>
 <a class="sourceLine" id="cb9-6" title="6"><span class="st">  </span><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(</a>
-<a class="sourceLine" id="cb9-7" title="7">    <span class="dt">outcome.name =</span> outcome.name.awareness,</a>
+<a class="sourceLine" id="cb9-7" title="7">    <span class="dt">outcome.name =</span> awareness.name,</a>
 <a class="sourceLine" id="cb9-8" title="8">    <span class="dt">input.names =</span> input.names,</a>
 <a class="sourceLine" id="cb9-9" title="9">    <span class="dt">dat =</span> snack.dat,</a>
 <a class="sourceLine" id="cb9-10" title="10">    <span class="dt">interactions =</span> interactions</a>
@@ -301,7 +285,7 @@
 <a class="sourceLine" id="cb9-15" title="15"><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona + `Age Group` + </span></a>
 <a class="sourceLine" id="cb9-16" title="16"><span class="co">#&gt;     `Age Group` * Gender + `Age Group` * Region + `Age Group` * </span></a>
 <a class="sourceLine" id="cb9-17" title="17"><span class="co">#&gt;     Gender * Region</span></a>
-<a class="sourceLine" id="cb9-18" title="18"><span class="co">#&gt; &lt;environment: 0x000000001740bf70&gt;</span></a>
+<a class="sourceLine" id="cb9-18" title="18"><span class="co">#&gt; &lt;environment: 0x0000000017706100&gt;</span></a>
 <a class="sourceLine" id="cb9-19" title="19"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb9-20" title="20"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb9-21" title="21"><span class="co">#&gt;     variable   class order specified.from exclude.user.specified</span></a>
@@ -337,7 +321,7 @@
 <a class="sourceLine" id="cb10-3" title="3"></a>
 <a class="sourceLine" id="cb10-4" title="4">pattern.form &lt;-</a>
 <a class="sourceLine" id="cb10-5" title="5"><span class="st">  </span><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(</a>
-<a class="sourceLine" id="cb10-6" title="6">    <span class="dt">outcome.name =</span> outcome.name.awareness,</a>
+<a class="sourceLine" id="cb10-6" title="6">    <span class="dt">outcome.name =</span> awareness.name,</a>
 <a class="sourceLine" id="cb10-7" title="7">    <span class="dt">input.names =</span> input.names,</a>
 <a class="sourceLine" id="cb10-8" title="8">    <span class="dt">dat =</span> snack.dat,</a>
 <a class="sourceLine" id="cb10-9" title="9">    <span class="dt">input.patterns =</span> input.patterns</a>
@@ -350,7 +334,7 @@
 <a class="sourceLine" id="cb10-16" title="16"><span class="co">#&gt;     BP_Like_Logo_0_10 + BP_Special_Occasions_0_10 + BP_Everyday_Snack_0_10 + </span></a>
 <a class="sourceLine" id="cb10-17" title="17"><span class="co">#&gt;     BP_Healthy_0_10 + BP_Delicious_0_10 + BP_Right_Amount_0_10 + </span></a>
 <a class="sourceLine" id="cb10-18" title="18"><span class="co">#&gt;     BP_Relaxing_0_10</span></a>
-<a class="sourceLine" id="cb10-19" title="19"><span class="co">#&gt; &lt;environment: 0x000000001812f088&gt;</span></a>
+<a class="sourceLine" id="cb10-19" title="19"><span class="co">#&gt; &lt;environment: 0x0000000017fd0538&gt;</span></a>
 <a class="sourceLine" id="cb10-20" title="20"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb10-21" title="21"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb10-22" title="22"><span class="co">#&gt;                      variable   class order specified.from</span></a>
@@ -417,7 +401,7 @@
 <a href="#selecting-all-of-the-variables" class="anchor"></a>Selecting All of the Variables</h3>
 <p>The create.formula function maintains this capability when <strong>“.”</strong> is included in the input.names and a data set is provided:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">dot.form<span class="fl">.1</span> &lt;-</a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(<span class="dt">outcome.name =</span> outcome.name.awareness,</a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="st">  </span><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(<span class="dt">outcome.name =</span> awareness.name,</a>
 <a class="sourceLine" id="cb11-3" title="3">                 <span class="dt">input.names =</span> <span class="st">"."</span>,</a>
 <a class="sourceLine" id="cb11-4" title="4">                 <span class="dt">dat =</span> snack.dat)</a>
 <a class="sourceLine" id="cb11-5" title="5"></a>
@@ -429,7 +413,7 @@
 <a class="sourceLine" id="cb11-11" title="11"><span class="co">#&gt;     BP_Everyday_Snack_0_10 + BP_Healthy_0_10 + BP_Delicious_0_10 + </span></a>
 <a class="sourceLine" id="cb11-12" title="12"><span class="co">#&gt;     BP_Right_Amount_0_10 + BP_Relaxing_0_10 + Consideration + </span></a>
 <a class="sourceLine" id="cb11-13" title="13"><span class="co">#&gt;     Consumption + Satisfaction + Advocacy + `Age Group` + `Income Group`</span></a>
-<a class="sourceLine" id="cb11-14" title="14"><span class="co">#&gt; &lt;environment: 0x000000001aec7178&gt;</span></a>
+<a class="sourceLine" id="cb11-14" title="14"><span class="co">#&gt; &lt;environment: 0x000000001ae0a690&gt;</span></a>
 <a class="sourceLine" id="cb11-15" title="15"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-16" title="16"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb11-17" title="17"><span class="co">#&gt;                      variable   class order specified.from</span></a>
@@ -520,7 +504,7 @@
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"></a>
 <a class="sourceLine" id="cb12-2" title="2">input.names =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Gender"</span>, <span class="st">"."</span>)</a>
 <a class="sourceLine" id="cb12-3" title="3"></a>
-<a class="sourceLine" id="cb12-4" title="4">dot.form<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(<span class="dt">outcome.name =</span> outcome.name.awareness, <span class="dt">input.names =</span> input.names, <span class="dt">dat =</span> snack.dat)</a>
+<a class="sourceLine" id="cb12-4" title="4">dot.form<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(<span class="dt">outcome.name =</span> awareness.name, <span class="dt">input.names =</span> input.names, <span class="dt">dat =</span> snack.dat)</a>
 <a class="sourceLine" id="cb12-5" title="5"></a>
 <a class="sourceLine" id="cb12-6" title="6"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(dot.form<span class="fl">.2</span>)</a>
 <a class="sourceLine" id="cb12-7" title="7"><span class="co">#&gt; $formula</span></a>
@@ -530,7 +514,7 @@
 <a class="sourceLine" id="cb12-11" title="11"><span class="co">#&gt;     BP_Everyday_Snack_0_10 + BP_Healthy_0_10 + BP_Delicious_0_10 + </span></a>
 <a class="sourceLine" id="cb12-12" title="12"><span class="co">#&gt;     BP_Right_Amount_0_10 + BP_Relaxing_0_10 + Consideration + </span></a>
 <a class="sourceLine" id="cb12-13" title="13"><span class="co">#&gt;     Consumption + Satisfaction + Advocacy + `Age Group` + `Income Group`</span></a>
-<a class="sourceLine" id="cb12-14" title="14"><span class="co">#&gt; &lt;environment: 0x000000001b980248&gt;</span></a>
+<a class="sourceLine" id="cb12-14" title="14"><span class="co">#&gt; &lt;environment: 0x000000001b8493c8&gt;</span></a>
 <a class="sourceLine" id="cb12-15" title="15"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb12-16" title="16"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb12-17" title="17"><span class="co">#&gt;                      variable   class order specified.from</span></a>
@@ -621,7 +605,7 @@
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"></a>
 <a class="sourceLine" id="cb13-2" title="2">input.names =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Typo"</span>, <span class="st">"."</span>)</a>
 <a class="sourceLine" id="cb13-3" title="3"></a>
-<a class="sourceLine" id="cb13-4" title="4">dot.form<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(<span class="dt">outcome.name =</span> outcome.name.awareness, <span class="dt">input.names =</span> input.names, <span class="dt">dat =</span> snack.dat)</a>
+<a class="sourceLine" id="cb13-4" title="4">dot.form<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(<span class="dt">outcome.name =</span> awareness.name, <span class="dt">input.names =</span> input.names, <span class="dt">dat =</span> snack.dat)</a>
 <a class="sourceLine" id="cb13-5" title="5"></a>
 <a class="sourceLine" id="cb13-6" title="6"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(dot.form<span class="fl">.2</span>)</a>
 <a class="sourceLine" id="cb13-7" title="7"><span class="co">#&gt; $formula</span></a>
@@ -631,7 +615,7 @@
 <a class="sourceLine" id="cb13-11" title="11"><span class="co">#&gt;     BP_Everyday_Snack_0_10 + BP_Healthy_0_10 + BP_Delicious_0_10 + </span></a>
 <a class="sourceLine" id="cb13-12" title="12"><span class="co">#&gt;     BP_Right_Amount_0_10 + BP_Relaxing_0_10 + Consideration + </span></a>
 <a class="sourceLine" id="cb13-13" title="13"><span class="co">#&gt;     Consumption + Satisfaction + Advocacy + `Age Group` + `Income Group`</span></a>
-<a class="sourceLine" id="cb13-14" title="14"><span class="co">#&gt; &lt;environment: 0x000000001726e3f8&gt;</span></a>
+<a class="sourceLine" id="cb13-14" title="14"><span class="co">#&gt; &lt;environment: 0x00000000174f2198&gt;</span></a>
 <a class="sourceLine" id="cb13-15" title="15"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb13-16" title="16"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb13-17" title="17"><span class="co">#&gt;                      variable   class order specified.from</span></a>
@@ -747,7 +731,7 @@
 <a class="sourceLine" id="cb14-19" title="19"></a>
 <a class="sourceLine" id="cb14-20" title="20">variables.to.exclude.form &lt;-</a>
 <a class="sourceLine" id="cb14-21" title="21"><span class="st">  </span><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(</a>
-<a class="sourceLine" id="cb14-22" title="22">    <span class="dt">outcome.name =</span> outcome.name.awareness,</a>
+<a class="sourceLine" id="cb14-22" title="22">    <span class="dt">outcome.name =</span> awareness.name,</a>
 <a class="sourceLine" id="cb14-23" title="23">    <span class="dt">input.names =</span> input.names,</a>
 <a class="sourceLine" id="cb14-24" title="24">    <span class="dt">interactions =</span> interactions,</a>
 <a class="sourceLine" id="cb14-25" title="25">    <span class="dt">input.patterns =</span> bp.pattern,</a>
@@ -763,7 +747,7 @@
 <a class="sourceLine" id="cb14-35" title="35"><span class="co">#&gt;     BP_Like_Logo_0_10 + BP_Special_Occasions_0_10 + BP_Everyday_Snack_0_10 + </span></a>
 <a class="sourceLine" id="cb14-36" title="36"><span class="co">#&gt;     BP_Healthy_0_10 + BP_Right_Amount_0_10 + BP_Relaxing_0_10 + </span></a>
 <a class="sourceLine" id="cb14-37" title="37"><span class="co">#&gt;     Age * Income</span></a>
-<a class="sourceLine" id="cb14-38" title="38"><span class="co">#&gt; &lt;environment: 0x00000000185a8ec8&gt;</span></a>
+<a class="sourceLine" id="cb14-38" title="38"><span class="co">#&gt; &lt;environment: 0x0000000018457578&gt;</span></a>
 <a class="sourceLine" id="cb14-39" title="39"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb14-40" title="40"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb14-41" title="41"><span class="co">#&gt;                      variable   class order specified.from</span></a>
@@ -859,7 +843,7 @@
 <a class="sourceLine" id="cb15-9" title="9"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(outcomes.as.inputs.form)</a>
 <a class="sourceLine" id="cb15-10" title="10"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb15-11" title="11"><span class="co">#&gt; Income ~ Age</span></a>
-<a class="sourceLine" id="cb15-12" title="12"><span class="co">#&gt; &lt;environment: 0x000000001b6b7350&gt;</span></a>
+<a class="sourceLine" id="cb15-12" title="12"><span class="co">#&gt; &lt;environment: 0x000000001b5c1568&gt;</span></a>
 <a class="sourceLine" id="cb15-13" title="13"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb15-14" title="14"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb15-15" title="15"><span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span></a>
@@ -882,7 +866,7 @@
 <a class="sourceLine" id="cb16-4" title="4"></a>
 <a class="sourceLine" id="cb16-5" title="5">duplicated.form &lt;-</a>
 <a class="sourceLine" id="cb16-6" title="6"><span class="st">  </span><span class="kw"><a href="../reference/create.formula.html">create.formula</a></span>(</a>
-<a class="sourceLine" id="cb16-7" title="7">    <span class="dt">outcome.name =</span> outcome.name.awareness,</a>
+<a class="sourceLine" id="cb16-7" title="7">    <span class="dt">outcome.name =</span> awareness.name,</a>
 <a class="sourceLine" id="cb16-8" title="8">    <span class="dt">input.names =</span> duplicated.inputs,</a>
 <a class="sourceLine" id="cb16-9" title="9">    <span class="dt">interactions =</span> duplicated.interactions,</a>
 <a class="sourceLine" id="cb16-10" title="10">    <span class="dt">dat =</span> snack.dat</a>
@@ -891,7 +875,7 @@
 <a class="sourceLine" id="cb16-13" title="13"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(duplicated.form)</a>
 <a class="sourceLine" id="cb16-14" title="14"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb16-15" title="15"><span class="co">#&gt; Awareness ~ Age + Income + Age * Income</span></a>
-<a class="sourceLine" id="cb16-16" title="16"><span class="co">#&gt; &lt;environment: 0x000000001be34d68&gt;</span></a>
+<a class="sourceLine" id="cb16-16" title="16"><span class="co">#&gt; &lt;environment: 0x000000001bd654f0&gt;</span></a>
 <a class="sourceLine" id="cb16-17" title="17"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb16-18" title="18"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb16-19" title="19"><span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span></a>
@@ -917,7 +901,7 @@
 <a class="sourceLine" id="cb17-6" title="6"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(formula.with.typo)</a>
 <a class="sourceLine" id="cb17-7" title="7"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb17-8" title="8"><span class="co">#&gt; Income ~ Age + Typo</span></a>
-<a class="sourceLine" id="cb17-9" title="9"><span class="co">#&gt; &lt;environment: 0x0000000016c1f128&gt;</span></a>
+<a class="sourceLine" id="cb17-9" title="9"><span class="co">#&gt; &lt;environment: 0x0000000016f1ecd8&gt;</span></a>
 <a class="sourceLine" id="cb17-10" title="10"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb17-11" title="11"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb17-12" title="12"><span class="co">#&gt; Null data.table (0 rows and 0 cols)</span></a>
@@ -931,7 +915,7 @@
 <a class="sourceLine" id="cb18-5" title="5"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(formula.without.typo)</a>
 <a class="sourceLine" id="cb18-6" title="6"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb18-7" title="7"><span class="co">#&gt; Income ~ Age</span></a>
-<a class="sourceLine" id="cb18-8" title="8"><span class="co">#&gt; &lt;environment: 0x0000000015ecf9d0&gt;</span></a>
+<a class="sourceLine" id="cb18-8" title="8"><span class="co">#&gt; &lt;environment: 0x00000000155ef678&gt;</span></a>
 <a class="sourceLine" id="cb18-9" title="9"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb18-10" title="10"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb18-11" title="11"><span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span></a>
@@ -969,7 +953,7 @@
 <a class="sourceLine" id="cb20-4" title="4"></a>
 <a class="sourceLine" id="cb20-5" title="5"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(formula.consideration<span class="op">$</span>formula)</a>
 <a class="sourceLine" id="cb20-6" title="6"><span class="co">#&gt; Consideration ~ Age + Awareness</span></a>
-<a class="sourceLine" id="cb20-7" title="7"><span class="co">#&gt; &lt;environment: 0x000000001874d408&gt;</span></a>
+<a class="sourceLine" id="cb20-7" title="7"><span class="co">#&gt; &lt;environment: 0x0000000018528870&gt;</span></a>
 <a class="sourceLine" id="cb20-8" title="8"></a>
 <a class="sourceLine" id="cb20-9" title="9"><span class="kw"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="dt">formula =</span> formula.consideration,</a>
 <a class="sourceLine" id="cb20-10" title="10">    <span class="dt">data =</span> snack.dat,</a>
@@ -988,7 +972,7 @@
 <a class="sourceLine" id="cb21-9" title="9"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(formula.consideration)</a>
 <a class="sourceLine" id="cb21-10" title="10"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb21-11" title="11"><span class="co">#&gt; Consideration ~ Age</span></a>
-<a class="sourceLine" id="cb21-12" title="12"><span class="co">#&gt; &lt;environment: 0x000000001aed7028&gt;</span></a>
+<a class="sourceLine" id="cb21-12" title="12"><span class="co">#&gt; &lt;environment: 0x000000001ae58908&gt;</span></a>
 <a class="sourceLine" id="cb21-13" title="13"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb21-14" title="14"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb21-15" title="15"><span class="co">#&gt;     variable   class order specified.from exclude.user.specified</span></a>
@@ -1015,7 +999,7 @@
 <a class="sourceLine" id="cb22-4" title="4"></a>
 <a class="sourceLine" id="cb22-5" title="5"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(formula.awareness<span class="op">$</span>formula)</a>
 <a class="sourceLine" id="cb22-6" title="6"><span class="co">#&gt; Awareness ~ `Age Group` + Gender</span></a>
-<a class="sourceLine" id="cb22-7" title="7"><span class="co">#&gt; &lt;environment: 0x000000001b794e40&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb22-7" title="7"><span class="co">#&gt; &lt;environment: 0x000000001b6e5b90&gt;</span></a></code></pre></div>
 <p>#<code>{r create.formula with lack of contrast 1} #glm(formula = formula.awareness$formula, data = #snack.dat[get(age.group.name) == "[ 18, 35)",], family = "binomial") #</code></p>
 <p>This particular example is designed to demonstrate the issue with a simple contradiction, and its root cause is easy to identify. In real applications, significant investigation may be required to determine which variables may be causing such an effect. The error message provided informs the user of a lack of contrast, but it does not identify which variable is causing the issue. In a formula that incorporates many inputs, there may be a number of different variables that each contribute to the issue.</p>
 <p>Within the formulaic package, the create.formula’s <strong>reduce</strong> parameter can be used to automatically identify categorical variables with a lack of contrast. When <strong>reduce = TRUE</strong> and a data set is provided, inputs with no variation are excluded from the resulting formula. The <strong>exclude.lack.contrast </strong> column of the output’s <strong>inclusion.table</strong> identifies which variables include a lack of contrast, and the <strong>min.categories</strong> column identifies the number of unique values for each variable. This is demonstrated with the call to create.formula below:</p>
@@ -1048,7 +1032,7 @@
 <a class="sourceLine" id="cb24-10" title="10"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(formula.consideration<span class="fl">.1</span>)</a>
 <a class="sourceLine" id="cb24-11" title="11"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb24-12" title="12"><span class="co">#&gt; Consideration ~ `Age Group` + Gender + Awareness</span></a>
-<a class="sourceLine" id="cb24-13" title="13"><span class="co">#&gt; &lt;environment: 0x000000001baa3c88&gt;</span></a>
+<a class="sourceLine" id="cb24-13" title="13"><span class="co">#&gt; &lt;environment: 0x000000001b9ba688&gt;</span></a>
 <a class="sourceLine" id="cb24-14" title="14"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb24-15" title="15"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb24-16" title="16"><span class="co">#&gt;     variable   class order specified.from exclude.user.specified</span></a>
@@ -1079,7 +1063,7 @@
 <a class="sourceLine" id="cb25-10" title="10"><span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(formula.consideration<span class="fl">.2</span>)</a>
 <a class="sourceLine" id="cb25-11" title="11"><span class="co">#&gt; $formula</span></a>
 <a class="sourceLine" id="cb25-12" title="12"><span class="co">#&gt; Consideration ~ `Age Group` + Gender</span></a>
-<a class="sourceLine" id="cb25-13" title="13"><span class="co">#&gt; &lt;environment: 0x00000000173383a8&gt;</span></a>
+<a class="sourceLine" id="cb25-13" title="13"><span class="co">#&gt; &lt;environment: 0x000000001758b4a8&gt;</span></a>
 <a class="sourceLine" id="cb25-14" title="14"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb25-15" title="15"><span class="co">#&gt; $inclusion.table</span></a>
 <a class="sourceLine" id="cb25-16" title="16"><span class="co">#&gt;     variable   class order specified.from exclude.user.specified</span></a>
@@ -1112,7 +1096,7 @@
 <a class="sourceLine" id="cb26-6" title="6">  <span class="dt">max.input.categories =</span> <span class="dv">30</span></a>
 <a class="sourceLine" id="cb26-7" title="7">)<span class="op">$</span>formula</a>
 <a class="sourceLine" id="cb26-8" title="8"><span class="co">#&gt; Satisfaction ~ Age + Income + Region</span></a>
-<a class="sourceLine" id="cb26-9" title="9"><span class="co">#&gt; &lt;environment: 0x00000000180069f8&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb26-9" title="9"><span class="co">#&gt; &lt;environment: 0x0000000017cd56c0&gt;</span></a></code></pre></div>
 </div>
 <div id="inspection-of-all-variables" class="section level3">
 <h3 class="hasAnchor">
@@ -1127,7 +1111,7 @@
 <a class="sourceLine" id="cb27-7" title="7">)<span class="op">$</span>formula</a>
 <a class="sourceLine" id="cb27-8" title="8"><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona + Product + </span></a>
 <a class="sourceLine" id="cb27-9" title="9"><span class="co">#&gt;     `Age Group` + `Income Group`</span></a>
-<a class="sourceLine" id="cb27-10" title="10"><span class="co">#&gt; &lt;environment: 0x000000001adbae28&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb27-10" title="10"><span class="co">#&gt; &lt;environment: 0x00000000189ae740&gt;</span></a></code></pre></div>
 <p>All of the brand perceptions and other states of engagement were removed from the formula. This was due to a lack of contrast arising from the structurally missing values when the respondents were not aware of the product. Meanwhile, the User ID was removed due to its large number of categories. Only the names of the products and the respondent-specific variables remain. From this list, an investigator could then make selections of which variables to include (e.g. Age or Age Group). However, much of the preliminary investigation would be handled automatically. This is especially helpful in settings in which the full relationship of the variables – such as the sequence and dependencies of the marketing survey’s questions – is not yet fully understood.</p>
 </div>
 </div>
@@ -1157,7 +1141,7 @@
 <a class="sourceLine" id="cb28-7" title="7">)<span class="op">$</span>formula</a>
 <a class="sourceLine" id="cb28-8" title="8"><span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona + Product + </span></a>
 <a class="sourceLine" id="cb28-9" title="9"><span class="co">#&gt;     `Age Group` + `Income Group`</span></a>
-<a class="sourceLine" id="cb28-10" title="10"><span class="co">#&gt; &lt;environment: 0x000000001baa1c08&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb28-10" title="10"><span class="co">#&gt; &lt;environment: 0x000000001b9c4b58&gt;</span></a></code></pre></div>
 </div>
 </div>
 </div>
@@ -1187,7 +1171,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by David Shilane, Anderson Nelson.</p>
+  <p>Developed by David Shilane, Caffrey Lee, Zichen Huang, Anderson Nelson.</p>
 </div>
 
 <div class="pkgdown">

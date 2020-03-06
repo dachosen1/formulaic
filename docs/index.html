@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">formulaic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6</span>
       </span>
     </div>
 
@@ -81,9 +81,7 @@
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
-<p><strong>Formulaic</strong> is useful to create a dynamic formula with multiple features. It not only diminishes the time required for modeling and implementing, but also enriches the quality of the result.</p>
-<p>Many statistical models and analyses in R are implemented through formula objects. The formulaic package creates a unified approach for programmatically and dynamically generating formula objects in R. Users may specify the inputs and outcomes of a model directly, search for variables to include based upon naming patterns, and identify variables to exclude. A wide range of quality checks are implemented to identify issues such as misspecified variables, duplication, a lack of contrast in the inputs, and a large number of levels in categorical data. These issues are documented and reported in a manner that provides greater accountability and useful information to guide an investigators choices in selecting features.</p>
-<p>Dynamically generated formula objects can enable the development of applications that incorporate a user’s inputs for selecting the variables of a model and the subsets of data to include. The quality checks enable a programmatic reduction of the inputs to those that are appropriate for inclusion in the model. By automatically limiting these selections, many models that would lead to errors or intractable computations may be proactively avoided. By performing this process in the creation of the formula, all statistical models and analyses relying on formula objects can easily make use of these features. Furthermore, the list of quality checks can be easily expanded to incorporate additional concerns.</p>
+<p><strong>Formulaic</strong> is useful in creating a dynamic formula with multiple features. It not only diminishes the time required for modeling and implementing, but also enriches the quality of the result. Many statistical models and analyses in R are implemented through formula objects. The formulaic package creates a unified approach for programmatically and dynamically generating formula objects in R. Users may specify the inputs and outcomes of a model directly, search for variables to include based upon naming patterns, and identify variables to exclude. A wide range of quality checks is implemented to identify issues such as misspecified variables, duplication, a lack of contrast in the inputs, and a large number of levels in categorical data. These issues are documented and reported in a manner that provides greater accountability and useful information to guide the investigator’s choices in selecting features. Dynamically generated formula objects can enable the development of applications that incorporate a user’s inputs for selecting the variables of a model and the subsets of data to include. The quality checks enable a programmatic reduction of the inputs to those that are appropriate for inclusion in the model. By automatically limiting these selections, many models that would lead to errors or intractable computations may be proactively avoided. By performing this process in the creation of the formula, all statistical models and analyses relying on formula objects can easily make use of these features. Furthermore, the list of quality checks can be easily expanded to incorporate additional concerns.</p>
 </div>
 <div id="install-the-current-release-from-cran" class="section level2">
 <h2 class="hasAnchor">
@@ -99,15 +97,15 @@
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
 <p>Formulaic package has two main functions – <strong>create.formula</strong> and <strong>reduce.existing.formula</strong> – and one subsidiary function, <strong>add.backticks</strong>. The main purpose of developing the package is to help users to build a robust model faster and more convenient.</p>
-<p><strong>create.formula</strong> automatically creates a formula from a provided list of input variables and the output variable. The variables will undergo a series of qualification tests such as automatic variable/categories reduction, typo, duplication, and lack of contrasted features elimination, etc. to make sure that a given feature is usable for modeling. This will reduce the time to build a model and set the users free from the trivial maneuver: manually inputting variables for modeling. The outcome of this formula can be used in a wide range from simple linear regression to any machine learning techniques such as random forest, neural network, etc.</p>
-<p>The principal advantages of using create.formula are followed:</p>
+<p><strong>create.formula</strong> automatically creates a formula from a provided list of input variables and the output variable. The variables will undergo a series of qualification tests such as automatic variable/categories reduction, typo, duplication, and lack of contrasted features elimination, etc. to make sure that a given feature is used for modeling. This will reduce the time to build a model and set the users free from the trivial maneuver: manually inputting variables for modeling. The outcome of this formula can be used in a wide range from simple linear regression to any machine learning techniques such as random forest, neural network, etc.</p>
+<p>The principal advantages of using create.formula are as followed:</p>
 <p>1) Being able to dynamically generate a formula from a vector of inputs, without necessarily having to spell them all out by name.</p>
 <p>2) Adding variables by searching for patterns.</p>
 <p>3) Simple integration of interactions.</p>
 <p>4) Easy removal of specific variables.</p>
 <p>5) Quality checks that resolve a variety of issues – typos, duplication, lack of contrast, etc. – while providing a transparent explanation.</p>
-<p><strong>reduce.existing.formula</strong> trims an existing formula down. Users plug an existing formula into the function, then it will undergo the same test as create.formula.</p>
-<p><strong>add.backticks</strong> applies backticks the variables needs backticks to be employed in a formula as default. Users can also add backticks to all the variables; however, it is not necessary.</p>
+<p><strong>reduce.existing.formula</strong> Trims existing formula . Users plug an existing formula into the function; then, it will undergo the same test as create.formula.</p>
+<p><strong>add.backticks</strong> applies backticks to the variables that require backticks to be employed in a formula as default. Users can also add backticks to all the variables; however, it is not necessary.</p>
 <div id="example" class="section level3">
 <h3 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h3>
@@ -118,18 +116,18 @@
 <a class="sourceLine" id="cb3-5" title="5">dd[, item_<span class="dv">1</span> <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="fl">0.3</span> <span class="op">*</span><span class="st"> </span>pixel_<span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(n)]</a>
 <a class="sourceLine" id="cb3-6" title="6">dd[, item_<span class="dv">2</span> <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="fl">0.3</span> <span class="op">*</span><span class="st"> </span>pixel_<span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(n)]</a>
 <a class="sourceLine" id="cb3-7" title="7">dd[, y <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>pixel_<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>pixel_<span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(n)]</a></code></pre></div>
-<p>The resulting script create a data.table with 8 unique features</p>
+<p>The resulting script create a data.table with 8 unique features.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(dd)</a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="st">"w"</span>       <span class="st">"x"</span>       <span class="st">"pixel_1"</span> <span class="st">"pixel 2"</span> <span class="st">"pixel_3"</span> <span class="st">"item_1"</span>  <span class="st">"item_2"</span>  <span class="st">"y"</span>  </a></code></pre></div>
-<p>Traditionally, creating a formula in R required the user to manually select the desired variables or use the y~. notation to select all the features. <strong><code>formulaic</code></strong> is useful to programmatically select variables to include and performs quality check against the input.</p>
+<p>Traditionally, creating a formula in R required the user to select the desired variables or use the y~ . notation to select all the features. <strong><code>formulaic</code></strong> is useful to choose variables programmatically to include and perform a quality check against the input.</p>
 <p><strong>use case:</strong> Creating a model with all pixel patterns</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># create formula object </span></a>
 <a class="sourceLine" id="cb5-2" title="2">formula1 &lt;-<span class="st"> </span><span class="kw"><a href="reference/create.formula.html">create.formula</a></span>(<span class="dt">outcome.name =</span> <span class="st">"y"</span>, <span class="dt">input.names =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"x"</span>,<span class="st">"Random error"</span>, <span class="st">"y"</span>), <span class="dt">input.patterns =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"pix"</span>), <span class="dt">dat =</span> dd)</a>
 <a class="sourceLine" id="cb5-3" title="3"></a>
 <a class="sourceLine" id="cb5-4" title="4">formula1<span class="op">$</span>formula</a>
 <a class="sourceLine" id="cb5-5" title="5">y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>pixel_<span class="dv">1</span> <span class="op">+</span><span class="st"> `</span><span class="dt">pixel 2</span><span class="st">`</span> <span class="op">+</span><span class="st"> </span>pixel_<span class="dv">3</span></a></code></pre></div>
-<p>The result is a formula object of all the pixel variables and the input x. Notice that ‘Random error’ variable was automatically excluded from the output and a backtick was automatically added to the variable pixel 2. Since the the independent variable y was included as feature, it was excluded from the output formula.</p>
-<p>Details of the variables included is provided in the inclusion table</p>
+<p>The result is a formula object of all the pixel variables and the input x. Notice that the ‘Random error’ variable was automatically excluded from the output, and a backtick was automatically added to the variable pixel 2. Since the independent variable y was included as a feature, it was excluded from the output formula.</p>
+<p>Details of the variables included are provided in the inclusion table</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># inclustion table</span></a>
 <a class="sourceLine" id="cb6-2" title="2"><span class="op">&gt;</span><span class="st"> </span>formula1<span class="op">$</span>inclusion.table</a>
 <a class="sourceLine" id="cb6-3" title="3">       variable   class order specified.from exclude.user.specified exclude.not.in.names.dat exclude.matches.outcome.name include.variable</a>
@@ -174,8 +172,9 @@
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>David Shilane <br><small class="roles"> Author </small>  </li>
-<li>Anderson Nelson <br><small class="roles"> Contributor, maintainer </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li>Caffrey Lee <br><small class="roles"> Author, contributor </small>  </li>
+<li>Zichen Huang <br><small class="roles"> Author, contributor </small>  </li>
+<li>Anderson Nelson <br><small class="roles"> Author, contributor, maintainer </small>  </li>
 </ul>
 </div>
 
@@ -195,7 +194,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by David Shilane, Anderson Nelson.</p>
+  <p>Developed by David Shilane, Caffrey Lee, Zichen Huang, Anderson Nelson.</p>
 </div>
 
 <div class="pkgdown">

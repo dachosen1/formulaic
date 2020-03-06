@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">formulaic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6</span>
       </span>
     </div>
 
@@ -146,15 +146,15 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>outcome.name</th>
-      <td><p>A character value specifying the name of the formula's outcome variable. In this version, only a single outcome may be included. The first entry of outcome.name will be used to build the formula.</p></td>
+      <td><p>A character value specifying the name of the formula's outcome variable. In this version, only a single outcome may be ed. The first entry of outcome.name will be used to build the formula.</p></td>
     </tr>
     <tr>
       <th>input.names</th>
-      <td><p>The names of the variables with the full names delineated.</p></td>
+      <td><p>The names of the variables with the full names delineated. User can specify '.' or 'all' to e all the column variables.</p></td>
     </tr>
     <tr>
       <th>input.patterns</th>
-      <td><p>Includes additional input variables. The user may enter patterns -- e.g. to include every variable with a name that includes the pattern. Multiple patterns may be included as a character vector. However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.</p></td>
+      <td><p>es additional input variables. The user may enter patterns -- e.g. to e every variable with a name that es the pattern. Multiple patterns may be ed as a character vector. However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.</p></td>
     </tr>
     <tr>
       <th>dat</th>
@@ -162,11 +162,11 @@
     </tr>
     <tr>
       <th>interactions</th>
-      <td><p>A list of character vectors. Each character vector includes the names of the variables that form a single interaction. Specifying interactions = list(c("x", "y"), c("x", "z"), c("y", "z"), c("x", "y", "z")) would lead to the interactions x*y + x*z + y*z + x*y*z.</p></td>
+      <td><p>A list of character vectors. Each character vector es the names of the variables that form a single interaction. Specifying interactions = list(c("x", "y"), c("x", "z"), c("y", "z"), c("x", "y", "z")) would lead to the interactions x*y + x*z + y*z + x*y*z.</p></td>
     </tr>
     <tr>
       <th>force.main.effects</th>
-      <td><p>This is a logical value. When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.</p></td>
+      <td><p>This is a logical value. When TRUE, the intent is that any term ed as an interaction (of multiple variables) must also be listed individually as a main effect.</p></td>
     </tr>
     <tr>
       <th>reduce</th>
@@ -178,7 +178,7 @@
     </tr>
     <tr>
       <th>max.outcome.categories.to.search</th>
-      <td><p>A numeric value. The create.formula function includes a feature that identifies input variables exhibiting a lack of contrast. When reduce = TRUE, these variables are automatically excluded from the resulting formula. This search may be expanded to subsets of the outcome when the number of unique measured values of the outcome is no greater than max.outcome.categories.to.search. In this case, each subset of the outcome will be separately examined, and any inputs that exhibit a lack of contrast within at least one subset will be excluded.</p></td>
+      <td><p>A numeric value. The create.formula function es a feature that identifies input variables exhibiting a lack of contrast. When reduce = TRUE, these variables are automatically excluded from the resulting formula. This search may be expanded to subsets of the outcome when the number of unique measured values of the outcome is no greater than max.outcome.categories.to.search. In this case, each subset of the outcome will be separately examined, and any inputs that exhibit a lack of contrast within at least one subset will be excluded.</p></td>
     </tr>
     <tr>
       <th>order.as</th>
@@ -233,7 +233,7 @@ The input.names and names of variables matching the input.patterns will be conca
 #&gt; 10: -0.282705449 -0.91407483 -1.51239965  0.6135880 -9.7921176</div><div class='input'>
  <span class='fu'>create.formula</span>(<span class='kw'>outcome.name</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>input.names</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>input.patterns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pi"</span>, <span class='st'>"xel"</span>), <span class='kw'>dat</span> <span class='kw'>=</span> <span class='no'>dd</span>)</div><div class='output co'>#&gt; $formula
 #&gt; y ~ x + pixel_1 + pixel_2
-#&gt; &lt;environment: 0x0000000020b749b0&gt;
+#&gt; &lt;environment: 0x000000002224d948&gt;
 #&gt; 
 #&gt; $inclusion.table
 #&gt;    variable   class order specified.from exclude.user.specified
@@ -263,7 +263,7 @@ The input.names and names of variables matching the input.patterns will be conca
 
       <footer>
       <div class="copyright">
-  <p>Developed by David Shilane, Anderson Nelson.</p>
+  <p>Developed by David Shilane, Caffrey Lee, Zichen Huang, Anderson Nelson.</p>
 </div>
 
 <div class="pkgdown">

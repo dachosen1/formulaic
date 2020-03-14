@@ -2,30 +2,29 @@
 
 language: R
 cache: packages
+warnings_are_errors: false
 
-# build matrix; turn on vdiffr only on r release
 matrix:
   include:
+  - r: devel
+  - r: oldrel
+  
   - r: release
-    env: VDIFFR_RUN_TESTS=true
     before_cache:
     - Rscript -e 'remotes::install_cran("pkgdown")'
-    
+ 
   - r: 3.6    
   - r: 3.5
   - r: 3.4
   - r: 3.3
   - r: 3.2
   
-    env: R_REMOTES_NO_ERRORS_FROM_WARNINGS=true
-
 # environment variables set for all builds
 env:
   global:
-  # don't treat missing suggested packages as error
   - _R_CHECK_FORCE_SUGGESTS_=false
-  # switch off vdiffr by default
-  - VDIFFR_RUN_TESTS=false
+  - _R_CHECK_FORCE_SUGGESTS_=true
+  - _R_CHECK_CRAN_INCOMING_=true
 
 after_success:
   - Rscript -e 'covr::codecov()'

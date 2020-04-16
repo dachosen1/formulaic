@@ -1,5 +1,6 @@
 # formulaic
 ![R-CMD-check](https://github.com/dachosen1/formulaic/workflows/R-CMD-check/badge.svg)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0c8859e97a934d0daf112469a7b7279d)](https://app.codacy.com/manual/anderson.nelson1/formulaic?utm_source=github.com&utm_medium=referral&utm_content=dachosen1/formulaic&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.com/dachosen1/formulaic.svg?token=Vccc85T4kcPx9zLDqfTx&branch=master)](https://travis-ci.com/dachosen1/formulaic) 
 [![codecov](https://codecov.io/gh/dachosen1/formulaic/branch/master/graph/badge.svg)](https://codecov.io/gh/dachosen1/formulaic)
 [![license](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)

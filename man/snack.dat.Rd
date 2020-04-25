@@ -4,7 +4,8 @@
 \name{snack.dat}
 \alias{snack.dat}
 \title{Simulated Marketing Data}
-\format{A data frame of 23000 rows and 23 columns
+\format{
+A data frame of 23000 rows and 23 columns
 \describe{
  \item{User ID}{Character values assigning a unique customer value}
  \item{Age}{Numeric values displaying the age of customer in years}
@@ -31,7 +32,8 @@
  \item{Advocacy}{Numeric displaying if the customer would advocate for this product 1: Yes, 0: No}
  \item{Age Group}{Categorical variable that breaks the Users into 4 different groups}
  \item{Income Group}{Categorical variable that breaks the Users into 5 different levels}
- }}
+ }
+}
 \source{
 "Randomly generated data"
 }

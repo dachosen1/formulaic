@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Formulaic"
 output: rmarkdown::html_vignette
-author: 'Authors: David Shilane, Caffrey Lee, Zoe Huang, Anderson Nelson'
+author: 'Authors: David Shilane, Anderson Nelson, Caffrey Lee and Zoe Huang'
 date: "`r Sys.Date()`"
 vignette: >
   %\VignetteIndexEntry{Introduction to Formulaic}

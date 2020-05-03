@@ -8,7 +8,8 @@
 
 add.backtick <- function(x, include.backtick = "as.needed"){
   if(include.backtick == "all"){
-    w <- 1:length(x)
+    w <- seq_along(x)
+
   }
   if (include.backtick == "as.needed") {
     w <- grep(pattern = " ",
@@ -101,12 +102,12 @@ create.formula <-
           "Error:  To create a formula, the outcome.name must match one of the values in names(dat)."
         )
       }
-      variable.names.from.exclude <- c()
+      variable.names.from.exclude <- NULL
       if (!is.null(variables.to.exclude)) {
         variable.names.from.exclude <- unique(variables.to.exclude)
       }
 
-      variable.names.from.patterns <- c()
+      variable.names.from.patterns <- NULL
 
       if (!is.null(input.patterns)) {
         pattern <- paste(input.patterns, collapse = "|")
@@ -417,7 +418,7 @@ reduce.existing.formula <-
 
     w.int <- grep(pattern = "\\*", x = the.pieces.trimmed)
     w.input <-
-      (1:length(the.pieces.trimmed))[!((1:length(the.pieces.trimmed)) %in% w.int)]
+      (seq_along(the.pieces.trimmed))[!((seq_along(the.pieces.trimmed)) %in% w.int)]
 
     if (length(w.input) == 0) {
       input.names <- NULL

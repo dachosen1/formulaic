@@ -1,5 +1,4 @@
 context("Create Formula")
-library(formulaic)
 
 n <- 10
 dd <-
@@ -36,7 +35,7 @@ include.backtick <- "as.needed"
 format.as <- "formula"
 force.main.effects <- TRUE
 
-input.names <- c("Age")
+input.names <- "Age"
 interactions = list(c("Age Group", "Gender"))
 
 test = data.frame()
@@ -44,22 +43,23 @@ test = data.frame()
 
 #--------------------------------------------------------
 
-formula.1 <- create.formula(
+formula.1 <- formulaic::create.formula(
   outcome.name = "y",
   input.names = c("x", "Random error", "y"),
   input.patterns = c("pix"),
   dat = dd
 )
 
-formula.2 <- create.formula(
+formula.2 <- formulaic::create.formula(
   outcome.name = "y",
   input.names = '.',
-  input.patterns = c("pix"),
+  input.patterns = "pix",
   dat = dd,
   include.backtick = 'all'
 )
 
-all.inputs <- `y` ~ `w` + `x` + `pixel_1` + `pixel 2` + `pixel_3` + `item_1` + `item_2`
+all.inputs <-
+  `y` ~ `w` + `x` + `pixel_1` + `pixel 2` + `pixel_3` + `item_1` + `item_2`
 
 test_that('Inclusion table: input names',
           {
@@ -77,25 +77,40 @@ test_that('input names all',
 # ---------------------------------
 
 interaction.form <-
-  create.formula(
+  formulaic::create.formula(
     outcome.name = awareness.name,
     input.names = input.names,
     dat = snack.dat,
     interactions = interactions
   )
 
+test_that('outcome error',
+          {
+            expect_equal(
+              formulaic::create.formula(
+                input.names = 'y',
+                outcome.name = 'x',
+                dat = snack.dat
+              ),
+              "Error:  To create a formula, the outcome.name must match one of the values in names(dat)."
+            )
+            expect_equal(
+              formulaic::create.formula(
+                input.names = 'y',
+                outcome.name = 'x',
+                dat = test
+              ),
+              "Error:  dat must be an object with specified names."
+            )
+          })
+
+
+
 test_that(
-  'outcome error',
-  {
-  expect_equal(create.formula( input.names = 'y', outcome.name = 'x', dat = snack.dat), "Error:  To create a formula, the outcome.name must match one of the values in names(dat).")
-  expect_equal(create.formula(input.names = 'y',outcome.name = 'x', dat = test),"Error:  dat must be an object with specified names.")
-})
-
-
-
-test_that('Interaction outcome',
-          expect_equal(interaction.form$formula,Awareness ~ Age + `Age Group` + Gender + `Age Group` *
-    Gender)
-          )
-
-
+  'Interaction outcome',
+  expect_equal(
+    interaction.form$formula,
+    Awareness ~ Age + `Age Group` + Gender + `Age Group` *
+      Gender
+  )
+)

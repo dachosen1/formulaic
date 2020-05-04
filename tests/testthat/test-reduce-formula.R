@@ -1,11 +1,9 @@
 context("Reduce Formula")
-library(formulaic)
-
 
 
 the.initial.formula <- Awareness ~ .
 
-formula_1 <- reduce.existing.formula(
+formula_1 <- formulaic::reduce.existing.formula(
   the.initial.formula = the.initial.formula,
   dat = snack.dat,
   max.input.categories = 30

@@ -125,8 +125,7 @@ As a subsidiary function, formulaic::add.backtick is used inside of formulaic::c
 as.needed = formulaic::add.backtick(x = names(snack.dat), include.backtick = 'as.needed')
 all = formulaic::add.backtick(x = names(snack.dat), include.backtick = 'all')
 
-library(DT)
-datatable(data = cbind(as.needed, all))
+DT::datatable(data = cbind(as.needed, all))
 ```
 
 This feature is automatically incorporated into formulaic’s formulaic::create.formula method:

@@ -1,5 +1,2 @@
-library(testthat)
-library(formulaic)
-
-test_check("formulaic")
+testthat::test_check("formulaic")
 

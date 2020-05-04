@@ -46,7 +46,7 @@ test = data.frame()
 formula.1 <- formulaic::create.formula(
   outcome.name = "y",
   input.names = c("x", "Random error", "y"),
-  input.patterns = c("pix"),
+  input.patterns = "pix",
   dat = dd
 )
 

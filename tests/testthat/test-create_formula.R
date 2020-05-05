@@ -105,7 +105,6 @@ test_that('outcome error',
           })
 
 
-
 test_that(
   'Interaction outcome',
   expect_equal(

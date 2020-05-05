@@ -44,7 +44,8 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 #' @details  Return as the data type of the output.  If not set as "formula", then a character vector will be returned.
 #' The input.names and names of variables matching the input.patterns will be concatenated to form the full list of input variables.
 #'
-#' @import data.table
+#' @import data.table stats
+#'
 #' @export
 #' @examples
 #'  n <- 10
@@ -53,7 +54,7 @@ add.backtick <- function(x, include.backtick = "as.needed"){
 #'  dd[, y := 5 * x + 3 * pixel_1 + 2 * pixel_2 + rnorm(n)]
 #'
 #'  create.formula(outcome.name = "y", input.names = "x", input.patterns = c("pi", "xel"), dat = dd)
-#' @import stats
+#'
 #' @export
 create.formula <-
   function(outcome.name,

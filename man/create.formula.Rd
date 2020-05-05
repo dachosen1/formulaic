@@ -64,4 +64,5 @@ The input.names and names of variables matching the input.patterns will be conca
  dd[, y := 5 * x + 3 * pixel_1 + 2 * pixel_2 + rnorm(n)]
 
  create.formula(outcome.name = "y", input.names = "x", input.patterns = c("pi", "xel"), dat = dd)
+
 }

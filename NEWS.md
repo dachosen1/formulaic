@@ -2,6 +2,8 @@
 * Implemented additional test coverage for create formula
 * Improved code base quality 
 * Addressed NA variables in SnackDat Cookies Product 
+* Minor updates to the package vignette
+* Removed dependency on stats on and DT 
 
 # formulaic 0.0.6
 * modified package citations

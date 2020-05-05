@@ -6,8 +6,8 @@
 #' @param  include.backtick specifies whether a backtick should be added. Parameter values should be either 'all' or 'as.needed'
 #' @export
 
-add.backtick <- function(x, include.backtick = "as.needed"){
-  if(include.backtick == "all"){
+add.backtick <- function(x, include.backtick = "as.needed") {
+  if (include.backtick == "all") {
     w <- seq_along(x)
 
   }
@@ -71,7 +71,6 @@ create.formula <-
            format.as = "formula",
            variables.to.exclude = NULL,
            include.intercept = TRUE) {
-
     specified.from <-
       exclude.not.in.names.dat <-
       exclude.matches.outcome.name <-
@@ -81,9 +80,9 @@ create.formula <-
       include.variable <-
       variable <- . <- exclude.user.specified <-  NULL
 
-      input.names <- unique(input.names)
-      interactions <- unique(interactions)
-      input.patterns <- unique(input.patterns)
+    input.names <- unique(input.names)
+    interactions <- unique(interactions)
+    input.patterns <- unique(input.patterns)
 
     if (is.data.frame(dat)) {
       data.table::setDT(dat)
@@ -91,12 +90,11 @@ create.formula <-
       if (!is.null(input.names)) {
         if ("." %in% input.names | "all" %in% input.names) {
           input.names <-
-            unique(c(input.names[!input.names %in% c(".",'all')], names(dat)))
+            unique(c(input.names[!input.names %in% c(".", 'all')], names(dat)))
         }
       }
       if (length(names(dat)) == 0) {
-
-                return("Error:  dat must be an object with specified names.")
+        return("Error:  dat must be an object with specified names.")
       }
       if (!(outcome.name %in% names(dat))) {
         return(
@@ -129,7 +127,8 @@ create.formula <-
           unlisted.interactions
         ))
 
-      if (length(unique.names) == 0 | is.null(length(unique.names))) {
+      if (length(unique.names) == 0 |
+          is.null(length(unique.names))) {
         unique.names <- NA
       }
 

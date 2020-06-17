@@ -79,17 +79,13 @@
 
       
 
-      </header><script src="Introduction-to-formulaic_files/htmlwidgets-1.5.1/htmlwidgets.js"></script><script src="Introduction-to-formulaic_files/jquery-1.12.4/jquery.min.js"></script><link href="Introduction-to-formulaic_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="Introduction-to-formulaic_files/datatables-binding-0.13/datatables.js"></script><link href="Introduction-to-formulaic_files/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="Introduction-to-formulaic_files/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="Introduction-to-formulaic_files/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="Introduction-to-formulaic_files/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet">
-<script src="Introduction-to-formulaic_files/crosstalk-1.1.0.1/js/crosstalk.min.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to Formulaic</h1>
                         <h4 class="author">Authors: David Shilane, Anderson Nelson, Caffrey Lee and Zoe Huang</h4>
             
-            <h4 class="date">2020-05-04</h4>
+            <h4 class="date">2020-06-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/dachosen1/formulaic/blob/master/vignettes/Introduction-to-formulaic.Rmd"><code>vignettes/Introduction-to-formulaic.Rmd</code></a></small>
       <div class="hidden name"><code>Introduction-to-formulaic.Rmd</code></div>
@@ -125,7 +121,7 @@
 
 <span class="no">ex.form</span>$<span class="no">formula</span>
 <span class="co">#&gt; Awareness ~ 1</span>
-<span class="co">#&gt; &lt;environment: 0x000000001748f058&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001748a228&gt;</span>
 <span class="no">lm_example</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="kw">formula</span> <span class="kw">=</span> <span class="no">ex.form</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">snack.dat</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">lm_example</span>)
 <span class="co">#&gt; </span>
@@ -154,7 +150,7 @@
 
 <span class="kw pkg">formulaic</span><span class="kw ns">::</span><span class="fu"><a href="../reference/create.formula.html">create.formula</a></span>(<span class="kw">outcome.name</span> <span class="kw">=</span> <span class="no">user.outcome.name</span>, <span class="kw">input.names</span> <span class="kw">=</span> <span class="no">user.input.names</span>)$<span class="no">formula</span>
 <span class="co">#&gt; Satisfaction ~ `Age Group` + Gender + Region</span>
-<span class="co">#&gt; &lt;environment: 0x000000001c23eed0&gt;</span></pre></body></html></div>
+<span class="co">#&gt; &lt;environment: 0x000000001c152580&gt;</span></pre></body></html></div>
 </div>
 <div id="dataset-snack-dat" class="section level2">
 <h2 class="hasAnchor">
@@ -188,13 +184,12 @@
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="no">as.needed</span> <span class="kw">=</span> <span class="kw pkg">formulaic</span><span class="kw ns">::</span><span class="fu"><a href="../reference/add.backtick.html">add.backtick</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">snack.dat</span>), <span class="kw">include.backtick</span> <span class="kw">=</span> <span class="st">'as.needed'</span>)
 <span class="no">all</span> <span class="kw">=</span> <span class="kw pkg">formulaic</span><span class="kw ns">::</span><span class="fu"><a href="../reference/add.backtick.html">add.backtick</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">snack.dat</span>), <span class="kw">include.backtick</span> <span class="kw">=</span> <span class="st">'all'</span>)
 
-<span class="kw pkg">DT</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span>(<span class="kw">data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">as.needed</span>, <span class="no">all</span>))</pre></body></html></div>
-<div id="htmlwidget-6896c660f866ab27d93c" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6896c660f866ab27d93c">{"x":{"filter":"none","data":[["`User ID`","Age","Gender","Income","Region","Persona","Product","Awareness","BP_For_Me_0_10","BP_Fits_Budget_0_10","BP_Tastes_Great_0_10","BP_Good_To_Share_0_10","BP_Like_Logo_0_10","BP_Special_Occasions_0_10","BP_Everyday_Snack_0_10","BP_Healthy_0_10","BP_Delicious_0_10","BP_Right_Amount_0_10","BP_Relaxing_0_10","Consideration","Consumption","Satisfaction","Advocacy","`Age Group`","`Income Group`"],["`User ID`","`Age`","`Gender`","`Income`","`Region`","`Persona`","`Product`","`Awareness`","`BP_For_Me_0_10`","`BP_Fits_Budget_0_10`","`BP_Tastes_Great_0_10`","`BP_Good_To_Share_0_10`","`BP_Like_Logo_0_10`","`BP_Special_Occasions_0_10`","`BP_Everyday_Snack_0_10`","`BP_Healthy_0_10`","`BP_Delicious_0_10`","`BP_Right_Amount_0_10`","`BP_Relaxing_0_10`","`Consideration`","`Consumption`","`Satisfaction`","`Advocacy`","`Age Group`","`Income Group`"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>as.needed<\/th>\n      <th>all<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>This feature is automatically incorporated into formulaic’s formulaic::create.formula method:</p>
+<span class="no">data</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(<span class="no">as.needed</span>, <span class="no">all</span>)</pre></body></html></div>
+<p>This feature is automatically incorporated into formulaic’s formulaic::create.formula method:</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="kw pkg">formulaic</span><span class="kw ns">::</span><span class="fu"><a href="../reference/create.formula.html">create.formula</a></span>(<span class="kw">outcome.name</span> <span class="kw">=</span> <span class="no">awareness.name</span>, <span class="kw">input.names</span> <span class="kw">=</span> <span class="no">variable.names</span>)$<span class="no">formula</span>
 <span class="co">#&gt; Awareness ~ Age + Gender + `Income Group` + Region + Persona + </span>
 <span class="co">#&gt;     Typo</span>
-<span class="co">#&gt; &lt;environment: 0x000000001fabae48&gt;</span></pre></body></html></div>
+<span class="co">#&gt; &lt;environment: 0x000000001bd44398&gt;</span></pre></body></html></div>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="kw pkg">formulaic</span><span class="kw ns">::</span><span class="fu"><a href="../reference/create.formula.html">create.formula</a></span>(
   <span class="kw">outcome.name</span> <span class="kw">=</span> <span class="no">awareness.name</span>,
   <span class="kw">input.names</span> <span class="kw">=</span> <span class="no">variable.names</span>,
@@ -249,7 +244,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">basic.form</span>)
 <span class="co">#&gt; $formula</span>
 <span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona</span>
-<span class="co">#&gt; &lt;environment: 0x000000001ff524a8&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001f0f2a68&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $inclusion.table</span>
 <span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span>
@@ -291,7 +286,7 @@
 <span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona + `Age Group` + </span>
 <span class="co">#&gt;     `Age Group` * Gender + `Age Group` * Region + `Age Group` * </span>
 <span class="co">#&gt;     Gender * Region</span>
-<span class="co">#&gt; &lt;environment: 0x0000000014994958&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001f8f8690&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $inclusion.table</span>
 <span class="co">#&gt;     variable   class order specified.from exclude.user.specified</span>
@@ -340,7 +335,7 @@
 <span class="co">#&gt;     BP_Like_Logo_0_10 + BP_Special_Occasions_0_10 + BP_Everyday_Snack_0_10 + </span>
 <span class="co">#&gt;     BP_Healthy_0_10 + BP_Delicious_0_10 + BP_Right_Amount_0_10 + </span>
 <span class="co">#&gt;     BP_Relaxing_0_10</span>
-<span class="co">#&gt; &lt;environment: 0x000000001c762058&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001ffb10b0&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $inclusion.table</span>
 <span class="co">#&gt;                      variable   class order specified.from</span>
@@ -419,7 +414,7 @@
 <span class="co">#&gt;     BP_Everyday_Snack_0_10 + BP_Healthy_0_10 + BP_Delicious_0_10 + </span>
 <span class="co">#&gt;     BP_Right_Amount_0_10 + BP_Relaxing_0_10 + Consideration + </span>
 <span class="co">#&gt;     Consumption + Satisfaction + Advocacy + `Age Group` + `Income Group`</span>
-<span class="co">#&gt; &lt;environment: 0x000000001f122448&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x0000000015259a08&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $inclusion.table</span>
 <span class="co">#&gt;                      variable   class order specified.from</span>
@@ -520,7 +515,7 @@
 <span class="co">#&gt;     BP_Everyday_Snack_0_10 + BP_Healthy_0_10 + BP_Delicious_0_10 + </span>
 <span class="co">#&gt;     BP_Right_Amount_0_10 + BP_Relaxing_0_10 + Consideration + </span>
 <span class="co">#&gt;     Consumption + Satisfaction + Advocacy + `Age Group` + `Income Group`</span>
-<span class="co">#&gt; &lt;environment: 0x000000001fbc0a50&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001c84c3a8&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $inclusion.table</span>
 <span class="co">#&gt;                      variable   class order specified.from</span>
@@ -621,7 +616,7 @@
 <span class="co">#&gt;     BP_Everyday_Snack_0_10 + BP_Healthy_0_10 + BP_Delicious_0_10 + </span>
 <span class="co">#&gt;     BP_Right_Amount_0_10 + BP_Relaxing_0_10 + Consideration + </span>
 <span class="co">#&gt;     Consumption + Satisfaction + Advocacy + `Age Group` + `Income Group`</span>
-<span class="co">#&gt; &lt;environment: 0x0000000016e629d0&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001f3cae20&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $inclusion.table</span>
 <span class="co">#&gt;                      variable   class order specified.from</span>
@@ -753,7 +748,7 @@
 <span class="co">#&gt;     BP_Like_Logo_0_10 + BP_Special_Occasions_0_10 + BP_Everyday_Snack_0_10 + </span>
 <span class="co">#&gt;     BP_Healthy_0_10 + BP_Right_Amount_0_10 + BP_Relaxing_0_10 + </span>
 <span class="co">#&gt;     Age * Income</span>
-<span class="co">#&gt; &lt;environment: 0x000000001c919190&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001fe80ee8&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $inclusion.table</span>
 <span class="co">#&gt;                      variable   class order specified.from</span>
@@ -849,7 +844,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">outcomes.as.inputs.form</span>)
 <span class="co">#&gt; $formula</span>
 <span class="co">#&gt; Income ~ Age</span>
-<span class="co">#&gt; &lt;environment: 0x000000001f881cc8&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001c8f0c80&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $inclusion.table</span>
 <span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span>
@@ -881,7 +876,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">duplicated.form</span>)
 <span class="co">#&gt; $formula</span>
 <span class="co">#&gt; Awareness ~ Age + Income + Age * Income</span>
-<span class="co">#&gt; &lt;environment: 0x000000001fdaa2a8&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001c857cf0&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $inclusion.table</span>
 <span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span>
@@ -907,7 +902,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">formula.with.typo</span>)
 <span class="co">#&gt; $formula</span>
 <span class="co">#&gt; Income ~ Age + Typo</span>
-<span class="co">#&gt; &lt;environment: 0x0000000016e56448&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001f0faec8&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $inclusion.table</span>
 <span class="co">#&gt; Null data.table (0 rows and 0 cols)</span>
@@ -921,7 +916,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">formula.without.typo</span>)
 <span class="co">#&gt; $formula</span>
 <span class="co">#&gt; Income ~ Age</span>
-<span class="co">#&gt; &lt;environment: 0x0000000014addfc8&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001f38bf98&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $inclusion.table</span>
 <span class="co">#&gt;    variable   class order specified.from exclude.user.specified</span>
@@ -959,7 +954,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">formula.consideration</span>$<span class="no">formula</span>)
 <span class="co">#&gt; Consideration ~ Age + Awareness</span>
-<span class="co">#&gt; &lt;environment: 0x000000001c6864c0&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001fb5e678&gt;</span>
 
 <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(<span class="kw">formula</span> <span class="kw">=</span> <span class="no">formula.consideration</span>,
     <span class="kw">data</span> <span class="kw">=</span> <span class="no">snack.dat</span>,
@@ -978,7 +973,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">formula.consideration</span>)
 <span class="co">#&gt; $formula</span>
 <span class="co">#&gt; Consideration ~ Age</span>
-<span class="co">#&gt; &lt;environment: 0x000000001bf1a3a8&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001fe67828&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $inclusion.table</span>
 <span class="co">#&gt;     variable   class order specified.from exclude.user.specified</span>
@@ -1005,7 +1000,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">formula.awareness</span>$<span class="no">formula</span>)
 <span class="co">#&gt; Awareness ~ `Age Group` + Gender</span>
-<span class="co">#&gt; &lt;environment: 0x000000001f5e0618&gt;</span></pre></body></html></div>
+<span class="co">#&gt; &lt;environment: 0x0000000016a54b18&gt;</span></pre></body></html></div>
 <p>#<code>{r formulaic::create.formula with lack of contrast 1} #glm(formula = formula.awareness$formula, data = #snack.dat[get(age.group.name) == "[ 18, 35)",], family = "binomial") #</code></p>
 <p>This particular example is designed to demonstrate the issue with a simple contradiction, and its root cause is easy to identify. In real applications, significant investigation may be required to determine which variables may be causing such an effect. The error message provided informs the user of a lack of contrast, but it does not identify which variable is causing the issue. In a formula that incorporates many inputs, there may be a number of different variables that each contribute to the issue.</p>
 <p>Within the formulaic package, the formulaic::create.formula’s <strong>reduce</strong> parameter can be used to automatically identify categorical variables with a lack of contrast. When <strong>reduce = TRUE</strong> and a data set is provided, inputs with no variation are excluded from the resulting formula. The <strong>exclude.lack.contrast </strong> column of the output’s <strong>inclusion.table</strong> identifies which variables include a lack of contrast, and the <strong>min.categories</strong> column identifies the number of unique values for each variable. This is demonstrated with the call to formulaic::create.formula below:</p>
@@ -1038,7 +1033,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">formula.consideration.1</span>)
 <span class="co">#&gt; $formula</span>
 <span class="co">#&gt; Consideration ~ `Age Group` + Gender + Awareness</span>
-<span class="co">#&gt; &lt;environment: 0x000000001f9a2b68&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001c5aa558&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $inclusion.table</span>
 <span class="co">#&gt;     variable   class order specified.from exclude.user.specified</span>
@@ -1069,7 +1064,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">formula.consideration.2</span>)
 <span class="co">#&gt; $formula</span>
 <span class="co">#&gt; Consideration ~ `Age Group` + Gender</span>
-<span class="co">#&gt; &lt;environment: 0x000000001ffb4d50&gt;</span>
+<span class="co">#&gt; &lt;environment: 0x000000001c868b38&gt;</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $inclusion.table</span>
 <span class="co">#&gt;     variable   class order specified.from exclude.user.specified</span>
@@ -1102,7 +1097,7 @@
   <span class="kw">max.input.categories</span> <span class="kw">=</span> <span class="fl">30</span>
 )$<span class="no">formula</span>
 <span class="co">#&gt; Satisfaction ~ Age + Income + Region</span>
-<span class="co">#&gt; &lt;environment: 0x000000001c55c7e8&gt;</span></pre></body></html></div>
+<span class="co">#&gt; &lt;environment: 0x000000001f1a83a0&gt;</span></pre></body></html></div>
 </div>
 <div id="inspection-of-all-variables" class="section level3">
 <h3 class="hasAnchor">
@@ -1117,7 +1112,7 @@
 )$<span class="no">formula</span>
 <span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona + Product + </span>
 <span class="co">#&gt;     `Age Group` + `Income Group`</span>
-<span class="co">#&gt; &lt;environment: 0x000000001c7a14e0&gt;</span></pre></body></html></div>
+<span class="co">#&gt; &lt;environment: 0x000000001f9c9a10&gt;</span></pre></body></html></div>
 <p>All of the brand perceptions and other states of engagement were removed from the formula. This was due to a lack of contrast arising from the structurally missing values when the respondents were not aware of the product. Meanwhile, the User ID was removed due to its large number of categories. Only the names of the products and the respondent-specific variables remain. From this list, an investigator could then make selections of which variables to include (e.g. Age or Age Group). However, much of the preliminary investigation would be handled automatically. This is especially helpful in settings in which the full relationship of the variables – such as the sequence and dependencies of the marketing survey’s questions – is not yet fully understood.</p>
 </div>
 </div>
@@ -1147,7 +1142,7 @@
 )$<span class="no">formula</span>
 <span class="co">#&gt; Awareness ~ Age + Gender + Income + Region + Persona + Product + </span>
 <span class="co">#&gt;     `Age Group` + `Income Group`</span>
-<span class="co">#&gt; &lt;environment: 0x000000001f823720&gt;</span></pre></body></html></div>
+<span class="co">#&gt; &lt;environment: 0x000000001713e858&gt;</span></pre></body></html></div>
 </div>
 </div>
 </div>
@@ -1164,7 +1159,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by David Shilane, Caffrey Lee, Zichen Huang, Anderson Nelson.</p>
+  <p>Developed by David Shilane, Anderson Nelson, Caffrey Lee, Zichen Huang.</p>
 </div>
 
 <div class="pkgdown">

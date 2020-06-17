@@ -194,7 +194,6 @@ automatically removes all unnecessary backticks. That is, it is only compatible 
 ### Basic format
 
 ```{r formulaic::create.formula examples basic}
-
 input.names <-
   c("Age", "Gender", "Income", "Region", "Persona", "Typo")
 
@@ -267,7 +266,6 @@ print(dot.form.1)
 It is unnecessary, but user may want to add another variable as the following example demonstrates. formulaic::create.formula will handle the duplicated variable, here "Gender", and incorporate the variables that pass the quality checks:  
 
 ```{r formulaic::create.formula example dot.2}
-
 input.names = c("Gender", ".")
 
 dot.form.2 <- formulaic::create.formula(outcome.name = awareness.name, input.names = input.names, dat = snack.dat)
@@ -278,7 +276,6 @@ print(dot.form.2)
 Also, if user adds another variable and misspells it that it is not a column name of the dataset as the following example shows, formulaic::create.formula will drop the misspelled variable, here "Typo", and incorporate the variables that pass the quality checks:  
 
 ```{r formulaic::create.formula example dot.3}
-
 input.names = c("Typo", ".")
 
 dot.form.2 <- formulaic::create.formula(outcome.name = awareness.name, input.names = input.names, dat = snack.dat)
@@ -455,8 +452,6 @@ This particular example is designed to demonstrate the issue with a simple contr
 
 Within the formulaic package, the formulaic::create.formula’s **reduce** parameter can be used to automatically identify categorical variables with a lack of contrast. When **reduce = TRUE** and a data set is provided, inputs with no variation are excluded from the resulting formula. The **exclude.lack.contrast ** column of the output’s **inclusion.table** identifies which variables include a lack of contrast, and the **min.categories** column identifies the number of unique values for each variable. This is demonstrated with the call to formulaic::create.formula below:
 ```{r formulaic::create.formula with lack of contrast 2, eval=FALSE, include=TRUE}
-
-
 formula.awareness <-
   formulaic::create.formula(
     outcome.name = awareness.name,
@@ -534,7 +529,6 @@ formulaic::create.formula(
   dat = snack.dat,
   max.input.categories = 30
 )$formula
-
 ```
 
 All of the brand perceptions and other states of engagement were removed from the formula. This was due to a lack of contrast arising from the structurally missing values when the respondents were not aware of the product. Meanwhile, the User ID was removed due to its large number of categories. Only the names of the products and the respondent-specific variables remain. From this list, an investigator could then make selections of which variables to include (e.g. Age or Age Group). However, much of the preliminary investigation would be handled automatically. This is especially helpful in settings in which the full relationship of the variables – such as the sequence and dependencies of the marketing survey’s questions – is not yet fully understood.
@@ -563,5 +557,4 @@ formulaic::reduce.existing.formula(
   max.input.categories = 30
 )$formula
 ```
-
 

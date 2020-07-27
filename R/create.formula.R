@@ -7,15 +7,31 @@
 #'  Parameter values should be either 'all' or 'as.needed'
 #' @export
 
-add.backtick <- function(x, include.backtick = "as.needed") {
-  if (include.backtick == "all") {
-    w <- seq_along(x)
+add.backtick <- function(x, include.backtick = "as.needed", dat = NULL){
 
+  len.x <- length(x)
+  if(include.backtick == "all"){
+    w <- 1:len.x
   }
   if (include.backtick == "as.needed") {
-    w <- grep(pattern = " ",
-              x = x,
-              fixed = TRUE)
+    if(is.null(dat)){
+      w <- which(x != make.names(names = x))
+    }
+    if(!is.null(dat)){
+      require(data.table)
+      setDT(dat)
+      requires.backtick <- logical(length = len.x)
+
+      for(i in 1:len.x){
+        value.exists <- is.null(tryCatch(expr = dat[, unique(eval(parse(text = x[i])))], error = function(e) return(NULL)))
+
+        if(value.exists == TRUE & x[i] %in% names(dat) & x[i] != make.names(x[i])){
+          requires.backtick[i] <- TRUE
+        }
+      }
+      w <- which(requires.backtick == TRUE)
+    }
+
   }
   if (length(w) > 0) {
     x[w] <- sprintf("`%s`", x[w])
@@ -123,6 +139,7 @@ create.formula <-
            format.as = "formula",
            variables.to.exclude = NULL,
            include.intercept = TRUE) {
+
     specified.from <-
       exclude.not.in.names.dat <-
       exclude.matches.outcome.name <-
@@ -136,29 +153,35 @@ create.formula <-
     interactions <- unique(interactions)
     input.patterns <- unique(input.patterns)
 
+    outcome.name <- outcome.name[1]
+
     if (is.data.frame(dat)) {
       data.table::setDT(dat)
+
+      unique.outcome.values <- tryCatch(expr = dat[, unique(eval(parse(text = add.backtick(x = outcome.name, include.backtick = "as.needed", dat = dat))))], error = function(e) return(NULL))
+
+      if (is.null(unique.outcome.values)){
+        stop("To create a formula, the outcome.name must be a quantity that can be calculated from the variables in dat."
+        )
+      }
+
 
       if (!is.null(input.names)) {
         if ("." %in% input.names | "all" %in% input.names) {
           input.names <-
-            unique(c(input.names[!input.names %in% c(".", 'all')], names(dat)))
+            unique(c(input.names[!input.names %in% c(".",'all')], names(dat)))
         }
       }
       if (length(names(dat)) == 0) {
-        return("Error:  dat must be an object with specified names.")
+
+        stop("dat must be an object with specified names.")
       }
-      if (!(outcome.name %in% names(dat))) {
-        return(
-          "Error:  To create a formula, the outcome.name must match one of the values in names(dat)."
-        )
-      }
-      variable.names.from.exclude <- NULL
+      variable.names.from.exclude <- c()
       if (!is.null(variables.to.exclude)) {
         variable.names.from.exclude <- unique(variables.to.exclude)
       }
 
-      variable.names.from.patterns <- NULL
+      variable.names.from.patterns <- c()
 
       if (!is.null(input.patterns)) {
         pattern <- paste(input.patterns, collapse = "|")
@@ -179,16 +202,22 @@ create.formula <-
           unlisted.interactions
         ))
 
-      if (length(unique.names) == 0 |
-          is.null(length(unique.names))) {
+      if (length(unique.names) == 0 | is.null(length(unique.names))) {
         unique.names <- NA
       }
 
-      #Compute inclusion.table
 
-      inclusion.table <-
-        data.table(variable = unique.names)[!is.na(variable)]
+      if (is.null(variables.to.exclude)) {
+        num.from.variables.to.exclude <- 0
+      }
 
+      if (!is.null(variables.to.exclude)) {
+        if (is.na(variables.to.exclude[1])) {
+          num.from.variables.to.exclude <- 0
+        }
+        num.from.variables.to.exclude <-
+          length(variables.to.exclude[!is.na(variables.to.exclude)])
+      }
 
       if (is.null(input.names)) {
         num.from.input.names <- 0
@@ -232,7 +261,19 @@ create.formula <-
           )]))
       }
 
-      inclusion.table[variable %in% names(dat), class := as.character(dat[, as.character(lapply(X = .SD, FUN = "class")), .SDcols = variable]), by = variable]
+      #Compute inclusion.table
+
+      inclusion.table <-
+        data.table(variable = unique.names)[!is.na(variable)]
+
+      for(i in 1:inclusion.table[, .N]){
+
+        the.variable <- inclusion.table[i, variable]
+        check.variable.null = tryCatch(expr = dat[, unique(eval(parse(text = add.backtick(x = the.variable, include.backtick = "as.needed", dat = dat))))], error = function(e) return(NULL))
+        inclusion.table[i, exclude.null.quantity := is.null(check.variable.null)]
+      }
+
+      inclusion.table[exclude.null.quantity == F, class := dat[, class(eval(parse(text = add.backtick(x = variable, dat = dat))))], by = variable]
       inclusion.table[, order := 1:.N]
       inclusion.table[, specified.from := c(
         rep.int(x = "input.names", times = num.from.input.names),
@@ -240,36 +281,38 @@ create.formula <-
         rep.int(x = "interactions", times = num.from.interactions)
       )]
 
-      inclusion.table[, exclude.user.specified := variable %in% variable.names.from.exclude]
-      inclusion.table[, exclude.not.in.names.dat := !(variable %in% names(dat))]
+      inclusion.table[exclude.null.quantity == F, exclude.user.specified := variable %in% variable.names.from.exclude]
+      #inclusion.table[, exclude.not.in.names.dat := !(variable %in% names(dat))]
       inclusion.table[, exclude.matches.outcome.name := (variable == outcome.name)]
 
       if (reduce == TRUE) {
         num.outcome.categories <-
-          dat[!is.na(get(outcome.name)), length(unique(get(outcome.name)))]
+          dat[!is.na(eval(parse(text = outcome.name))), length(unique(eval(parse(text = outcome.name))))]
 
         the.inputs <-
-          inclusion.table[variable %in% names(dat), variable]
+          inclusion.table[exclude.null.quantity == F, variable]
 
         if (num.outcome.categories <= max.outcome.categories.to.search) {
-          num.unique.tab <-
-            dat[, lapply(
-              X = .SD,
-              FUN = function(x) {
-                return(length(unique(x[!is.na(x)])))
-              }
-            ), .SDcols = the.inputs, by = outcome.name]
+          by.step.num.unique <- parse(text = add.backtick(x = outcome.name, dat = dat))
+        }
+        if (num.outcome.categories > max.outcome.categories.to.search) {
+          by.step.num.unique <- NULL
         }
 
-        if (num.outcome.categories > max.outcome.categories.to.search) {
-          num.unique.tab <-
-            dat[, lapply(
-              X = .SD,
-              FUN = function(x) {
-                return(length(unique(x[!is.na(x)])))
-              }
-            ), .SDcols = the.inputs]
+        list.num.unique <- list()
+
+        for(i in 1:length(the.inputs)){
+          list.num.unique[[i]] <- dat[, .(input = the.inputs[i], num.unique = eval(parse(text = sprintf("length(unique(%s))", add.backtick(x = the.inputs[i], dat = dat))))), by = eval(by.step.num.unique)]
         }
+
+        melted.num.unique.tab <- rbindlist(l = list.num.unique)
+        setnames(x = melted.num.unique.tab, old = "by.step.num.unique", new = outcome.name, skip_absent = T)
+
+        if(outcome.name %in% names(melted.num.unique.tab) == FALSE){
+          melted.num.unique.tab[, eval(outcome.name) := "All"]
+        }
+
+        num.unique.tab <- dcast.data.table(data = melted.num.unique.tab, formula = sprintf("`%s` ~ input", outcome.name), value.var = "num.unique")
 
         min.categories.tab <-
           num.unique.tab[, .(variable = the.inputs,
@@ -286,8 +329,7 @@ create.formula <-
             all.y = TRUE
           )
 
-        inclusion.table[, exclude.numerous.categories := min.categories > max.input.categories &
-                          class %in% c("character", "factor")]
+        inclusion.table[exclude.null.quantity == FALSE, exclude.numerous.categories := min.categories > max.input.categories & class %in% c("character", "factor")]
       }
 
       setorderv(x = inclusion.table,
@@ -299,18 +341,18 @@ create.formula <-
       inclusion.table[, include.variable := rowMeans(.SD, na.rm = TRUE) == 0, .SDcols = exclusion.columns]
 
       if (force.main.effects == TRUE) {
-        input.names <-
+        all.input.names <-
           inclusion.table[include.variable == TRUE, variable]
       }
 
       if (force.main.effects == FALSE) {
-        input.names <-
+        all.input.names <-
           inclusion.table[include.variable == TRUE &
                             specified.from != "interactions", variable]
       }
 
       if (order.as == "column.order") {
-        input.names <- names(dat)[names(dat) %in% input.names]
+        all.input.names <- names(dat)[names(dat) %in% all.input.names]
       }
 
       # Compute included.interactions
@@ -326,7 +368,7 @@ create.formula <-
       interactions.with.backtick <-
         lapply(X = interactions,
                FUN = "add.backtick",
-               include.backtick = include.backtick)
+               include.backtick = include.backtick, dat = dat)
 
       all.interaction.terms <-
         as.character(lapply(
@@ -360,28 +402,44 @@ create.formula <-
         interaction.terms <- NULL
       }
 
+      all.input.names <- input.names
       inclusion.table <- data.table()
       interactions.table <- data.table()
 
+      if (is.null(dat)) {
+        inclusion.table.statement <-
+          "dat was not provided (NA); no inclusion table was computed."
+        interactions.table.statement <-
+          "dat was not provided (NA); no interactions.table object was computed."
+      }
+      if (!is.null(dat)) {
+        inclusion.table.statement <-
+          "dat was not a data.frame; no inclusion table was computed."
+        interactions.table.statement <-
+          "dat was not a data.frame; no interactions.table object was computed."
+      }
     }
 
-    if (length(c(input.names[!is.null(input.names)], interaction.terms[!is.null(interaction.terms)])) == 0) {
-      input.names <- "1"
+
+
+
+    if (length(c(all.input.names[!is.null(all.input.names)], interaction.terms[!is.null(interaction.terms)])) == 0) {
+      all.input.names <- "1"
     }
 
     if (order.as == "increasing") {
-      input.names <- sort(x = input.names, decreasing = FALSE)
+      all.input.names <- sort(x = all.input.names, decreasing = FALSE)
     }
 
     if (order.as == "decreasing") {
-      input.names <- sort(x = input.names, decreasing = TRUE)
+      all.input.names <- sort(x = all.input.names, decreasing = TRUE)
     }
 
     input.names.delineated <-
-      add.backtick(x =  input.names, include.backtick = include.backtick)
+      add.backtick(x =  all.input.names, include.backtick = include.backtick, dat = dat)
 
     outcome.name.delineated <-
-      add.backtick(x = outcome.name, include.backtick = include.backtick)
+      add.backtick(x = outcome.name, include.backtick = include.backtick, dat = dat)
 
     rhs.with.missing <- c(input.names.delineated, interaction.terms)
     rhs <- rhs.with.missing[!is.na(rhs.with.missing)]

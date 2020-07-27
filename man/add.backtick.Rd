@@ -4,7 +4,7 @@
 \alias{add.backtick}
 \title{Add backtick}
 \usage{
-add.backtick(x, include.backtick = "as.needed")
+add.backtick(x, include.backtick = "as.needed", dat = NULL)
 }
 \arguments{
 \item{x}{Character value specifying the name of input parameters.}

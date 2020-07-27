@@ -47,11 +47,19 @@ reduce.existing.formula <-
            order.as = "as.specified",
            include.backtick = "as.needed",
            format.as = "formula") {
-    if (class(the.initial.formula) == "formula") {
+
+    status.formula.object <- is(object = the.initial.formula, class2 = "formula")
+    status.character.object <- is.character(the.initial.formula)
+    if(status.formula.object == FALSE & status.character.object == FALSE){
+      stop("the.initial.formula must be a formula or character object.")
+
+    }
+
+    if (status.formula.object == TRUE) {
       the.sides <- as.character(the.initial.formula)[2:3]
     }
 
-    if (is.character(the.initial.formula)) {
+    if (status.character.object == TRUE) {
       the.sides <- strsplit(x = the.initial.formula, split = "~")[[1]]
     }
 
@@ -75,7 +83,7 @@ reduce.existing.formula <-
 
     w.int <- grep(pattern = "\\*", x = the.pieces.trimmed)
     w.input <-
-      (seq_along(the.pieces.trimmed))[!((seq_along(the.pieces.trimmed)) %in% w.int)]
+      (1:length(the.pieces.trimmed))[!((1:length(the.pieces.trimmed)) %in% w.int)]
 
     if (length(w.input) == 0) {
       input.names <- NULL

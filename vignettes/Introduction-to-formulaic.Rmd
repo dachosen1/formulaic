@@ -585,9 +585,9 @@ create.formula(
 
 ```{r create.formula transformation 2}
 
-res <- create.formula(outcome.name = outcome.name, input.names = input.names, interactions = interactions, dat = dat, reduce = reduce)
+res <- create.formula(outcome.name = awareness.name, input.names = input.names, interactions = interactions, dat = snack.dat, reduce = TRUE)
 
-glm(formula = res$formula, data = dat, family = "binomial")
+glm(formula = res$formula, data = snack.dat, family = "binomial")
 
 res
 

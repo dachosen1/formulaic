@@ -11,10 +11,12 @@
 #' @param  include.backtick Add backticks to make a appropriate variable
 #' @param  format.as The data type of the output.  If not set as "formula", then a character vector will be returned.
 #'
+#' @import data.table
+#'
 #' @export
 #' @examples
 #' data('snack.dat')
-#' the.initial.formula <- Awareness ~ .
+#' the.initial.formula <- 'Income ~ .'
 #'
 #' reduce.existing.formula(the.initial.formula = the.initial.formula,dat = snack.dat,
 #'   max.input.categories = 30)$formula

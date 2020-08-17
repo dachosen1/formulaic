@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 library(formulaic)
 library(data.table)
 library(knitr)
+library(DT)
 data("snack.dat", package = "formulaic")
 ```
 
@@ -46,6 +47,14 @@ order.as <- "as.specified"
 include.backtick <- "as.needed"
 format.as <- "formula"
 force.main.effects <- TRUE
+outcome.name = awareness.name
+reduce = TRUE
+interactions = list(c(gender.name, income.group.name))
+input.patterns = NULL
+force.main.effects = TRUE
+variables.to.exclude = NULL
+include.intercept = TRUE
+dat = snack.dat
 ```
 
 # Introduction
@@ -126,10 +135,10 @@ As a subsidiary function, add.backtick is used inside of create.formula function
 **Update Notes**: The add.backtick function now accepts the data.frame dat as an additional input (not required).  When provided, the judgment about when to use backticks is based on whether the input exists as a variable name of dat and requires backticks.  Other cases (like transformations) will not include them. Please refer to the example 5. 
 
 ```{r add.backtick example}
-as.needed = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'as.needed')
+as.needed = formulaic::add.backtick(x = names(snack.dat), include.backtick = 'as.needed')
 all = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'all')
 
-library(DT)
+
 datatable(data = cbind(as.needed, all))
 ```
 
@@ -546,7 +555,7 @@ When **reduce = TRUE** and a data set is supplied, the create.formula function p
 
 ```{r create.formula large volume of categorical variables}
 create.formula(
-  outcome.name = awareness.name,
+  outcome.name = income.name,
   input.names = ".",
   reduce = TRUE,
   dat = snack.dat,
@@ -584,15 +593,11 @@ create.formula(
 ```
 
 ```{r create.formula transformation 2}
-
-res <- create.formula(outcome.name = outcome.name, input.names = input.names, interactions = interactions, dat = dat, reduce = reduce)
+res <- create.formula(outcome.name = outcome.name, input.names = input.names, interactions = interactions, dat = snack.dat, reduce = reduce)
 
 glm(formula = res$formula, data = dat, family = "binomial")
 
 res
-
-
-
 ```
 
 ## Reducing an Existing Formula (reduce.existing.formula):
@@ -611,7 +616,7 @@ The **reduce.existing.formula** function was designed to perform quality checks 
 As an example, we will demonstrate that a user-supplied formula will produce the same results as that created in the previous section:
 
 ```{r reduce.existing.formula example}
-the.initial.formula <- Awareness ~ .
+the.initial.formula <- 'Income ~ .'
 
 reduce.existing.formula(
   the.initial.formula = the.initial.formula,

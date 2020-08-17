@@ -37,7 +37,7 @@ The reduce.existing.formula function was designed to perform quality checks and 
 }
 \examples{
 data('snack.dat')
-the.initial.formula <- Awareness ~ .
+the.initial.formula <- 'Income ~ .'
 
 reduce.existing.formula(the.initial.formula = the.initial.formula,dat = snack.dat,
   max.input.categories = 30)$formula

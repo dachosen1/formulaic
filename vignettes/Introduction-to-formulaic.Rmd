@@ -574,7 +574,7 @@ Rather than looking for the names of existing variables, the updated  create.for
 ```{r create.formula transformation 1}
 
 create.formula(
-  outcome.name = awareness.name,
+  outcome.name = income.name,
   input.names = c(region.name, gender.name, sprintf("sqrt(%s^2) * log(%s)", age.name, income.name), income.group.name, "ldkao"),
   reduce = TRUE,
   interactions = list(c(gender.name, income.group.name)),

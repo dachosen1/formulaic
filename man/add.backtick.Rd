@@ -10,6 +10,8 @@ add.backtick(x, include.backtick = "as.needed", dat = NULL)
 \item{x}{Character value specifying the name of input parameters.}
 
 \item{include.backtick}{specifies whether a backtick should be added. Parameter values should be either 'all' or 'as.needed'}
+
+\item{dat}{Data}
 }
 \description{
 Function that add backticks to the input variables.

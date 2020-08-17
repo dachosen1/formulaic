@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 library(formulaic)
 library(data.table)
 library(knitr)
-library(DT)
+#library(DT)
 data("snack.dat", package = "formulaic")
 ```
 
@@ -139,7 +139,8 @@ as.needed = formulaic::add.backtick(x = names(snack.dat), include.backtick = 'as
 all = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'all')
 
 
-datatable(data = cbind(as.needed, all))
+data = cbind(as.needed, all)
+list(data)
 ```
 
 This feature is automatically incorporated into formulaic’s create.formula method:
@@ -593,9 +594,14 @@ create.formula(
 ```
 
 ```{r create.formula transformation 2}
+
 res <- create.formula(outcome.name = outcome.name, input.names = input.names, interactions = interactions, dat = snack.dat, reduce = reduce)
 
-glm(formula = res$formula, data = dat, family = "binomial")
+
+res <- create.formula(outcome.name = awareness.name, input.names = input.names, interactions = interactions, dat = snack.dat, reduce = TRUE)
+
+
+glm(formula = res$formula, data = snack.dat, family = "binomial")
 
 res
 ```

@@ -4,6 +4,7 @@
 #'
 #' @param  x  Character value specifying the name of input parameters.
 #' @param  include.backtick specifies whether a backtick should be added. Parameter values should be either 'all' or 'as.needed'
+#' @param dat Data
 #' @import data.table
 #' @export
 
@@ -18,7 +19,7 @@ add.backtick <- function(x, include.backtick = "as.needed", dat = NULL){
       w <- which(x != make.names(names = x))
     }
     if(!is.null(dat)){
-      require(data.table)
+      #require(data.table)
       data.table::setDT(dat)
       requires.backtick <- logical(length = len.x)
 

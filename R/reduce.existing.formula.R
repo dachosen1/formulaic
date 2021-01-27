@@ -10,8 +10,10 @@
 #' @param  order.as  rearranges its first argument into ascending or descending order.
 #' @param  include.backtick Add backticks to make a appropriate variable
 #' @param  format.as The data type of the output.  If not set as "formula", then a character vector will be returned.
+#' @param  envir The path to search. Global environment is default value
 #'
 #' @import data.table
+
 #'
 #' @export
 #' @examples
@@ -30,7 +32,7 @@ reduce.existing.formula <-
            force.main.effects = TRUE,
            order.as = "as.specified",
            include.backtick = "as.needed",
-           format.as = "formula") {
+           format.as = "formula", envir = .GlobalEnv) {
 
     status.formula.object <- is(object = the.initial.formula, class2 = "formula")
     status.character.object <- is.character(the.initial.formula)

@@ -30,7 +30,9 @@
 #'
 #'  create.formula(outcome.name = "y", input.names = "x", input.patterns = c("pi", "xel"), dat = dd)
 #' @import stats
+#' @import data.table
 #' @export
+#'
 create.formula <-
   function(outcome.name,
            input.names = NULL,
@@ -47,6 +49,8 @@ create.formula <-
            variables.to.exclude = NULL,
            include.intercept = TRUE) {
 
+    #require(data.table)
+
     specified.from <-
       exclude.null.quantity <-
 
@@ -58,6 +62,8 @@ create.formula <-
       include.variable <-
       variable <- . <- exclude.user.specified <-  NULL
 
+    original.format.dt <- FALSE
+
     input.names <- unique(input.names)
     interactions <- unique(interactions)
     input.patterns <- unique(input.patterns)
@@ -65,9 +71,14 @@ create.formula <-
     outcome.name <- outcome.name[1]
 
     if (is.data.frame(dat)) {
+
+      original.format.dt <- is.data.table(x = dat)
       data.table::setDT(dat)
 
-      unique.outcome.values <- tryCatch(expr = dat[, unique(eval(parse(text = add.backtick(x = outcome.name, include.backtick = "as.needed", dat = dat))))], error = function(e) return(NULL))
+
+      statement.outcome.values <- sprintf("dat[, unique(%s)]", add.backtick(x = outcome.name, include.backtick = "as.needed", dat = dat))
+
+      unique.outcome.values <- tryCatch(expr = eval(expr = parse(text = statement.outcome.values)), error = function(e) return(NULL))
 
       if (is.null(unique.outcome.values)){
         stop("To create a formula, the outcome.name must be a quantity that can be calculated from the variables in dat."
@@ -178,7 +189,10 @@ create.formula <-
       for(i in 1:inclusion.table[, .N]){
 
         the.variable <- inclusion.table[i, variable]
-        check.variable.null = tryCatch(expr = dat[, unique(eval(parse(text = add.backtick(x = the.variable, include.backtick = "as.needed", dat = dat))))], error = function(e) return(NULL))
+
+        statement.variable.values <- sprintf("dat[, unique(%s)]", add.backtick(x = the.variable, include.backtick = "as.needed", dat = dat))
+
+        check.variable.null <- tryCatch(expr = eval(expr = parse(text = statement.variable.values)), error = function(e) return(NULL))
         inclusion.table[i, exclude.null.quantity := is.null(check.variable.null)]
       }
 
@@ -195,28 +209,29 @@ create.formula <-
       inclusion.table[, exclude.matches.outcome.name := (variable == outcome.name)]
 
       if (reduce == TRUE) {
-        all.outcome.categories <- dat[, unique(eval(parse(text = add.backtick(x = outcome.name, include.backtick = "as.needed", dat = dat))))]
-
-        num.outcome.categories <- length(all.outcome.categories[!is.na(all.outcome.categories)])
+        num.outcome.categories <- length(unique.outcome.values[!is.na(unique.outcome.values)])
 
         the.inputs <-
           inclusion.table[exclude.null.quantity == F, variable]
 
         if (num.outcome.categories <= max.outcome.categories.to.search) {
-          by.step.num.unique <- parse(text = add.backtick(x = outcome.name, dat = dat))
+
+          by.step.num.unique <- sprintf("%s", add.backtick(x = outcome.name, dat = dat))
         }
         if (num.outcome.categories > max.outcome.categories.to.search) {
-          by.step.num.unique <- NULL
+          by.step.num.unique <- "NULL"
         }
 
         list.num.unique <- list()
 
         for(i in 1:length(the.inputs)){
-          list.num.unique[[i]] <- dat[, .(input = the.inputs[i], num.unique = eval(parse(text = sprintf("length(unique(%s))", add.backtick(x = the.inputs[i], dat = dat))))), by = eval(by.step.num.unique)]
+
+          statement.num.unique <- sprintf("dat[, .(input = '%s', num.unique = length(unique(%s))), by = %s]", the.inputs[i], add.backtick(x = the.inputs[i], dat = dat), by.step.num.unique)
+
+          list.num.unique[[i]] <- eval(expr = parse(text = statement.num.unique))
         }
 
         melted.num.unique.tab <- rbindlist(l = list.num.unique)
-        setnames(x = melted.num.unique.tab, old = "by.step.num.unique", new = outcome.name, skip_absent = T)
 
         if(outcome.name %in% names(melted.num.unique.tab) == FALSE){
           melted.num.unique.tab[, eval(outcome.name) := "All"]
@@ -369,7 +384,8 @@ create.formula <-
     }
 
     if (format.as == "formula") {
-      the.formula <- stats::as.formula(the.formula)
+      the.formula <- stats::as.formula(the.formula) #
+
     }
 
     res <-
@@ -379,5 +395,12 @@ create.formula <-
         interactions.table = interactions.table
       )
 
+    if(is.data.frame(x = dat)){
+      if(original.format.dt == F){
+        setDF(x = dat)
+      }
+    }
+
     return(res)
   }
+

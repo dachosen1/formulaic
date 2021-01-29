@@ -13,7 +13,6 @@
 #' @param  envir The path to search. Global environment is default value
 #'
 #' @import data.table
-
 #'
 #' @export
 #' @examples
@@ -34,8 +33,8 @@ reduce.existing.formula <-
            include.backtick = "as.needed",
            format.as = "formula", envir = .GlobalEnv) {
 
-    status.formula.object <- is(object = the.initial.formula, class2 = "formula")
-    status.character.object <- is.character(the.initial.formula)
+    status.formula.object <- methods::is(object = the.initial.formula, class2 = "formula")
+    status.character.object <- base::is.character(the.initial.formula)
     if(status.formula.object == FALSE & status.character.object == FALSE){
       stop("the.initial.formula must be a formula or character object.")
 

@@ -1,6 +1,6 @@
 Package: formulaic
 Title: Dynamic Generation and Quality Checks of Formula Objects
-Version: 0.0.7
+Version: 0.0.8
 Authors@R: c(
     person("David", "Shilane", , "david.shilane@columbia.edu", c("aut")),
     person("Anderson", "Nelson", , "an2908@columbia.edu", c("aut","ctb","cre")),
@@ -16,7 +16,8 @@ Encoding: UTF-8
 LazyData: TRUE
 RoxygenNote: 7.1.1
 Imports: 
-    data.table
+    data.table, 
+    methods
 Suggests: 
     knitr,
     rmarkdown,

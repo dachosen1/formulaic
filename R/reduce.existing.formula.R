@@ -68,7 +68,7 @@ reduce.existing.formula <-
 
     w.int <- grep(pattern = "\\*", x = the.pieces.trimmed)
     w.input <-
-      (1:length(the.pieces.trimmed))[!((1:length(the.pieces.trimmed)) %in% w.int)]
+      (seq_along(the.pieces.trimmed))[!((seq_along(the.pieces.trimmed)) %in% w.int)]
 
     if (length(w.input) == 0) {
       input.names <- NULL

@@ -96,12 +96,12 @@ create.formula <-
 
         stop("dat must be an object with specified names.")
       }
-      variable.names.from.exclude <- c()
+      variable.names.from.exclude <- vector()
       if (!is.null(variables.to.exclude)) {
         variable.names.from.exclude <- unique(variables.to.exclude)
       }
 
-      variable.names.from.patterns <- c()
+      variable.names.from.patterns <- vector()
 
       if (!is.null(input.patterns)) {
         pattern <- paste(input.patterns, collapse = "|")
@@ -224,7 +224,7 @@ create.formula <-
 
         list.num.unique <- list()
 
-        for(i in 1:length(the.inputs)){
+        for(i in seq_along(the.inputs)){
 
           statement.num.unique <- sprintf("dat[, .(input = '%s', num.unique = length(unique(%s))), by = %s]", the.inputs[i], add.backtick(x = the.inputs[i], dat = dat), by.step.num.unique)
 

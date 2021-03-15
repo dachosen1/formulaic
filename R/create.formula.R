@@ -196,7 +196,7 @@ create.formula <-
         inclusion.table[i, exclude.null.quantity := is.null(check.variable.null)]
       }
 
-      inclusion.table[exclude.null.quantity == F, class := dat[, class(eval(parse(text = add.backtick(x = variable, dat = dat))))], by = variable]
+      inclusion.table[exclude.null.quantity == F, class := dat[, class(eval(parse(text = add.backtick(x = variable, dat = dat))))][1], by = variable]
       inclusion.table[, order := 1:.N]
       inclusion.table[, specified.from := c(
         rep.int(x = "input.names", times = num.from.input.names),

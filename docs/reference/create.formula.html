@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">formulaic</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.8</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -106,7 +106,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/dachosen1/formulaic/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,22 +132,22 @@
     <p>Create formula is a tool to automatically create a formula object from a provided variable and output names. Reduces the time required to manually input variables for modeling. Output can be used in linear regression, random forest, neural network etc. Create formula becomes useful when modeling data with multiple features. Reduces the time required for modeling and implementation :</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create.formula</span>(
-  <span class='no'>outcome.name</span>,
-  <span class='kw'>input.names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>input.patterns</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>interactions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>force.main.effects</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>reduce</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>max.input.categories</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-  <span class='kw'>max.outcome.categories.to.search</span> <span class='kw'>=</span> <span class='fl'>4</span>,
-  <span class='kw'>order.as</span> <span class='kw'>=</span> <span class='st'>"as.specified"</span>,
-  <span class='kw'>include.backtick</span> <span class='kw'>=</span> <span class='st'>"as.needed"</span>,
-  <span class='kw'>format.as</span> <span class='kw'>=</span> <span class='st'>"formula"</span>,
-  <span class='kw'>variables.to.exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>include.intercept</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>create.formula</span><span class='op'>(</span>
+  <span class='va'>outcome.name</span>,
+  input.names <span class='op'>=</span> <span class='cn'>NULL</span>,
+  input.patterns <span class='op'>=</span> <span class='cn'>NULL</span>,
+  dat <span class='op'>=</span> <span class='cn'>NULL</span>,
+  interactions <span class='op'>=</span> <span class='cn'>NULL</span>,
+  force.main.effects <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  reduce <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  max.input.categories <span class='op'>=</span> <span class='fl'>20</span>,
+  max.outcome.categories.to.search <span class='op'>=</span> <span class='fl'>4</span>,
+  order.as <span class='op'>=</span> <span class='st'>"as.specified"</span>,
+  include.backtick <span class='op'>=</span> <span class='st'>"as.needed"</span>,
+  format.as <span class='op'>=</span> <span class='st'>"formula"</span>,
+  variables.to.exclude <span class='op'>=</span> <span class='cn'>NULL</span>,
+  include.intercept <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -216,9 +216,10 @@
 The input.names and names of variables matching the input.patterns will be concatenated to form the full list of input variables.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'> <span class='no'>n</span> <span class='kw'>&lt;-</span> <span class='fl'>10</span>
- <span class='no'>dd</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span>(<span class='kw'>w</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span><span class='kw'>=</span> <span class='no'>n</span>), <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='no'>n</span>), <span class='kw'>pixel_1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='no'>n</span>))
- <span class='no'>dd</span>[, <span class='no'>pixel_2</span> <span class='kw'>:=</span> <span class='fl'>0.3</span> * <span class='no'>pixel_1</span> + <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>n</span>)]</div><div class='output co'>#&gt;                w           x     pixel_1    pixel_2
+    <pre class="examples"><div class='input'> <span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
+ <span class='va'>dd</span> <span class='op'>&lt;-</span> <span class='fu'>data.table</span><span class='fu'>::</span><span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/data.table.html'>data.table</a></span><span class='op'>(</span>w <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n<span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span>, x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span>, pixel_1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span><span class='op'>)</span>
+ <span class='va'>dd</span><span class='op'>[</span>, <span class='va'>pixel_2</span> <span class='op'>:=</span> <span class='fl'>0.3</span> <span class='op'>*</span> <span class='va'>pixel_1</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;                w           x     pixel_1    pixel_2
 #&gt;  1: -1.400043517 -0.55369938  0.46815442  1.0758095
 #&gt;  2:  0.255317055  0.62898204  0.36295126  0.2853740
 #&gt;  3: -2.437263611  2.06502490 -1.30454355 -0.1476776
@@ -228,7 +229,8 @@ The input.names and names of variables matching the input.patterns will be conca
 #&gt;  7: -1.821817661 -0.52201251 -0.93584735 -2.1908417
 #&gt;  8: -0.247325302 -0.05260191 -0.01595031 -0.2840223
 #&gt;  9: -0.244199607  0.54299634 -0.82678895 -0.5614827
-#&gt; 10: -0.282705449 -0.91407483 -1.51239965  0.6135880</div><div class='input'> <span class='no'>dd</span>[, <span class='no'>y</span> <span class='kw'>:=</span> <span class='fl'>5</span> * <span class='no'>x</span> + <span class='fl'>3</span> * <span class='no'>pixel_1</span> + <span class='fl'>2</span> * <span class='no'>pixel_2</span> + <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='no'>n</span>)]</div><div class='output co'>#&gt;                w           x     pixel_1    pixel_2          y
+#&gt; 10: -0.282705449 -0.91407483 -1.51239965  0.6135880</div><div class='input'> <span class='va'>dd</span><span class='op'>[</span>, <span class='va'>y</span> <span class='op'>:=</span> <span class='fl'>5</span> <span class='op'>*</span> <span class='va'>x</span> <span class='op'>+</span> <span class='fl'>3</span> <span class='op'>*</span> <span class='va'>pixel_1</span> <span class='op'>+</span> <span class='fl'>2</span> <span class='op'>*</span> <span class='va'>pixel_2</span> <span class='op'>+</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt;                w           x     pixel_1    pixel_2          y
 #&gt;  1: -1.400043517 -0.55369938  0.46815442  1.0758095  0.8576202
 #&gt;  2:  0.255317055  0.62898204  0.36295126  0.2853740  4.1653886
 #&gt;  3: -2.437263611  2.06502490 -1.30454355 -0.1476776  6.0661737
@@ -239,24 +241,24 @@ The input.names and names of variables matching the input.patterns will be conca
 #&gt;  8: -0.247325302 -0.05260191 -0.01595031 -0.2840223 -0.3011961
 #&gt;  9: -0.244199607  0.54299634 -0.82678895 -0.5614827 -0.7701556
 #&gt; 10: -0.282705449 -0.91407483 -1.51239965  0.6135880 -9.7921176</div><div class='input'>
- <span class='fu'>create.formula</span>(<span class='kw'>outcome.name</span> <span class='kw'>=</span> <span class='st'>"y"</span>, <span class='kw'>input.names</span> <span class='kw'>=</span> <span class='st'>"x"</span>, <span class='kw'>input.patterns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"pi"</span>, <span class='st'>"xel"</span>), <span class='kw'>dat</span> <span class='kw'>=</span> <span class='no'>dd</span>)</div><div class='output co'>#&gt; $formula
+ <span class='fu'>create.formula</span><span class='op'>(</span>outcome.name <span class='op'>=</span> <span class='st'>"y"</span>, input.names <span class='op'>=</span> <span class='st'>"x"</span>, input.patterns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"pi"</span>, <span class='st'>"xel"</span><span class='op'>)</span>, dat <span class='op'>=</span> <span class='va'>dd</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $formula
 #&gt; y ~ x + pixel_1 + pixel_2
-#&gt; &lt;environment: 0x00000000296fb5e0&gt;
+#&gt; &lt;environment: 0x000000001904d188&gt;
 #&gt; 
 #&gt; $inclusion.table
-#&gt;    variable   class order specified.from exclude.user.specified
-#&gt; 1:        x numeric     1    input.names                  FALSE
-#&gt; 2:  pixel_1 numeric     2 input.patterns                  FALSE
-#&gt; 3:  pixel_2 numeric     3 input.patterns                  FALSE
-#&gt;    exclude.not.in.names.dat exclude.matches.outcome.name include.variable
-#&gt; 1:                    FALSE                        FALSE             TRUE
-#&gt; 2:                    FALSE                        FALSE             TRUE
-#&gt; 3:                    FALSE                        FALSE             TRUE
+#&gt;    variable exclude.null.quantity   class order specified.from
+#&gt; 1:        x                 FALSE numeric     1    input.names
+#&gt; 2:  pixel_1                 FALSE numeric     2 input.patterns
+#&gt; 3:  pixel_2                 FALSE numeric     3 input.patterns
+#&gt;    exclude.user.specified exclude.matches.outcome.name include.variable
+#&gt; 1:                  FALSE                        FALSE             TRUE
+#&gt; 2:                  FALSE                        FALSE             TRUE
+#&gt; 3:                  FALSE                        FALSE             TRUE
 #&gt; 
 #&gt; $interactions.table
 #&gt; Empty data.table (0 rows and 2 cols): interactions,include.interaction
-#&gt; </div><div class='input'>
-</div></pre>
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -272,7 +274,7 @@ The input.names and names of variables matching the input.patterns will be conca
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

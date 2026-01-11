@@ -2,7 +2,7 @@
 #'
 #' Create formula is a tool to automatically create a formula object from a provided variable and output names. Reduces the time required to manually input variables for modeling. Output can be used in linear regression, random forest, neural network etc. Create formula becomes useful when modeling data with multiple features. Reduces the time required for modeling and implementation :
 
-#' @param outcome.name A character value specifying the name of the formula's outcome variable. In this version, only a single outcome may be ed. The first entry of outcome.name will be used to build the formula.
+#' @param outcome.name A character value specifying the name of the formula's outcome variable. In this version, only a single outcome may be ed. The first entry of outcome.name will be used to build the formula. When NULL, a one-sided formula is created (e.g., ~ x1 + x2), which is useful for functions like xtabs(), model.matrix(), matchit(), and others that accept one-sided formulas.
 #' @param input.names The names of the variables with the full names delineated. User can specify '.' or 'all' to e all the column variables.
 #' @param input.patterns es additional input variables. The user may enter patterns -- e.g. to e every variable with a name that es the pattern. Multiple patterns may be ed as a character vector. However, each pattern may not contain spaces and is otherwise subject to the same limits on patterns as used in the grep function.
 #' @param dat User can specify a data.frame object that will be used to remove any variables that are not listed in names(dat. As default it is set as NULL. In this case, the formula is created simply from the outcome.name and input.names.
@@ -29,12 +29,15 @@
 #'  dd[, y := 5 * x + 3 * pixel_1 + 2 * pixel_2 + rnorm(n)]
 #'
 #'  create.formula(outcome.name = "y", input.names = "x", input.patterns = c("pi", "xel"), dat = dd)
+#'
+#'  # One-sided formula (useful for xtabs, model.matrix, matchit, etc.)
+#'  create.formula(outcome.name = NULL, input.names = c("x", "w"), dat = dd)
 #' @import stats
 #' @import data.table
 #' @export
 #'
 create.formula <-
-  function(outcome.name,
+  function(outcome.name = NULL,
            input.names = NULL,
            input.patterns = NULL,
            dat = NULL,
@@ -68,21 +71,25 @@ create.formula <-
     interactions <- unique(interactions)
     input.patterns <- unique(input.patterns)
 
-    outcome.name <- outcome.name[1]
+    if (!is.null(outcome.name)) {
+      outcome.name <- outcome.name[1]
+    }
 
     if (is.data.frame(dat)) {
 
       original.format.dt <- is.data.table(x = dat)
       data.table::setDT(dat)
 
+      unique.outcome.values <- NULL
+      if (!is.null(outcome.name)) {
+        statement.outcome.values <- sprintf("dat[, unique(%s)]", add.backtick(x = outcome.name, include.backtick = "as.needed", dat = dat))
 
-      statement.outcome.values <- sprintf("dat[, unique(%s)]", add.backtick(x = outcome.name, include.backtick = "as.needed", dat = dat))
+        unique.outcome.values <- tryCatch(expr = eval(expr = parse(text = statement.outcome.values)), error = function(e) return(NULL))
 
-      unique.outcome.values <- tryCatch(expr = eval(expr = parse(text = statement.outcome.values)), error = function(e) return(NULL))
-
-      if (is.null(unique.outcome.values)){
-        stop("To create a formula, the outcome.name must be a quantity that can be calculated from the variables in dat."
-        )
+        if (is.null(unique.outcome.values)){
+          stop("To create a formula, the outcome.name must be a quantity that can be calculated from the variables in dat."
+          )
+        }
       }
 
 
@@ -206,19 +213,26 @@ create.formula <-
 
       inclusion.table[exclude.null.quantity == F, exclude.user.specified := variable %in% variable.names.from.exclude]
       #inclusion.table[, exclude.not.in.names.dat := !(variable %in% names(dat))]
-      inclusion.table[, exclude.matches.outcome.name := (variable == outcome.name)]
+      if (!is.null(outcome.name)) {
+        inclusion.table[, exclude.matches.outcome.name := (variable == outcome.name)]
+      } else {
+        inclusion.table[, exclude.matches.outcome.name := FALSE]
+      }
 
       if (reduce == TRUE) {
-        num.outcome.categories <- length(unique.outcome.values[!is.na(unique.outcome.values)])
+        if (!is.null(outcome.name)) {
+          num.outcome.categories <- length(unique.outcome.values[!is.na(unique.outcome.values)])
+        } else {
+          num.outcome.categories <- 0
+        }
 
         the.inputs <-
           inclusion.table[exclude.null.quantity == F, variable]
 
-        if (num.outcome.categories <= max.outcome.categories.to.search) {
+        if (!is.null(outcome.name) && num.outcome.categories <= max.outcome.categories.to.search) {
 
           by.step.num.unique <- sprintf("%s", add.backtick(x = outcome.name, dat = dat))
-        }
-        if (num.outcome.categories > max.outcome.categories.to.search) {
+        } else {
           by.step.num.unique <- "NULL"
         }
 
@@ -233,14 +247,17 @@ create.formula <-
 
         melted.num.unique.tab <- rbindlist(l = list.num.unique)
 
-        if(outcome.name %in% names(melted.num.unique.tab) == FALSE){
-          melted.num.unique.tab[, eval(outcome.name) := "All"]
+        # Use a placeholder column name for one-sided formulas (outcome.name = NULL)
+        outcome.col.name <- if (!is.null(outcome.name)) outcome.name else ".outcome.placeholder"
+
+        if(outcome.col.name %in% names(melted.num.unique.tab) == FALSE){
+          melted.num.unique.tab[, eval(outcome.col.name) := "All"]
         }
 
-        setnames(x = melted.num.unique.tab, old = outcome.name, new = "V1")
+        setnames(x = melted.num.unique.tab, old = outcome.col.name, new = "V1")
         num.unique.tab <- dcast.data.table(data = melted.num.unique.tab, formula = V1 ~ input, value.var = "num.unique")
 
-        setnames(x = num.unique.tab, old = "V1", new = outcome.name)
+        setnames(x = num.unique.tab, old = "V1", new = outcome.col.name)
 
         min.categories.tab <-
           num.unique.tab[, .(variable = the.inputs,
@@ -366,9 +383,6 @@ create.formula <-
     input.names.delineated <-
       add.backtick(x =  all.input.names, include.backtick = include.backtick, dat = dat)
 
-    outcome.name.delineated <-
-      add.backtick(x = outcome.name, include.backtick = include.backtick, dat = dat)
-
     rhs.with.missing <- c(input.names.delineated, interaction.terms)
     rhs <- rhs.with.missing[!is.na(rhs.with.missing)]
 
@@ -376,8 +390,16 @@ create.formula <-
       rhs <- "1"
     }
 
-    the.formula <-
-      sprintf("%s ~ %s", outcome.name.delineated, paste(rhs, collapse = " + "))
+    # Create one-sided formula when outcome.name is NULL
+    if (!is.null(outcome.name)) {
+      outcome.name.delineated <-
+        add.backtick(x = outcome.name, include.backtick = include.backtick, dat = dat)
+      the.formula <-
+        sprintf("%s ~ %s", outcome.name.delineated, paste(rhs, collapse = " + "))
+    } else {
+      the.formula <-
+        sprintf("~ %s", paste(rhs, collapse = " + "))
+    }
 
     if (include.intercept == FALSE) {
       the.formula <- sprintf("%s - 1", the.formula)

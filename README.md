@@ -75,11 +75,11 @@ formula1 <- create.formula(outcome.name = "y", input.names = c("x","Random error
 formula1$formula
 y ~ x + pixel_1 + `pixel 2` + pixel_3
 ```
-The result is a formula object of all the pixel variables and the input x. Notice that the 'Random error' variable was automatically excluded from the output, and a backtick was automatically added to the variable pixel 2. Since the independent variable y was included as a feature, it was excluded from the output formula. 
+The result is a formula object of all the pixel variables and the input x. Notice that the 'Random error' variable was automatically excluded from the output, and a backtick was automatically added to the variable pixel 2. Since the independent variable y was included as a feature, it was excluded from the output formula.
 
-Details of the variables included are provided in the inclusion table 
+Details of the variables included are provided in the inclusion table
 
-```r 
+```r
 # inclustion table
 > formula1$inclusion.table
        variable   class order specified.from exclude.user.specified exclude.not.in.names.dat exclude.matches.outcome.name include.variable
@@ -92,6 +92,24 @@ Details of the variables included are provided in the inclusion table
 
 # implement formula object
 model <- lm(formula = formula1, data = dd)
+```
+
+### One-Sided Formulas
+
+One-sided formulas (without a left-hand side) are used by many R functions including `xtabs()`, `model.matrix()`, `matchit()`, `weightit()`, `cor.test()`, and others. Create one-sided formulas by setting `outcome.name = NULL`:
+
+``` r
+# create a one-sided formula
+one.sided <- create.formula(outcome.name = NULL, input.names = c("x", "w"), dat = dd)
+
+one.sided$formula
+~ x + w
+
+# useful for functions like xtabs
+xtabs(one.sided$formula, data = dd)
+
+# or model.matrix
+model.matrix(one.sided$formula, data = dd)
 ```
 
 

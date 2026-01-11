@@ -114,6 +114,45 @@ user.input.names <- c('Age Group', 'Gender', 'Region')
 create.formula(outcome.name = user.outcome.name, input.names = user.input.names)$formula
 ```
 
+## One-Sided Formulas
+
+One-sided formulas (without a left-hand side outcome variable) are used by many R functions including `xtabs()`, `model.matrix()`, `matchit()`, `weightit()`, `cor.test()`, `pairs()`, and others. The `create.formula` function supports one-sided formulas by setting `outcome.name = NULL`:
+
+```{r one-sided formula example}
+# Create a one-sided formula
+one.sided.form <- create.formula(
+  outcome.name = NULL,
+  input.names = c("Age", "Gender", "Region"),
+  dat = snack.dat
+)
+
+one.sided.form$formula
+```
+
+One-sided formulas can also use patterns and interactions:
+
+```{r one-sided formula with patterns}
+# One-sided formula with patterns
+one.sided.bp <- create.formula(
+  outcome.name = NULL,
+  input.patterns = "BP_",
+  dat = snack.dat
+)
+
+one.sided.bp$formula
+```
+
+```{r one-sided formula usage}
+# Example usage with xtabs
+xtabs.form <- create.formula(
+  outcome.name = NULL,
+  input.names = c("Gender", "Region"),
+  dat = snack.dat
+)
+
+xtabs(xtabs.form$formula, data = snack.dat)
+```
+
 
 ## Dataset (snack.dat)
  
@@ -190,7 +229,7 @@ The create.formula function is designed to automatically generate formulas from 
 
 ### Parameter description:
 
-- **outcome.name** A character value specifying the name of the formula's outcome variable.  In this version, only a single outcome may be included.  The first entry of outcome.name will be used to build the formula.
+- **outcome.name** A character value specifying the name of the formula's outcome variable.  In this version, only a single outcome may be included.  The first entry of outcome.name will be used to build the formula. When set to NULL, a one-sided formula is created (e.g., ~ x1 + x2), which is useful for functions like xtabs(), model.matrix(), matchit(), and others that accept one-sided formulas.
 
 - **input.names** The names of the variables with the full names delineated.
  

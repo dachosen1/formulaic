@@ -5,6 +5,10 @@
 * Deprecated `context()` and `expect_that()` calls in tests replaced with modern equivalents (`expect_s3_class()`).
 * Formula equality tests made environment-independent via `deparse()` comparison, compatible with both testthat edition 2 and edition 3 / waldo.
 
+### Bug fixes:
+* Fixed `create.formula()` crash when `outcome.name = NULL` and `reduce = TRUE`: `variable != NULL` in data.table returns `logical(0)` rather than a full logical vector, causing `the.inputs` to be empty and `dcast.data.table` to fail with "value.var not found". Fix: guard the input selection with an explicit `is.null(outcome.name)` check.
+* Replaced data.table NSE patterns (`by = variable` with nested j-expression, `.SD` inside `lapply`, `rowMeans(.SD, .SDcols = ...)`) with covr-instrumentation-safe equivalents so that `covr::package_coverage()` runs tests against the instrumented package without NSE breakage.
+
 ### Code quality:
 * Replaced all uses of `T`/`F` abbreviations with `TRUE`/`FALSE` throughout source files (`create.formula`, `add.backtick`).
 * Replaced explicit `== TRUE` / `== FALSE` comparisons with idiomatic R (`if (x)`, `if (!x)`) in `create.formula` and `reduce.existing.formula`.

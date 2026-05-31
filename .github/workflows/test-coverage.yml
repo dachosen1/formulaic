@@ -30,6 +30,8 @@ jobs:
         run: |
           install.packages(".", repos = NULL, type = "source")
           testthat::test_package("formulaic", reporter = "progress")
+          message("--- Also running test_check to simulate covr environment ---")
+          testthat::test_check("formulaic", reporter = "progress")
         shell: Rscript {0}
 
       - name: Test coverage
@@ -44,19 +46,19 @@ jobs:
           )
         shell: Rscript {0}
 
-      - name: Show test failure output
+      - name: Show test failure output in summary
         if: failure()
         run: |
           ROUT="${{ runner.temp }}/package/formulaic/formulaic-tests/testthat.Rout.fail"
+          echo "## Test Failure Details" >> "$GITHUB_STEP_SUMMARY"
           if [ -f "$ROUT" ]; then
-            echo "::warning::=== testthat.Rout.fail contents ==="
-            while IFS= read -r line || [ -n "$line" ]; do
-              echo "::warning::$line"
-            done < "$ROUT"
+            echo "File: \`$ROUT\`" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            cat "$ROUT" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "::warning::Rout.fail not at expected path: $ROUT"
-            find "${{ runner.temp }}" -name 'testthat.Rout*' 2>/dev/null | while read -r f; do
-              echo "::warning::Found: $f"
-            done
+            echo "Rout.fail not found at expected path." >> "$GITHUB_STEP_SUMMARY"
+            echo "Searching for testthat output files:" >> "$GITHUB_STEP_SUMMARY"
+            find "${{ runner.temp }}" -name 'testthat.Rout*' 2>/dev/null >> "$GITHUB_STEP_SUMMARY" || true
           fi
         shell: bash

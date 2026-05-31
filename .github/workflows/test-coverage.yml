@@ -31,9 +31,20 @@ jobs:
 
       - name: Test coverage
         run: |
-          cov <- covr::package_coverage(quiet = FALSE)
+          cov <- covr::package_coverage(quiet = FALSE, clean = FALSE)
           covr::to_cobertura(cov)
         shell: Rscript {0}
+
+      - name: Print test failure details
+        if: failure()
+        run: |
+          echo "=== Searching for testthat output files ==="
+          find /tmp -name 'testthat.Rout*' 2>/dev/null | while read f; do
+            echo ""
+            echo "=== $f ==="
+            cat "$f"
+          done || echo "No testthat output files found in /tmp"
+        shell: bash
 
       - name: Upload coverage reports to Codecov
         if: success()

@@ -46,19 +46,22 @@ jobs:
           )
         shell: Rscript {0}
 
-      - name: Show test failure output in summary
+      - name: Post test failure as PR comment
         if: failure()
         run: |
           ROUT="${{ runner.temp }}/package/formulaic/formulaic-tests/testthat.Rout.fail"
-          echo "## Test Failure Details" >> "$GITHUB_STEP_SUMMARY"
           if [ -f "$ROUT" ]; then
-            echo "File: \`$ROUT\`" >> "$GITHUB_STEP_SUMMARY"
-            echo '```' >> "$GITHUB_STEP_SUMMARY"
-            cat "$ROUT" >> "$GITHUB_STEP_SUMMARY"
-            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            CONTENT=$(head -300 "$ROUT")
           else
-            echo "Rout.fail not found at expected path." >> "$GITHUB_STEP_SUMMARY"
-            echo "Searching for testthat output files:" >> "$GITHUB_STEP_SUMMARY"
-            find "${{ runner.temp }}" -name 'testthat.Rout*' 2>/dev/null >> "$GITHUB_STEP_SUMMARY" || true
+            CONTENT="Rout.fail not found at: $ROUT"
+            FOUND=$(find "${{ runner.temp }}" -name 'testthat.Rout*' 2>/dev/null | head -5 || true)
+            CONTENT="$CONTENT
+Found files: $FOUND"
           fi
+          BODY=$(printf '## CI Test Failure (diagnostic)\n```\n%s\n```' "$CONTENT")
+          curl -s -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            "https://api.github.com/repos/dachosen1/formulaic/issues/18/comments" \
+            -d "$(jq -n --arg b "$BODY" '{"body": $b}')"
         shell: bash

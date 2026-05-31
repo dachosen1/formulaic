@@ -38,12 +38,16 @@ jobs:
       - name: Print test failure details
         if: failure()
         run: |
-          echo "=== Searching for testthat output files ==="
-          find /tmp -name 'testthat.Rout*' 2>/dev/null | while read f; do
-            echo ""
-            echo "=== $f ==="
-            cat "$f"
-          done || echo "No testthat output files found in /tmp"
+          ROUT=$(find /tmp -name 'testthat.Rout.fail' 2>/dev/null | head -1)
+          if [ -n "$ROUT" ]; then
+            echo "=== $ROUT ==="
+            cat "$ROUT"
+            grep -E "^(Error|Failure|✖|×|─)" "$ROUT" 2>/dev/null | while IFS= read -r line; do
+              echo "::error::$line"
+            done
+          else
+            echo "No testthat.Rout.fail found in /tmp"
+          fi
         shell: bash
 
       - name: Upload coverage reports to Codecov

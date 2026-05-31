@@ -21,6 +21,6 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0),
+    testthat (>= 2.1.0),
     covr
 VignetteBuilder: knitr

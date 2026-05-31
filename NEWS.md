@@ -2,7 +2,8 @@
 
 ### R compatibility:
 * Minimum R version bumped to 4.0.0, aligning with modern CRAN standards.
-* `testthat` minimum version bumped to 3.0.0; deprecated `context()` and `expect_that()` calls replaced with testthat 3 equivalents (`expect_s3_class()`).
+* Deprecated `context()` and `expect_that()` calls in tests replaced with modern equivalents (`expect_s3_class()`).
+* Formula equality tests made environment-independent via `deparse()` comparison, compatible with both testthat edition 2 and edition 3 / waldo.
 
 ### Code quality:
 * Replaced all uses of `T`/`F` abbreviations with `TRUE`/`FALSE` throughout source files (`create.formula`, `add.backtick`).

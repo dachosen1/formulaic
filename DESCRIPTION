@@ -24,4 +24,3 @@ Suggests:
     testthat (>= 3.0.0),
     covr
 VignetteBuilder: knitr
-Config/testthat/edition: 3

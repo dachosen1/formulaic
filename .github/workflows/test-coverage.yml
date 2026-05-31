@@ -23,33 +23,17 @@ jobs:
         with:
           extra-packages: covr
 
-      - name: Test coverage
+      - name: Run tests directly (for diagnostics)
         run: |
-          pkg_path <- file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "package")
-          cov <- covr::package_coverage(
-            quiet = FALSE,
-            clean = FALSE,
-            install_path = pkg_path
-          )
-          covr::to_cobertura(cov)
+          install.packages(".", repos = NULL, type = "source")
+          testthat::test_package("formulaic", reporter = "progress")
         shell: Rscript {0}
 
-      - name: Show testthat output on failure
-        if: failure()
+      - name: Test coverage
         run: |
-          find /home/runner/work/_temp/package -name 'testthat.Rout*' -exec echo "=== {} ===" \; -exec cat {} \; 2>/dev/null || true
-          find /tmp -name 'testthat.Rout*' -exec echo "=== {} ===" \; -exec cat {} \; 2>/dev/null || true
-        shell: bash
-
-      - name: Upload test failure logs
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-failure-logs
-          path: |
-            /home/runner/work/_temp/package/**/*.Rout*
-            /tmp/**/*.Rout*
-          if-no-files-found: ignore
+          cov <- covr::package_coverage(quiet = FALSE)
+          covr::to_cobertura(cov)
+        shell: Rscript {0}
 
       - name: Upload coverage reports to Codecov
         if: success()

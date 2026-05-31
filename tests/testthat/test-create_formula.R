@@ -110,3 +110,76 @@ test_that(
       Gender
   )
 )
+
+# ---------------------------------
+# One-sided formula tests (outcome.name = NULL)
+
+test_that('one-sided formula with input.names', {
+  one.sided.1 <- formulaic::create.formula(
+    outcome.name = NULL,
+    input.names = c("x", "w"),
+    dat = dd
+  )
+  expect_equal(one.sided.1$formula, ~ x + w)
+  expect_s3_class(one.sided.1$formula, "formula")
+})
+
+test_that('one-sided formula with input.patterns', {
+  one.sided.2 <- formulaic::create.formula(
+    outcome.name = NULL,
+    input.patterns = "pix",
+    dat = dd
+  )
+  expect_equal(one.sided.2$formula, ~ pixel_1 + `pixel 2` + pixel_3)
+})
+
+test_that('one-sided formula without dat', {
+  one.sided.3 <- formulaic::create.formula(
+    outcome.name = NULL,
+    input.names = c("a", "b", "c")
+  )
+  expect_equal(one.sided.3$formula, ~ a + b + c)
+})
+
+test_that('one-sided formula with interactions', {
+  one.sided.4 <- formulaic::create.formula(
+    outcome.name = NULL,
+    input.names = c("x", "w"),
+    interactions = list(c("x", "w")),
+    dat = dd
+  )
+  expect_equal(one.sided.4$formula, ~ x + w + x * w)
+})
+
+test_that('one-sided formula with include.intercept = FALSE', {
+  one.sided.5 <- formulaic::create.formula(
+    outcome.name = NULL,
+    input.names = c("x", "w"),
+    dat = dd,
+    include.intercept = FALSE
+  )
+  expect_equal(one.sided.5$formula, ~ x + w - 1)
+})
+
+test_that('one-sided formula with reduce = TRUE', {
+  one.sided.6 <- formulaic::create.formula(
+    outcome.name = NULL,
+    input.names = c("x", "w", "pixel_1"),
+    dat = dd,
+    reduce = TRUE
+  )
+  expect_s3_class(one.sided.6$formula, "formula")
+  # All variables should be included since they have contrast
+  expect_true("x" %in% all.vars(one.sided.6$formula))
+})
+
+test_that('one-sided formula with . for all columns', {
+  one.sided.7 <- formulaic::create.formula(
+    outcome.name = NULL,
+    input.names = '.',
+    dat = dd
+  )
+  # Should include all columns from dd
+  expect_s3_class(one.sided.7$formula, "formula")
+  expect_true(length(all.vars(one.sided.7$formula)) == ncol(dd))
+})

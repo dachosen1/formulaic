@@ -1,3 +1,13 @@
+# formulaic 0.0.9
+
+### New features:
+* create.formula: Added support for one-sided formulas by setting `outcome.name = NULL`. One-sided formulas (e.g., `~ x1 + x2`) are used by many R functions including `xtabs()`, `model.matrix()`, `matchit()`, `weightit()`, `cor.test()`, `pairs()`, and others.
+
+### Documentation:
+* Added one-sided formula examples to README
+* Added "One-Sided Formulas" section to package vignette
+* Updated `outcome.name` parameter documentation
+
 # formulaic 0.0.8
 
 

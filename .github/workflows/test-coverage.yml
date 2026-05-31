@@ -30,56 +30,11 @@ jobs:
           extra-packages: any::covr, any::xml2
           needs: coverage
 
-      - name: Install package
-        run: install.packages(".", repos = NULL, type = "source")
-        shell: Rscript {0}
-
-      - name: Run test_package (direct)
-        run: testthat::test_package("formulaic", reporter = "progress")
-        shell: Rscript {0}
-
-      - name: Run test_check (with captured output)
-        continue-on-error: true
+      - name: Run tests directly (verify tests pass)
         run: |
-          python3 - << 'PYEOF'
-          import subprocess, os, json, urllib.request, urllib.error
-
-          result = subprocess.run(
-            ["Rscript", "-e", "testthat::test_check('formulaic', reporter='progress')"],
-            capture_output=True, text=True
-          )
-          output = (result.stdout + "\n" + result.stderr).strip()
-          tc_exit = result.returncode
-
-          print(f"=== test_check exit: {tc_exit} ===")
-          print(output[:5000])
-
-          body = f"## test_check output (exit={tc_exit})\n```\n{output[:4000]}\n```"
-          token = os.environ.get("GITHUB_TOKEN", "")
-          data = json.dumps({"body": body}).encode()
-          req = urllib.request.Request(
-            "https://api.github.com/repos/dachosen1/formulaic/issues/18/comments",
-            data=data,
-            headers={
-              "Authorization": f"token {token}",
-              "Content-Type": "application/json",
-              "Accept": "application/vnd.github.v3+json",
-            },
-            method="POST"
-          )
-          try:
-            resp = urllib.request.urlopen(req)
-            print(f"Comment posted: HTTP {resp.status}")
-          except urllib.error.HTTPError as e:
-            print(f"HTTP Error {e.code}: {e.read().decode()}")
-          except Exception as e:
-            print(f"Error posting comment: {e}")
-
-          exit(tc_exit)
-          PYEOF
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          install.packages(".", repos = NULL, type = "source")
+          testthat::test_package("formulaic", reporter = "progress")
+        shell: Rscript {0}
 
       - name: Test coverage
         run: |
@@ -93,45 +48,17 @@ jobs:
           )
         shell: Rscript {0}
 
-      - name: Show covr failure output
+      - name: Show test failure output
         if: failure()
         run: |
-          python3 - << 'PYEOF'
-          import os, json, urllib.request, urllib.error, glob
-
-          runner_temp = os.environ.get("RUNNER_TEMP", "/home/runner/work/_temp")
-          rout = os.path.join(runner_temp, "package/formulaic/formulaic-tests/testthat.Rout.fail")
-
-          if os.path.exists(rout):
-            with open(rout) as f:
-              content = f.read()
-            label = f"covr Rout.fail at {rout}"
-          else:
-            found = glob.glob(os.path.join(runner_temp, "**", "testthat.Rout*"), recursive=True)
-            content = f"Rout.fail not found at expected path.\nFound: {found}"
-            label = "covr failure (no Rout.fail)"
-
-          body = f"## {label}\n```\n{content[:4000]}\n```"
-          token = os.environ.get("GITHUB_TOKEN", "")
-          data = json.dumps({"body": body}).encode()
-          req = urllib.request.Request(
-            "https://api.github.com/repos/dachosen1/formulaic/issues/18/comments",
-            data=data,
-            headers={
-              "Authorization": f"token {token}",
-              "Content-Type": "application/json",
-              "Accept": "application/vnd.github.v3+json",
-            },
-            method="POST"
-          )
-          try:
-            resp = urllib.request.urlopen(req)
-            print(f"Comment posted: HTTP {resp.status}")
-          except urllib.error.HTTPError as e:
-            print(f"HTTP Error {e.code}: {e.read().decode()}")
-          except Exception as e:
-            print(f"Error posting comment: {e}")
-          PYEOF
+          ROUT="${{ runner.temp }}/package/formulaic/formulaic-tests/testthat.Rout.fail"
+          echo "## Test Failure Details" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$ROUT" ]; then
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            cat "$ROUT" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Rout.fail not found at: $ROUT" >> "$GITHUB_STEP_SUMMARY"
+            find "${{ runner.temp }}" -name 'testthat.Rout*' 2>/dev/null >> "$GITHUB_STEP_SUMMARY" || true
+          fi
         shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

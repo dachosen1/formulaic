@@ -234,7 +234,11 @@ create.formula <-
           num.outcome.categories <- 0
         }
 
-        the.inputs <- inclusion.table[exclude.null.quantity == FALSE & variable != outcome.name, variable]
+        if (!is.null(outcome.name)) {
+          the.inputs <- inclusion.table[exclude.null.quantity == FALSE & variable != outcome.name, variable]
+        } else {
+          the.inputs <- inclusion.table[exclude.null.quantity == FALSE, variable]
+        }
 
         if (!is.null(outcome.name) && num.outcome.categories <= max.outcome.categories.to.search) {
 

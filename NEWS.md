@@ -1,3 +1,24 @@
+# formulaic 1.0.0
+
+### R compatibility:
+* Minimum R version bumped to 4.0.0, aligning with modern CRAN standards.
+* `testthat` minimum version bumped to 3.0.0; deprecated `context()` and `expect_that()` calls replaced with testthat 3 equivalents (`expect_s3_class()`).
+
+### Code quality:
+* Replaced all uses of `T`/`F` abbreviations with `TRUE`/`FALSE` throughout source files (`create.formula`, `add.backtick`).
+* Replaced explicit `== TRUE` / `== FALSE` comparisons with idiomatic R (`if (x)`, `if (!x)`) in `create.formula` and `reduce.existing.formula`.
+
+### CI/CD:
+* Updated GitHub Actions from `actions/checkout@v2` / `actions/upload-artifact@main` to `@v4` to comply with GitHub's deprecation of v2/v3 runners.
+
+### Documentation:
+* Fixed bug in vignette: `lm(formula = ex.form, ...)` corrected to `lm(formula = ex.form$formula, ...)`.
+* Removed duplicate `add.backtick` vignette example chunk.
+* Fixed stray Roxygen tag (`#' @param`) that leaked into the vignette's parameter description section; replaced with proper markdown.
+* Corrected `reduce.existing.formula` parameter description (was incorrectly listed as class `"lm"`; now correctly describes `"formula"` or character input).
+* Fixed `:::` (private accessor) to `::` for the exported `add.backtick` function in the vignette.
+* Made the `transformation 2` vignette example self-contained rather than relying on ambient variable state.
+
 # formulaic 0.0.9
 
 ### New features:

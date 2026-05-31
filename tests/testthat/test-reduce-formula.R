@@ -1,6 +1,3 @@
-context("Reduce Formula")
-
-
 the.initial.formula <- Awareness ~ .
 
 formula_1 <- formulaic::reduce.existing.formula(

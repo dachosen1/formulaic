@@ -1,5 +1,3 @@
-context("Create Formula")
-
 n <- 10
 dd <-
   data.table::data.table(w = rnorm(n = n),
@@ -69,7 +67,7 @@ test_that('Inclusion table: input names',
           })
 
 test_that('Formula output',
-          expect_that(formula.1$formula, is_a('formula')))
+          expect_s3_class(formula.1$formula, 'formula'))
 
 test_that('input names all',
           expect_equal(formula.2$formula, all.inputs))

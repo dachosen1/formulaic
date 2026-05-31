@@ -203,7 +203,7 @@ create.formula <-
         inclusion.table[i, exclude.null.quantity := is.null(check.variable.null)]
       }
 
-      inclusion.table[exclude.null.quantity == F, class := dat[, class(eval(parse(text = add.backtick(x = variable, dat = dat))))][1], by = variable]
+      inclusion.table[exclude.null.quantity == FALSE, class := dat[, class(eval(parse(text = add.backtick(x = variable, dat = dat))))][1], by = variable]
       inclusion.table[, order := 1:.N]
       inclusion.table[, specified.from := c(
         rep.int(x = "input.names", times = num.from.input.names),
@@ -211,7 +211,7 @@ create.formula <-
         rep.int(x = "interactions", times = num.from.interactions)
       )]
 
-      inclusion.table[exclude.null.quantity == F, exclude.user.specified := variable %in% variable.names.from.exclude]
+      inclusion.table[exclude.null.quantity == FALSE, exclude.user.specified := variable %in% variable.names.from.exclude]
       #inclusion.table[, exclude.not.in.names.dat := !(variable %in% names(dat))]
       if (!is.null(outcome.name)) {
         inclusion.table[, exclude.matches.outcome.name := (variable == outcome.name)]
@@ -219,14 +219,14 @@ create.formula <-
         inclusion.table[, exclude.matches.outcome.name := FALSE]
       }
 
-      if (reduce == TRUE) {
+      if (reduce) {
         if (!is.null(outcome.name)) {
           num.outcome.categories <- length(unique.outcome.values[!is.na(unique.outcome.values)])
         } else {
           num.outcome.categories <- 0
         }
 
-        the.inputs <- inclusion.table[exclude.null.quantity == F & variable != outcome.name, variable]
+        the.inputs <- inclusion.table[exclude.null.quantity == FALSE & variable != outcome.name, variable]
 
         if (!is.null(outcome.name) && num.outcome.categories <= max.outcome.categories.to.search) {
 
@@ -284,12 +284,12 @@ create.formula <-
 
       inclusion.table[, include.variable := rowMeans(.SD, na.rm = TRUE) == 0, .SDcols = exclusion.columns]
 
-      if (force.main.effects == TRUE) {
+      if (force.main.effects) {
         all.input.names <-
           inclusion.table[include.variable == TRUE, variable]
       }
 
-      if (force.main.effects == FALSE) {
+      if (!force.main.effects) {
         all.input.names <-
           inclusion.table[include.variable == TRUE &
                             specified.from != "interactions", variable]
@@ -417,7 +417,7 @@ create.formula <-
       )
 
     if(is.data.frame(x = dat)){
-      if(original.format.dt == F){
+      if(!original.format.dt){
         setDF(x = dat)
       }
     }

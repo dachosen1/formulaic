@@ -41,7 +41,7 @@ add.backtick <- function(x, include.backtick = "as.needed", dat = NULL){
 
   }
   if(is.data.frame(x = dat)){
-    if(original.format.dt == F){
+    if(!original.format.dt){
       setDF(x = dat)
     }
   }

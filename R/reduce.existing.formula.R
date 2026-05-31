@@ -35,7 +35,7 @@ reduce.existing.formula <-
 
     status.formula.object <- methods::is(object = the.initial.formula, class2 = "formula")
     status.character.object <- base::is.character(the.initial.formula)
-    if(status.formula.object == FALSE & status.character.object == FALSE){
+    if(!status.formula.object & !status.character.object){
       stop("the.initial.formula must be a formula or character object.")
 
     }

@@ -1,4 +1,10 @@
-context("Create Formula")
+# Compare formula structure only, ignoring the attached environment.
+# covr instruments the package in a temp library whose namespace differs
+# from the inline test formula's environment, so direct expect_equal on
+# formula objects can fail when testthat edition 3 / waldo is active.
+expect_formula_equal <- function(actual, expected) {
+  expect_equal(deparse(actual), deparse(expected))
+}
 
 n <- 10
 dd <-
@@ -63,16 +69,16 @@ all.inputs <-
 
 test_that('Inclusion table: input names',
           {
-            expect_equal(formula.1$formula, y ~ x + pixel_1 + `pixel 2` + pixel_3)
+            expect_formula_equal(formula.1$formula, y ~ x + pixel_1 + `pixel 2` + pixel_3)
             expect_false(formula.1$inclusion.table[formula.1$inclusion.table$variable == "Random error"]$include.variable)
             expect_false(formula.1$inclusion.table[formula.1$inclusion.table$variable == "y"]$include.variable)
           })
 
 test_that('Formula output',
-          expect_that(formula.1$formula, is_a('formula')))
+          expect_s3_class(formula.1$formula, 'formula'))
 
 test_that('input names all',
-          expect_equal(formula.2$formula, all.inputs))
+          expect_formula_equal(formula.2$formula, all.inputs))
 
 # ---------------------------------
 
@@ -104,7 +110,7 @@ test_that('outcome error',
 
 test_that(
   'Interaction outcome',
-  expect_equal(
+  expect_formula_equal(
     interaction.form$formula,
     Awareness ~ Age + `Age Group` + Gender + `Age Group` *
       Gender
@@ -120,7 +126,7 @@ test_that('one-sided formula with input.names', {
     input.names = c("x", "w"),
     dat = dd
   )
-  expect_equal(one.sided.1$formula, ~ x + w)
+  expect_formula_equal(one.sided.1$formula, ~ x + w)
   expect_s3_class(one.sided.1$formula, "formula")
 })
 
@@ -130,7 +136,7 @@ test_that('one-sided formula with input.patterns', {
     input.patterns = "pix",
     dat = dd
   )
-  expect_equal(one.sided.2$formula, ~ pixel_1 + `pixel 2` + pixel_3)
+  expect_formula_equal(one.sided.2$formula, ~ pixel_1 + `pixel 2` + pixel_3)
 })
 
 test_that('one-sided formula without dat', {
@@ -138,7 +144,7 @@ test_that('one-sided formula without dat', {
     outcome.name = NULL,
     input.names = c("a", "b", "c")
   )
-  expect_equal(one.sided.3$formula, ~ a + b + c)
+  expect_formula_equal(one.sided.3$formula, ~ a + b + c)
 })
 
 test_that('one-sided formula with interactions', {
@@ -148,7 +154,7 @@ test_that('one-sided formula with interactions', {
     interactions = list(c("x", "w")),
     dat = dd
   )
-  expect_equal(one.sided.4$formula, ~ x + w + x * w)
+  expect_formula_equal(one.sided.4$formula, ~ x + w + x * w)
 })
 
 test_that('one-sided formula with include.intercept = FALSE', {
@@ -158,7 +164,7 @@ test_that('one-sided formula with include.intercept = FALSE', {
     dat = dd,
     include.intercept = FALSE
   )
-  expect_equal(one.sided.5$formula, ~ x + w - 1)
+  expect_formula_equal(one.sided.5$formula, ~ x + w - 1)
 })
 
 test_that('one-sided formula with reduce = TRUE', {

@@ -94,7 +94,7 @@ ex.form <-
                  dat = snack.dat)
 
 ex.form$formula
-lm_example <- lm(formula = ex.form, data = snack.dat)
+lm_example <- lm(formula = ex.form$formula, data = snack.dat)
 summary(lm_example)
 ```
 
@@ -175,7 +175,7 @@ As a subsidiary function, add.backtick is used inside of create.formula function
 
 ```{r add.backtick example}
 as.needed = formulaic::add.backtick(x = names(snack.dat), include.backtick = 'as.needed')
-all = formulaic:::add.backtick(x = names(snack.dat), include.backtick = 'all')
+all = formulaic::add.backtick(x = names(snack.dat), include.backtick = 'all')
 
 
 data = cbind(as.needed, all)
@@ -197,14 +197,6 @@ create.formula(
 )$formula
 ```
 
-```{r add.backtick example 4}
-create.formula(
-  outcome.name = awareness.name,
-  input.names = variable.names,
-  format.as = "character",
-  include.backtick = "all"
-)$formula
-```
 When the output is returned as a formula object, the backticks may only be provided on an as-needed basis. For character objects, either option may be selected.
 
 
@@ -238,7 +230,8 @@ The create.formula function is designed to automatically generate formulas from 
 - **dat** User can specify a data.frame object that will be used to remove any variables that are not listed in names(dat. As default it is set as NULL. In this case, the formula is created simply from the outcome.name and input.names.
 
 - **interactions** A list of character vectors. Each character vector includes the names of the variables that form a single interaction.  Specifying interactions = list(c("x", "y"), c("x", "z"), c("y", "z"), c("x", "y", "z")) would lead to the interactions x*y + x*z + y*z + x*y*z.
-#' @param force.main.effects This is a logical value.  When TRUE, the intent is that any term included as an interaction (of multiple variables) must also be listed individually as a main effect.
+
+- **force.main.effects** A logical value.  When TRUE, any term included as an interaction (of multiple variables) must also be listed individually as a main effect.
 
 - **reduce**  A logical value.  When dat is not NULL and reduce is TRUE, additional quality checks are performed to examine the input variables.  Any input variables that exhibit a lack of contrast will be excluded from the model. This search is global by default but may be conducted separately in subsets of the outcome variables by specifying max.outcome.categories.to.search.  Additionally, any input variables that exhibit too many contrasts, as defined by max.input.categories, will also be excluded.
 
@@ -633,12 +626,13 @@ create.formula(
 ```
 
 ```{r create.formula transformation 2}
-
-res <- create.formula(outcome.name = outcome.name, input.names = input.names, interactions = interactions, dat = snack.dat, reduce = reduce)
-
-
-res <- create.formula(outcome.name = awareness.name, input.names = input.names, interactions = interactions, dat = snack.dat, reduce = TRUE)
-
+res <- create.formula(
+  outcome.name = awareness.name,
+  input.names = c("Age", "Gender", "Income", "Region"),
+  interactions = list(c("Gender", "Income Group")),
+  dat = snack.dat,
+  reduce = TRUE
+)
 
 glm(formula = res$formula, data = snack.dat, family = "binomial")
 
@@ -650,7 +644,7 @@ res
 The **reduce.existing.formula** function was designed to perform quality checks and automatic removal of impractical variables can also be accessed when an **existing formula** has been previously constructed. This method uses natural language processing techniques to deconstruct the components of a formula. Each variable and interaction is separately identified and aggregated. These variables are then supplied to create.formula as the input.names and interactions parameters. Otherwise, the parameters of reduce.existing.formula are designed to match those of create.formula. As a result, an initial formula can be evaluated in terms of the same set of quality checks, and the formula can be reduced based on the same set of exclusions.
 
 ### Parameter description:
-*  the.initial.formula  object of class "lm" or for multiple responses of class c("mlm", "lm").
+*  the.initial.formula  An object of class `"formula"` or a character string in the form `"y ~ x1 + x2"`.
 *  dat Data frame, list or environment (or object coercible by as.data.frame to a data frame) containing the variables in the model.
 *  max.input.categories This limits the maximum number of variables that will be employed in the formula. As default it is set at 20, but users can still change at his/her convenience.
 *  max.outcome.categories.to.search This limits the maximum number of outcome categories will be investigated in the formula. As default it is set at 4, but users can still change at his/her convenience

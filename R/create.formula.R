@@ -211,8 +211,7 @@ create.formula <-
       if (reduce == TRUE) {
         num.outcome.categories <- length(unique.outcome.values[!is.na(unique.outcome.values)])
 
-        the.inputs <-
-          inclusion.table[exclude.null.quantity == F, variable]
+        the.inputs <- inclusion.table[exclude.null.quantity == F & variable != outcome.name, variable]
 
         if (num.outcome.categories <= max.outcome.categories.to.search) {
 

@@ -25,15 +25,34 @@ jobs:
 
       - name: Test coverage
         run: |
+          pkg_path <- file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "package")
           cov <- covr::package_coverage(
             quiet = FALSE,
             clean = FALSE,
-            install_path = file.path(normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/"), "package")
+            install_path = pkg_path
           )
           covr::to_cobertura(cov)
         shell: Rscript {0}
 
+      - name: Show testthat output on failure
+        if: failure()
+        run: |
+          find /home/runner/work/_temp/package -name 'testthat.Rout*' -exec echo "=== {} ===" \; -exec cat {} \; 2>/dev/null || true
+          find /tmp -name 'testthat.Rout*' -exec echo "=== {} ===" \; -exec cat {} \; 2>/dev/null || true
+        shell: bash
+
+      - name: Upload test failure logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-failure-logs
+          path: |
+            /home/runner/work/_temp/package/**/*.Rout*
+            /tmp/**/*.Rout*
+          if-no-files-found: ignore
+
       - name: Upload coverage reports to Codecov
+        if: success()
         uses: codecov/codecov-action@v4
         with:
           fail_ci_if_error: false

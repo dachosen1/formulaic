@@ -43,3 +43,20 @@ jobs:
             )
           )
         shell: Rscript {0}
+
+      - name: Show test failure output
+        if: failure()
+        run: |
+          ROUT="${{ runner.temp }}/package/formulaic/formulaic-tests/testthat.Rout.fail"
+          if [ -f "$ROUT" ]; then
+            echo "::warning::=== testthat.Rout.fail contents ==="
+            while IFS= read -r line || [ -n "$line" ]; do
+              echo "::warning::$line"
+            done < "$ROUT"
+          else
+            echo "::warning::Rout.fail not at expected path: $ROUT"
+            find "${{ runner.temp }}" -name 'testthat.Rout*' 2>/dev/null | while read -r f; do
+              echo "::warning::Found: $f"
+            done
+          fi
+        shell: bash

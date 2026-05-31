@@ -8,6 +8,10 @@ on:
 
 name: test-coverage
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   test-coverage:
     runs-on: ubuntu-latest
@@ -37,20 +41,45 @@ jobs:
       - name: Run test_check (with captured output)
         continue-on-error: true
         run: |
-          Rscript -e "testthat::test_check('formulaic', reporter='progress')" \
-            > /tmp/tc_output.txt 2>&1
-          TC_EXIT=$?
-          echo "=== test_check exit code: $TC_EXIT ==="
-          cat /tmp/tc_output.txt
-          echo "## test_check result (exit=$TC_EXIT)" >> "$GITHUB_STEP_SUMMARY"
-          echo '```' >> "$GITHUB_STEP_SUMMARY"
-          cat /tmp/tc_output.txt >> "$GITHUB_STEP_SUMMARY"
-          echo '```' >> "$GITHUB_STEP_SUMMARY"
-          gh pr comment 18 --body "$(printf '## test_check output (exit=%s)\n```\n%s\n```' "$TC_EXIT" "$(head -200 /tmp/tc_output.txt)")" || true
-          exit $TC_EXIT
+          python3 - << 'PYEOF'
+          import subprocess, os, json, urllib.request, urllib.error
+
+          result = subprocess.run(
+            ["Rscript", "-e", "testthat::test_check('formulaic', reporter='progress')"],
+            capture_output=True, text=True
+          )
+          output = (result.stdout + "\n" + result.stderr).strip()
+          tc_exit = result.returncode
+
+          print(f"=== test_check exit: {tc_exit} ===")
+          print(output[:5000])
+
+          body = f"## test_check output (exit={tc_exit})\n```\n{output[:4000]}\n```"
+          token = os.environ.get("GITHUB_TOKEN", "")
+          data = json.dumps({"body": body}).encode()
+          req = urllib.request.Request(
+            "https://api.github.com/repos/dachosen1/formulaic/issues/18/comments",
+            data=data,
+            headers={
+              "Authorization": f"token {token}",
+              "Content-Type": "application/json",
+              "Accept": "application/vnd.github.v3+json",
+            },
+            method="POST"
+          )
+          try:
+            resp = urllib.request.urlopen(req)
+            print(f"Comment posted: HTTP {resp.status}")
+          except urllib.error.HTTPError as e:
+            print(f"HTTP Error {e.code}: {e.read().decode()}")
+          except Exception as e:
+            print(f"Error posting comment: {e}")
+
+          exit(tc_exit)
+          PYEOF
         shell: bash
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Test coverage
         run: |
@@ -64,20 +93,45 @@ jobs:
           )
         shell: Rscript {0}
 
-      - name: Show test failure output
+      - name: Show covr failure output
         if: failure()
         run: |
-          ROUT="${{ runner.temp }}/package/formulaic/formulaic-tests/testthat.Rout.fail"
-          echo "## Test Failure Details" >> "$GITHUB_STEP_SUMMARY"
-          if [ -f "$ROUT" ]; then
-            echo '```' >> "$GITHUB_STEP_SUMMARY"
-            cat "$ROUT" >> "$GITHUB_STEP_SUMMARY"
-            echo '```' >> "$GITHUB_STEP_SUMMARY"
-            gh pr comment 18 --body "$(printf '## covr Rout.fail\n```\n%s\n```' "$(head -200 "$ROUT")")" || true
-          else
-            echo "Rout.fail not found at: $ROUT" >> "$GITHUB_STEP_SUMMARY"
-            find "${{ runner.temp }}" -name 'testthat.Rout*' 2>/dev/null >> "$GITHUB_STEP_SUMMARY" || true
-          fi
+          python3 - << 'PYEOF'
+          import os, json, urllib.request, urllib.error, glob
+
+          runner_temp = os.environ.get("RUNNER_TEMP", "/home/runner/work/_temp")
+          rout = os.path.join(runner_temp, "package/formulaic/formulaic-tests/testthat.Rout.fail")
+
+          if os.path.exists(rout):
+            with open(rout) as f:
+              content = f.read()
+            label = f"covr Rout.fail at {rout}"
+          else:
+            found = glob.glob(os.path.join(runner_temp, "**", "testthat.Rout*"), recursive=True)
+            content = f"Rout.fail not found at expected path.\nFound: {found}"
+            label = "covr failure (no Rout.fail)"
+
+          body = f"## {label}\n```\n{content[:4000]}\n```"
+          token = os.environ.get("GITHUB_TOKEN", "")
+          data = json.dumps({"body": body}).encode()
+          req = urllib.request.Request(
+            "https://api.github.com/repos/dachosen1/formulaic/issues/18/comments",
+            data=data,
+            headers={
+              "Authorization": f"token {token}",
+              "Content-Type": "application/json",
+              "Accept": "application/vnd.github.v3+json",
+            },
+            method="POST"
+          )
+          try:
+            resp = urllib.request.urlopen(req)
+            print(f"Comment posted: HTTP {resp.status}")
+          except urllib.error.HTTPError as e:
+            print(f"HTTP Error {e.code}: {e.read().decode()}")
+          except Exception as e:
+            print(f"Error posting comment: {e}")
+          PYEOF
         shell: bash
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

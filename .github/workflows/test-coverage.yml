@@ -26,13 +26,31 @@ jobs:
           extra-packages: any::covr, any::xml2
           needs: coverage
 
-      - name: Run tests directly (verify tests pass)
-        run: |
-          install.packages(".", repos = NULL, type = "source")
-          testthat::test_package("formulaic", reporter = "progress")
-          message("--- Also running test_check to simulate covr environment ---")
-          testthat::test_check("formulaic", reporter = "progress")
+      - name: Install package
+        run: install.packages(".", repos = NULL, type = "source")
         shell: Rscript {0}
+
+      - name: Run test_package (direct)
+        run: testthat::test_package("formulaic", reporter = "progress")
+        shell: Rscript {0}
+
+      - name: Run test_check (with captured output)
+        continue-on-error: true
+        run: |
+          Rscript -e "testthat::test_check('formulaic', reporter='progress')" \
+            > /tmp/tc_output.txt 2>&1
+          TC_EXIT=$?
+          echo "=== test_check exit code: $TC_EXIT ==="
+          cat /tmp/tc_output.txt
+          echo "## test_check result (exit=$TC_EXIT)" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          cat /tmp/tc_output.txt >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          gh pr comment 18 --body "$(printf '## test_check output (exit=%s)\n```\n%s\n```' "$TC_EXIT" "$(head -200 /tmp/tc_output.txt)")" || true
+          exit $TC_EXIT
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Test coverage
         run: |
@@ -55,8 +73,11 @@ jobs:
             echo '```' >> "$GITHUB_STEP_SUMMARY"
             cat "$ROUT" >> "$GITHUB_STEP_SUMMARY"
             echo '```' >> "$GITHUB_STEP_SUMMARY"
+            gh pr comment 18 --body "$(printf '## covr Rout.fail\n```\n%s\n```' "$(head -200 "$ROUT")")" || true
           else
             echo "Rout.fail not found at: $ROUT" >> "$GITHUB_STEP_SUMMARY"
             find "${{ runner.temp }}" -name 'testthat.Rout*' 2>/dev/null >> "$GITHUB_STEP_SUMMARY" || true
           fi
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
